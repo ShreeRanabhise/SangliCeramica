@@ -11,7 +11,7 @@ import {
   SidebarMenuItem,
   SidebarHeader,
 } from "@/components/ui/sidebar";
-import { Package, FolderTree, Image as ImageIcon, MessageSquare, Tag, LayoutDashboard, Settings, FileText, LayoutTemplate } from "lucide-react";
+import { Package, FolderTree, Image as ImageIcon, MessageSquare, Tag, LayoutDashboard, Settings, FileText, LayoutTemplate, MapPin } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -27,6 +27,7 @@ const items = [
   { title: "Inquiries", url: "/admin/inquiries", icon: MessageSquare },
   { title: "Content", url: "/admin/content", icon: FileText },
   { title: "Settings", url: "/admin/settings", icon: Settings },
+  { title: "Branches", url: "/admin/branches", icon: MapPin },
 ];
 
 export function AppSidebar() {

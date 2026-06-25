@@ -9,7 +9,10 @@ export const metadata: Metadata = {
 };
 
 export default async function ContactPage() {
-  const settings = await prisma.contactInformation.findFirst();
+  const [settings, branches] = await Promise.all([
+    prisma.contactInformation.findFirst(),
+    prisma.branch.findMany({ orderBy: { order: "asc" } })
+  ]);
 
   return (
     <div className="min-h-screen bg-background pt-28 pb-24">
@@ -24,62 +27,81 @@ export default async function ContactPage() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
           
-          {/* Left: Contact Info */}
-          <div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-12">
-              <div className="space-y-4 p-6 bg-muted/50 rounded-2xl border">
-                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
-                  <MapPin className="w-6 h-6 text-primary" />
-                </div>
-                <h3 className="text-xl font-semibold">Visit Us</h3>
-                <p className="text-muted-foreground whitespace-pre-line">
-                  {settings?.address || "123 Showroom Avenue,\nSangli, Maharashtra 416416,\nIndia"}
-                </p>
+          {/* Left: Contact Info (Branches) */}
+          <div className="space-y-12">
+            {branches.length === 0 ? (
+              <div className="p-8 text-center text-muted-foreground border rounded-2xl bg-muted/20">
+                No branches configured yet.
               </div>
+            ) : (
+              branches.map((branch, idx) => (
+                <div key={branch.id} className="space-y-6">
+                  <div>
+                    <h2 className="text-2xl font-bold mb-1">{branch.name}</h2>
+                    {branch.isPrimary && <span className="text-xs font-semibold px-2 py-1 bg-primary/10 text-primary rounded-full">Primary Location</span>}
+                  </div>
 
-              <div className="space-y-4 p-6 bg-muted/50 rounded-2xl border">
-                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
-                  <Phone className="w-6 h-6 text-primary" />
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div className="space-y-3 p-5 bg-muted/50 rounded-2xl border">
+                      <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center mb-2">
+                        <MapPin className="w-5 h-5 text-primary" />
+                      </div>
+                      <h3 className="text-lg font-semibold">Visit Us</h3>
+                      <p className="text-muted-foreground whitespace-pre-line text-sm">
+                        {branch.address}
+                      </p>
+                    </div>
+
+                    <div className="space-y-3 p-5 bg-muted/50 rounded-2xl border">
+                      <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center mb-2">
+                        <Phone className="w-5 h-5 text-primary" />
+                      </div>
+                      <h3 className="text-lg font-semibold">Call Us</h3>
+                      <p className="text-muted-foreground whitespace-pre-line text-sm">
+                        {branch.phones?.length ? branch.phones.join('\n') : "N/A"}
+                      </p>
+                    </div>
+
+                    <div className="space-y-3 p-5 bg-muted/50 rounded-2xl border">
+                      <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center mb-2">
+                        <Mail className="w-5 h-5 text-primary" />
+                      </div>
+                      <h3 className="text-lg font-semibold">Email Us</h3>
+                      <p className="text-muted-foreground whitespace-pre-line text-sm">
+                        {branch.email || settings?.email || "N/A"}
+                      </p>
+                    </div>
+
+                    <div className="space-y-3 p-5 bg-muted/50 rounded-2xl border">
+                      <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center mb-2">
+                        <Clock className="w-5 h-5 text-primary" />
+                      </div>
+                      <h3 className="text-lg font-semibold">Working Hours</h3>
+                      <p className="text-muted-foreground whitespace-pre-line text-sm">
+                        {branch.hours || "N/A"}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Map */}
+                  {branch.mapUrl && (
+                    <div className="w-full h-[300px] bg-slate-200 rounded-2xl overflow-hidden relative">
+                      <iframe 
+                        src={branch.mapUrl}
+                        width="100%" 
+                        height="100%" 
+                        style={{ border: 0 }} 
+                        allowFullScreen 
+                        loading="lazy" 
+                        referrerPolicy="no-referrer-when-downgrade"
+                      ></iframe>
+                    </div>
+                  )}
+
+                  {idx !== branches.length - 1 && <hr className="my-12 border-slate-200" />}
                 </div>
-                <h3 className="text-xl font-semibold">Call Us</h3>
-                <p className="text-muted-foreground whitespace-pre-line">
-                  {settings?.phones?.length ? settings.phones.join('\n') : "+91 98765 43210\n+91 98765 01234"}
-                </p>
-              </div>
-
-              <div className="space-y-4 p-6 bg-muted/50 rounded-2xl border">
-                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
-                  <Mail className="w-6 h-6 text-primary" />
-                </div>
-                <h3 className="text-xl font-semibold">Email Us</h3>
-                <p className="text-muted-foreground whitespace-pre-line">
-                  {settings?.email || "info@sangliceramica.com\nsales@sangliceramica.com"}
-                </p>
-              </div>
-
-              <div className="space-y-4 p-6 bg-muted/50 rounded-2xl border">
-                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
-                  <Clock className="w-6 h-6 text-primary" />
-                </div>
-                <h3 className="text-xl font-semibold">Working Hours</h3>
-                <p className="text-muted-foreground whitespace-pre-line">
-                  {settings?.hours || "Monday - Saturday\n10:00 AM - 8:00 PM\nSunday: Closed"}
-                </p>
-              </div>
-            </div>
-
-            {/* Map Placeholder */}
-            <div className="w-full h-[300px] bg-slate-200 rounded-2xl overflow-hidden relative">
-              <iframe 
-                src={settings?.mapUrl || "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d122283.79383679803!2d74.49842490800727!3d16.84074211189495!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc122ebdbce0eb9%3A0xc35dfd974df3b482!2sSangli%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"}
-                width="100%" 
-                height="100%" 
-                style={{ border: 0 }} 
-                allowFullScreen 
-                loading="lazy" 
-                referrerPolicy="no-referrer-when-downgrade"
-              ></iframe>
-            </div>
+              ))
+            )}
           </div>
 
           {/* Right: Contact Form */}

@@ -168,13 +168,24 @@ model HomepageContent {
 
 model ContactInformation {
   id           String   @id @default(cuid())
+  email        String
+  whatsapp     String?
+  socialLinks  Json?
+  updatedAt    DateTime @updatedAt
+}
+
+model Branch {
+  id           String   @id @default(cuid())
+  name         String
+  isPrimary    Boolean  @default(false)
   address      String   @db.Text
   mapUrl       String?  @db.Text
   phones       String[]
-  whatsapp     String
-  email        String
+  whatsapp     String?
+  email        String?
   hours        String
-  socialLinks  Json?
+  order        Int      @default(0)
+  createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 }
 

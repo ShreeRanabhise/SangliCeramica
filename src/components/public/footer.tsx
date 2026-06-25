@@ -5,9 +5,10 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { prisma } from "@/lib/prisma";
 
 export async function Footer() {
-  const [settings, catalogues] = await Promise.all([
+  const [settings, catalogues, primaryBranch] = await Promise.all([
     prisma.contactInformation.findFirst(),
-    prisma.catalogue.findMany({ where: { isActive: true }, orderBy: { createdAt: "desc" } })
+    prisma.catalogue.findMany({ where: { isActive: true }, orderBy: { createdAt: "desc" } }),
+    prisma.branch.findFirst({ where: { isPrimary: true } })
   ]);
   const mainCatalogue = catalogues[0];
 
@@ -64,15 +65,15 @@ export async function Footer() {
             <ul className="space-y-4">
               <li className="flex gap-3 text-sm text-slate-400">
                 <MapPin className="w-5 h-5 text-primary shrink-0" />
-                <span className="whitespace-pre-line">{settings?.address || "123 Showroom Ave, Sangli,\nMaharashtra 416416, India"}</span>
+                <span className="whitespace-pre-line">{primaryBranch?.address || "Please configure a primary branch in admin."}</span>
               </li>
               <li className="flex gap-3 text-sm text-slate-400">
                 <Phone className="w-5 h-5 text-primary shrink-0" />
-                <span>{settings?.phones?.[0] || "+91 98765 43210"}</span>
+                <span>{primaryBranch?.phones?.[0] || "+91 98765 43210"}</span>
               </li>
               <li className="flex gap-3 text-sm text-slate-400">
                 <Mail className="w-5 h-5 text-primary shrink-0" />
-                <span>{settings?.email || "info@sangliceramica.com"}</span>
+                <span>{primaryBranch?.email || settings?.email || "info@sangliceramica.com"}</span>
               </li>
             </ul>
           </div>

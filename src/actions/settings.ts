@@ -13,12 +13,8 @@ export async function getSettings() {
 }
 
 export async function updateSettings(data: {
-  address: string;
-  mapUrl?: string;
-  phones: string[];
-  whatsapp: string;
+  whatsapp?: string;
   email: string;
-  hours: string;
   socialLinks?: any;
 }) {
   try {
@@ -29,24 +25,16 @@ export async function updateSettings(data: {
       settings = await prisma.contactInformation.update({
         where: { id: existing.id },
         data: {
-          address: data.address || existing.address,
-          mapUrl: data.mapUrl || existing.mapUrl,
-          phones: data.phones || existing.phones,
           whatsapp: data.whatsapp || existing.whatsapp,
           email: data.email || existing.email,
-          hours: data.hours || existing.hours,
           socialLinks: data.socialLinks !== undefined ? data.socialLinks : existing.socialLinks,
         }
       });
     } else {
       settings = await prisma.contactInformation.create({
         data: {
-          address: data.address || "",
-          mapUrl: data.mapUrl || "",
-          phones: data.phones || [],
           whatsapp: data.whatsapp || "",
           email: data.email || "",
-          hours: data.hours || "",
           socialLinks: data.socialLinks || {},
         }
       });
