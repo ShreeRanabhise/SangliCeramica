@@ -161,15 +161,16 @@ model HomepageContent {
 }
 
 model ContactInformation {
-  id          String   @id @default(cuid())
-  address     String   @db.Text
-  mapUrl      String?  @db.Text
-  phones      String[]
-  whatsapp    String
-  email       String
-  hours       String
-  socialLinks Json?
-  updatedAt   DateTime @updatedAt
+  id           String   @id @default(cuid())
+  address      String   @db.Text
+  mapUrl       String?  @db.Text
+  phones       String[]
+  whatsapp     String
+  email        String
+  hours        String
+  catalogueUrl String?
+  socialLinks  Json?
+  updatedAt    DateTime @updatedAt
 }
 
 model ActivityLog {

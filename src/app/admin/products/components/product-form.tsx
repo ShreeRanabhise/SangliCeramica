@@ -132,7 +132,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({ initialData, categorie
             disabled={loading}
             onChange={(url, publicId) => setImages([...images, { url, publicId }])}
             onRemove={(url) => setImages(images.filter(img => img.url !== url))}
-            bucket="sangli-ceramica"
+            bucket="products"
           />
           <p className="text-sm text-muted-foreground mt-2">The first image will be used as the primary thumbnail.</p>
         </div>

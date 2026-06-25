@@ -19,6 +19,7 @@ export async function updateSettings(data: {
   whatsapp: string;
   email: string;
   hours: string;
+  catalogueUrl?: string;
   socialLinks?: any;
 }) {
   try {

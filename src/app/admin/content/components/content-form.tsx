@@ -8,6 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { updateContent } from "@/actions/content";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
+import ImageUpload from "@/components/admin/image-upload";
 
 interface ContentFormProps {
   section: string;
@@ -29,6 +30,7 @@ export const ContentForm: React.FC<ContentFormProps> = ({ section, initialData }
         contentJson = {
           title: formData.get("title"),
           subtitle: formData.get("subtitle"),
+          carouselImages: carouselImages,
         };
       } else if (section === "ABOUT") {
         contentJson = {
@@ -55,6 +57,7 @@ export const ContentForm: React.FC<ContentFormProps> = ({ section, initialData }
   };
 
   const data = initialData?.content || {};
+  const [carouselImages, setCarouselImages] = useState<{url: string, publicId: string}[]>(data.carouselImages || []);
 
   if (section === "HERO") {
     return (
@@ -79,6 +82,17 @@ export const ContentForm: React.FC<ContentFormProps> = ({ section, initialData }
             disabled={loading} 
             rows={3}
           />
+        </div>
+        <div className="space-y-2">
+          <Label>Carousel Background Images</Label>
+          <ImageUpload
+            value={carouselImages.map(img => img.url)}
+            onChange={(url, publicId) => setCarouselImages([...carouselImages, { url, publicId }])}
+            onRemove={(url) => setCarouselImages(carouselImages.filter(img => img.url !== url))}
+            bucket="carousel"
+            disabled={loading}
+          />
+          <p className="text-sm text-muted-foreground">Upload background images for the Hero section. They will slide automatically.</p>
         </div>
         <Button type="submit" disabled={loading}>
           {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}

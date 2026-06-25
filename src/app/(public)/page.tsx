@@ -4,6 +4,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { ArrowRight, MapPin, Sparkles } from "lucide-react";
+import { prisma } from "@/lib/prisma";
+import { HeroCarousel } from "@/components/public/hero-carousel";
 
 export const metadata = {
   title: "Sangli Ceramica | Premium Tiles & Sanitaryware Showroom",
@@ -12,9 +14,10 @@ export const metadata = {
 
 export default async function HomePage() {
   // Fetch data on the server
-  const [colRes, prodRes] = await Promise.all([
+  const [colRes, prodRes, heroContent] = await Promise.all([
     getCollections(),
-    getProducts()
+    getProducts(),
+    prisma.homepageContent.findUnique({ where: { section: "HERO" } })
   ]);
 
   const collections = colRes.success ? colRes.data : [];
@@ -22,36 +25,16 @@ export default async function HomePage() {
   const allProducts = prodRes.success ? prodRes.data : [];
   const featuredProducts = allProducts?.filter((p: any) => p.isFeatured).slice(0, 4) || [];
 
+  const heroContentData: any = heroContent?.content || {};
+
   return (
     <>
       {/* Hero Section */}
-      <section className="relative w-full h-[90vh] min-h-[600px] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-slate-950/40 z-10" />
-        {/* We would use a real image here, using a sophisticated placeholder for now */}
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2940&auto=format&fit=crop')] bg-cover bg-center" />
-        
-        <div className="container relative z-20 mx-auto px-4 text-center">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-sm font-medium mb-6 animate-fade-in-up">
-            <Sparkles className="w-4 h-4 text-primary" />
-            <span>Premium Showroom Experience</span>
-          </div>
-          <h1 className="text-5xl md:text-7xl font-bold text-white tracking-tight mb-6 animate-fade-in-up [animation-delay:200ms]">
-            Elevate Your <br className="hidden md:block" />
-            <span className="text-primary italic">Living Spaces</span>
-          </h1>
-          <p className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto mb-10 animate-fade-in-up [animation-delay:400ms]">
-            Discover Sangli's most exclusive collection of luxury tiles, elegant sanitaryware, and premium designer doors.
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-up [animation-delay:600ms]">
-            <Link href="/catalog" className={buttonVariants({ size: "lg", className: "rounded-full px-8 w-full sm:w-auto" })}>
-              Explore Collection
-            </Link>
-            <Link href="/contact" className={buttonVariants({ size: "lg", variant: "outline", className: "rounded-full px-8 w-full sm:w-auto bg-white/10 text-white hover:bg-white hover:text-black border-white/30 backdrop-blur-sm" })}>
-              Visit Showroom
-            </Link>
-          </div>
-        </div>
-      </section>
+      <HeroCarousel 
+        images={heroContentData.carouselImages?.map((img: any) => img.url) || []}
+        title={heroContentData.title || ""}
+        subtitle={heroContentData.subtitle || ""}
+      />
 
       {/* Featured Collections */}
       {collections && collections.length > 0 && (

@@ -67,7 +67,7 @@ export const CollectionForm: React.FC<CollectionFormProps> = ({ initialData }) =
               disabled={loading}
               onChange={(url) => setVideoUrl(url)}
               onRemove={() => setVideoUrl("")}
-              bucket="sangli-ceramica"
+              bucket="collections"
             />
           </div>
 

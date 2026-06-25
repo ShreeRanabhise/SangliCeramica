@@ -2,7 +2,12 @@ import Link from "next/link";
 import { Globe, MapPin, Phone, Mail, ArrowRight } from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
 
-export function Footer() {
+import { prisma } from "@/lib/prisma";
+
+export async function Footer() {
+  const settings = await prisma.contactInformation.findFirst();
+  const catalogueUrl = settings?.catalogueUrl;
+
   return (
     <footer className="bg-slate-950 text-slate-300 pt-16 pb-8 border-t border-slate-900">
       <div className="container mx-auto px-4 md:px-6">
@@ -41,6 +46,13 @@ export function Footer() {
                 </li>
               ))}
             </ul>
+            {catalogueUrl && (
+              <div className="mt-6">
+                <a href={catalogueUrl} target="_blank" rel="noopener noreferrer" className={buttonVariants({ variant: "outline", className: "w-full border-slate-700 text-slate-300 hover:text-white hover:bg-slate-800" })}>
+                  Download Catalogue
+                </a>
+              </div>
+            )}
           </div>
 
           {/* Contact Info */}

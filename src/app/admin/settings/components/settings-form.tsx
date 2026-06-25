@@ -8,6 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { updateSettings } from "@/actions/settings";
 import { toast } from "sonner";
 import { Loader2, Plus, Trash } from "lucide-react";
+import FileUpload from "@/components/admin/file-upload";
 
 interface SettingsFormProps {
   initialData: any;
@@ -16,6 +17,7 @@ interface SettingsFormProps {
 export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
   const [loading, setLoading] = useState(false);
   const [phones, setPhones] = useState<string[]>(initialData?.phones || [""]);
+  const [catalogueUrl, setCatalogueUrl] = useState<string>(initialData?.catalogueUrl || "");
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -32,6 +34,7 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
         whatsapp: formData.get("whatsapp") as string,
         email: formData.get("email") as string,
         hours: formData.get("hours") as string,
+        catalogueUrl: catalogueUrl,
         socialLinks: {
           facebook: formData.get("facebook"),
           instagram: formData.get("instagram"),
@@ -129,6 +132,22 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
               Add Phone Number
             </Button>
           </div>
+        </div>
+      </div>
+
+      <div className="space-y-6">
+        <h3 className="text-lg font-semibold border-b pb-2">Catalogue</h3>
+        <div className="space-y-2">
+          <Label>Product Catalogue (PDF)</Label>
+          <FileUpload
+            value={catalogueUrl ? [catalogueUrl] : []}
+            onChange={(url) => setCatalogueUrl(url)}
+            onRemove={() => setCatalogueUrl("")}
+            bucket="catalogue"
+            accept="application/pdf"
+            disabled={loading}
+          />
+          <p className="text-sm text-muted-foreground">Upload your product catalogue here. It will be available for download by visitors.</p>
         </div>
       </div>
 
