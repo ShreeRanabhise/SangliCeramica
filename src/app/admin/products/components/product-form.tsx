@@ -15,14 +15,22 @@ interface ProductFormProps {
   categories: any[];
   brands: any[];
   onClose: () => void;
+  defaultCategory?: string;
+  defaultCollection?: string;
 }
 
-export const ProductForm: React.FC<ProductFormProps> = ({ initialData, categories, brands, onClose }) => {
+export const ProductForm: React.FC<ProductFormProps> = ({ initialData, categories, brands, onClose, defaultCategory, defaultCollection }) => {
   const [loading, setLoading] = useState(false);
   
   // States for complex fields
   const [images, setImages] = useState<any[]>(initialData?.images || []);
   const [features, setFeatures] = useState<string[]>(initialData?.features || [""]);
+  
+  // Hierarchical selection
+  const initCollection = initialData?.category?.collection || defaultCollection || "TILES";
+  const [selectedCollection, setSelectedCollection] = useState<string>(initCollection);
+  
+  const filteredCategories = categories.filter(c => c.collection === selectedCollection);
   
   // Parse specifications if they exist
   const initSpecs = initialData?.specifications ? Object.entries(initialData.specifications).map(([key, value]) => ({ key, value })) : [{ key: "", value: "" }];
@@ -145,17 +153,32 @@ export const ProductForm: React.FC<ProductFormProps> = ({ initialData, categorie
           </div>
 
           <div className="space-y-2">
+            <Label htmlFor="collectionSelect">Collection <span className="text-destructive">*</span></Label>
+            <select 
+              id="collectionSelect" 
+              value={selectedCollection}
+              onChange={(e) => setSelectedCollection(e.target.value)}
+              disabled={loading} 
+              className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              <option value="TILES">Tiles</option>
+              <option value="SANITARYWARE">Sanitaryware</option>
+              <option value="DOORS">Doors</option>
+            </select>
+          </div>
+
+          <div className="space-y-2">
             <Label htmlFor="categoryId">Category <span className="text-destructive">*</span></Label>
             <select 
               id="categoryId" 
               name="categoryId" 
               disabled={loading} 
-              defaultValue={initialData?.categoryId || ""} 
+              defaultValue={initialData?.categoryId || defaultCategory || ""} 
               className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
               required
             >
               <option value="" disabled>Select a category</option>
-              {categories.map((c: any) => (
+              {filteredCategories.map((c: any) => (
                 <option key={c.id} value={c.id}>{c.name}</option>
               ))}
             </select>

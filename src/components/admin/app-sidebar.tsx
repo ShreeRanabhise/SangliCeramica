@@ -17,6 +17,7 @@ import { usePathname } from "next/navigation";
 
 const items = [
   { title: "Dashboard", url: "/admin", icon: LayoutDashboard },
+  { title: "Collections", url: "/admin/collections", icon: FolderTree },
   { title: "Products", url: "/admin/products", icon: Package },
   { title: "Categories", url: "/admin/categories", icon: FolderTree },
   { title: "Brands", url: "/admin/brands", icon: Tag },

@@ -10,8 +10,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Edit, Trash, Image as ImageIcon } from "lucide-react";
+import { Edit, Trash, Image as ImageIcon, FolderOpen } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { deleteCategory } from "@/actions/categories";
 import { toast } from "sonner";
 import {
@@ -118,7 +119,12 @@ export const CategoryTable: React.FC<CategoryTableProps> = ({ data, onEdit }) =>
                   <TableCell>{category.slug}</TableCell>
                   <TableCell>{category._count?.subcategories || 0}</TableCell>
                   <TableCell>{category._count?.products || 0}</TableCell>
-                  <TableCell className="text-right">
+                  <TableCell className="text-right whitespace-nowrap">
+                    <Link href={`/admin/categories/${category.id}/products`}>
+                      <Button variant="ghost" size="icon" title="Explore Products">
+                        <FolderOpen className="h-4 w-4" />
+                      </Button>
+                    </Link>
                     <Button
                       variant="ghost"
                       size="icon"

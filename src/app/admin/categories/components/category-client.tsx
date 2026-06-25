@@ -8,9 +8,10 @@ import { CategoryTable } from "./category-table";
 
 interface CategoryClientProps {
   data: any[];
+  defaultCollection?: string;
 }
 
-export const CategoryClient: React.FC<CategoryClientProps> = ({ data }) => {
+export const CategoryClient: React.FC<CategoryClientProps> = ({ data, defaultCollection }) => {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<any | null>(null);
 
@@ -32,7 +33,7 @@ export const CategoryClient: React.FC<CategoryClientProps> = ({ data }) => {
   if (isFormOpen) {
     return (
       <div className="space-y-4">
-        <CategoryForm initialData={selectedCategory} onClose={handleClose} />
+        <CategoryForm initialData={selectedCategory} onClose={handleClose} defaultCollection={defaultCollection} />
       </div>
     );
   }

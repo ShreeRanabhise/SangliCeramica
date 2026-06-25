@@ -13,9 +13,10 @@ import ImageUpload from "@/components/admin/image-upload";
 interface CategoryFormProps {
   initialData?: any | null;
   onClose: () => void;
+  defaultCollection?: string;
 }
 
-export const CategoryForm: React.FC<CategoryFormProps> = ({ initialData, onClose }) => {
+export const CategoryForm: React.FC<CategoryFormProps> = ({ initialData, onClose, defaultCollection }) => {
   const [loading, setLoading] = useState(false);
   const [iconUrl, setIconUrl] = useState<string>(initialData?.icon || "");
 
@@ -84,7 +85,7 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({ initialData, onClose
               id="collection" 
               name="collection" 
               disabled={loading} 
-              defaultValue={initialData?.collection || "TILES"} 
+              defaultValue={initialData?.collection || defaultCollection || "TILES"} 
               className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
               required
             >

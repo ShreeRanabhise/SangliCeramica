@@ -10,11 +10,25 @@ interface ProductClientProps {
   data: any[];
   categories: any[];
   brands: any[];
+  defaultCategory?: string;
+  defaultCollection?: string;
 }
 
-export const ProductClient: React.FC<ProductClientProps> = ({ data, categories, brands }) => {
+export const ProductClient: React.FC<ProductClientProps> = ({ data, categories, brands, defaultCategory, defaultCollection }) => {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<any | null>(null);
+  const [selectedCollection, setSelectedCollection] = useState<string | null>(defaultCollection || null);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(defaultCategory || null);
+
+  const filteredCategories = selectedCollection 
+    ? categories.filter(c => c.collection === selectedCollection)
+    : categories;
+
+  const filteredProducts = data.filter((p) => {
+    const matchesCollection = selectedCollection ? p.category?.collection === selectedCollection : true;
+    const matchesCategory = selectedCategory ? p.categoryId === selectedCategory : true;
+    return matchesCollection && matchesCategory;
+  });
 
   const handleCreateNew = () => {
     setSelectedProduct(null);
@@ -39,6 +53,8 @@ export const ProductClient: React.FC<ProductClientProps> = ({ data, categories, 
           categories={categories} 
           brands={brands} 
           onClose={handleClose} 
+          defaultCategory={defaultCategory}
+          defaultCollection={defaultCollection}
         />
       </div>
     );
@@ -59,7 +75,37 @@ export const ProductClient: React.FC<ProductClientProps> = ({ data, categories, 
         </Button>
       </div>
       <hr className="my-4" />
-      <ProductTable data={data} onEdit={handleEdit} />
+      
+      {/* Filters */}
+      <div className="flex gap-4 mb-6">
+        <select 
+          className="h-9 rounded-md border bg-transparent px-3 text-sm shadow-sm"
+          value={selectedCollection || ""}
+          onChange={(e) => {
+            setSelectedCollection(e.target.value || null);
+            setSelectedCategory(null);
+          }}
+        >
+          <option value="">All Collections</option>
+          <option value="TILES">Tiles</option>
+          <option value="SANITARYWARE">Sanitaryware</option>
+          <option value="DOORS">Doors</option>
+        </select>
+
+        <select 
+          className="h-9 rounded-md border bg-transparent px-3 text-sm shadow-sm"
+          value={selectedCategory || ""}
+          onChange={(e) => setSelectedCategory(e.target.value || null)}
+          disabled={!selectedCollection && filteredCategories.length === 0}
+        >
+          <option value="">All Categories</option>
+          {filteredCategories.map((c: any) => (
+            <option key={c.id} value={c.id}>{c.name}</option>
+          ))}
+        </select>
+      </div>
+
+      <ProductTable data={filteredProducts} onEdit={handleEdit} />
     </>
   );
 };

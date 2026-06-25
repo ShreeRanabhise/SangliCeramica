@@ -19,6 +19,15 @@ enum CollectionName {
   DOORS
 }
 
+model CollectionMeta {
+  id          String         @id @default(cuid())
+  collection  CollectionName @unique
+  title       String
+  tagline     String?
+  videoUrl    String?
+  updatedAt   DateTime       @updatedAt
+}
+
 model User {
   id        String   @id @default(uuid()) // Maps to Supabase Auth User ID
   email     String   @unique
