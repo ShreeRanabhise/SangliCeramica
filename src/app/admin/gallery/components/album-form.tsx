@@ -28,7 +28,7 @@ export const AlbumForm: React.FC<AlbumFormProps> = ({ initialData, onSuccess }) 
       setLoading(true);
       const formData = new FormData(e.currentTarget);
       const name = formData.get("name") as string;
-      const slug = formData.get("slug") as string;
+      const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, "-");
       const description = formData.get("description") as string;
 
       let albumId = initialData?.id;
@@ -80,16 +80,7 @@ export const AlbumForm: React.FC<AlbumFormProps> = ({ initialData, onSuccess }) 
         />
       </div>
 
-      <div className="space-y-2">
-        <Label htmlFor="slug">Slug (URL)</Label>
-        <Input 
-          id="slug" 
-          name="slug" 
-          defaultValue={initialData?.slug} 
-          required 
-          disabled={loading} 
-        />
-      </div>
+
 
       <div className="space-y-2">
         <Label htmlFor="description">Description</Label>
