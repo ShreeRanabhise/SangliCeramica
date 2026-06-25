@@ -62,7 +62,13 @@ export const ProductForm: React.FC<ProductFormProps> = ({ initialData, categorie
       const formData = new FormData(e.currentTarget);
       
       const name = formData.get("name") as string;
-      const sku = formData.get("sku") as string;
+      const code = formData.get("code") as string;
+      const productId = formData.get("productId") as string;
+      const price = formData.get("price") as string;
+      const quantity = formData.get("quantity") as string;
+      const size = formData.get("size") as string;
+      const color = formData.get("color") as string;
+      const finish = formData.get("finish") as string;
       const desc = formData.get("description") as string;
       const categoryId = formData.get("categoryId") as string;
       const isFeatured = formData.get("isFeatured") === "on";
@@ -78,7 +84,13 @@ export const ProductForm: React.FC<ProductFormProps> = ({ initialData, categorie
 
       const payload = {
         name,
-        sku,
+        code,
+        productId,
+        price,
+        quantity,
+        size,
+        color,
+        finish,
         description: desc,
         categoryId,
         isFeatured,
@@ -145,8 +157,38 @@ export const ProductForm: React.FC<ProductFormProps> = ({ initialData, categorie
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="sku">SKU Code <span className="text-destructive">*</span></Label>
-            <Input id="sku" name="sku" disabled={loading} defaultValue={initialData?.sku || ""} placeholder="e.g. TILE-STAT-01" required />
+            <Label htmlFor="code">Code <span className="text-destructive">*</span></Label>
+            <Input id="code" name="code" disabled={loading} defaultValue={initialData?.code || ""} placeholder="e.g. TILE-STAT-01" required />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="productId">Product ID</Label>
+            <Input id="productId" name="productId" disabled={loading} defaultValue={initialData?.productId || ""} placeholder="Custom Product ID (Optional)" />
+          </div>
+          
+          <div className="space-y-2">
+            <Label htmlFor="price">Price (₹)</Label>
+            <Input id="price" name="price" type="number" step="0.01" disabled={loading} defaultValue={initialData?.price || ""} placeholder="0.00" />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="quantity">Quantity</Label>
+            <Input id="quantity" name="quantity" type="number" disabled={loading} defaultValue={initialData?.quantity || ""} placeholder="Available Stock" />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="size">Size</Label>
+            <Input id="size" name="size" disabled={loading} defaultValue={initialData?.size || ""} placeholder="e.g. 600x1200 mm" />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="color">Colour</Label>
+            <Input id="color" name="color" disabled={loading} defaultValue={initialData?.color || ""} placeholder="e.g. White" />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="finish">Finish</Label>
+            <Input id="finish" name="finish" disabled={loading} defaultValue={initialData?.finish || ""} placeholder="e.g. Glossy, Matte" />
           </div>
 
           <div className="space-y-2">

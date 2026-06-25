@@ -79,10 +79,16 @@ model Product {
   id               String         @id @default(cuid())
   name             String
   slug             String         @unique
-  sku              String         @unique
+  code             String?        @unique // Formally sku
+  productId        String?
+  price            Float?
+  quantity         Int?
+  size             String?
+  color            String?
+  finish           String?
   description      String         @db.Text
   features         String[]
-  specifications   Json?          // Flexible JSON for varying specs (Material, Finish, Color, Dimensions)
+  specifications   Json?          // Flexible JSON for varying specs
   
   categoryId       String
   category         Category       @relation(fields: [categoryId], references: [id])

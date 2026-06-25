@@ -43,7 +43,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
   const hasSpecs = specs && Object.keys(specs).length > 0;
 
   // Generate a WhatsApp inquiry message
-  const inquiryMessage = encodeURIComponent(`Hello Sangli Ceramica, I am interested in the product: ${product.name} (SKU: ${product.sku}). Could you provide more details?`);
+  const inquiryMessage = encodeURIComponent(`Hello Sangli Ceramica, I am interested in the product: ${product.name} (Code: ${product.code}). Could you provide more details?`);
   const whatsappUrl = `https://wa.me/919876543210?text=${inquiryMessage}`;
 
   return (
@@ -78,7 +78,42 @@ export default async function ProductPage({ params }: ProductPageProps) {
             </div>
 
             <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">{product.name}</h1>
-            <p className="text-sm text-muted-foreground mb-6">SKU: {product.sku}</p>
+            <div className="flex flex-wrap gap-4 text-sm text-muted-foreground mb-6">
+              <span>Code: <strong className="text-foreground">{product.code}</strong></span>
+              {product.productId && <span>Product ID: <strong className="text-foreground">{product.productId}</strong></span>}
+            </div>
+
+            {product.price && (
+              <div className="mb-6">
+                <span className="text-2xl font-bold text-foreground">₹{product.price.toLocaleString('en-IN')}</span>
+                {product.quantity !== null && (
+                  <span className="ml-4 text-sm text-muted-foreground border-l pl-4 border-border/50">
+                    {product.quantity > 0 ? `${product.quantity} in stock` : "Out of stock"}
+                  </span>
+                )}
+              </div>
+            )}
+
+            <div className="grid grid-cols-2 gap-4 mb-8 bg-muted/30 p-4 rounded-xl border border-border/50">
+              {product.size && (
+                <div>
+                  <div className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Size</div>
+                  <div className="font-medium">{product.size}</div>
+                </div>
+              )}
+              {product.color && (
+                <div>
+                  <div className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Colour</div>
+                  <div className="font-medium">{product.color}</div>
+                </div>
+              )}
+              {product.finish && (
+                <div>
+                  <div className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Finish</div>
+                  <div className="font-medium">{product.finish}</div>
+                </div>
+              )}
+            </div>
 
             <div className="prose prose-slate dark:prose-invert mb-8">
               <p className="text-lg leading-relaxed text-foreground/80">{product.description}</p>
