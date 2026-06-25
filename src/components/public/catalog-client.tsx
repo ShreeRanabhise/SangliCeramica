@@ -10,14 +10,12 @@ import { Input } from "@/components/ui/input";
 interface CatalogClientProps {
   products: any[];
   categories: any[];
-  brands: any[];
 }
 
-export function CatalogClient({ products, categories, brands }: CatalogClientProps) {
+export function CatalogClient({ products, categories }: CatalogClientProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCollection, setSelectedCollection] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [selectedBrand, setSelectedBrand] = useState<string | null>(null);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   const filteredProducts = useMemo(() => {
@@ -26,16 +24,14 @@ export function CatalogClient({ products, categories, brands }: CatalogClientPro
                             p.sku.toLowerCase().includes(searchQuery.toLowerCase());
       const matchesCollection = selectedCollection ? p.category?.collection === selectedCollection : true;
       const matchesCategory = selectedCategory ? p.categoryId === selectedCategory : true;
-      const matchesBrand = selectedBrand ? p.brandId === selectedBrand : true;
-      return matchesSearch && matchesCollection && matchesCategory && matchesBrand;
+      return matchesSearch && matchesCollection && matchesCategory;
     });
-  }, [products, searchQuery, selectedCollection, selectedCategory, selectedBrand]);
+  }, [products, searchQuery, selectedCollection, selectedCategory]);
 
   const clearFilters = () => {
     setSearchQuery("");
     setSelectedCollection(null);
     setSelectedCategory(null);
-    setSelectedBrand(null);
   };
 
   const collections = [
@@ -130,30 +126,7 @@ export function CatalogClient({ products, categories, brands }: CatalogClientPro
           </div>
         </div>
 
-        <div className="space-y-4">
-          <div className="flex items-center justify-between">
-            <h3 className="font-semibold text-lg">Brands</h3>
-            {selectedBrand && (
-              <button onClick={() => setSelectedBrand(null)} className="text-xs text-muted-foreground hover:text-primary">Clear</button>
-            )}
-          </div>
-          <div className="flex flex-col gap-2">
-            {brands.map((brand) => (
-              <label key={brand.id} className="flex items-center gap-2 cursor-pointer group">
-                <input 
-                  type="radio" 
-                  name="brand" 
-                  checked={selectedBrand === brand.id}
-                  onChange={() => setSelectedBrand(brand.id)}
-                  className="rounded-full border-gray-300 text-primary focus:ring-primary"
-                />
-                <span className="text-sm group-hover:text-primary transition-colors">{brand.name}</span>
-              </label>
-            ))}
-          </div>
-        </div>
-
-        {(searchQuery || selectedCollection || selectedCategory || selectedBrand) && (
+        {(searchQuery || selectedCollection || selectedCategory) && (
           <Button variant="outline" className="w-full" onClick={clearFilters}>
             <X className="mr-2 h-4 w-4" /> Clear All Filters
           </Button>
@@ -193,13 +166,6 @@ export function CatalogClient({ products, categories, brands }: CatalogClientPro
                       ) : (
                         <div className="w-full h-full flex items-center justify-center bg-secondary">
                           <span className="text-muted-foreground text-sm">No image</span>
-                        </div>
-                      )}
-                      {product.brand && (
-                        <div className="absolute top-3 left-3">
-                          <span className="px-2 py-1 bg-white/90 backdrop-blur-sm text-xs font-medium rounded-md shadow-sm">
-                            {product.brand.name}
-                          </span>
                         </div>
                       )}
                     </div>

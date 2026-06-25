@@ -1,7 +1,6 @@
 import { Metadata } from "next";
 import { getProducts } from "@/actions/products";
 import { getCategories } from "@/actions/categories";
-import { getBrands } from "@/actions/brands";
 import { CatalogClient } from "@/components/public/catalog-client";
 
 export const metadata: Metadata = {
@@ -10,15 +9,13 @@ export const metadata: Metadata = {
 };
 
 export default async function CatalogPage() {
-  const [productsRes, categoriesRes, brandsRes] = await Promise.all([
+  const [productsRes, categoriesRes] = await Promise.all([
     getProducts(),
     getCategories(),
-    getBrands(),
   ]);
 
   const products = productsRes.success ? productsRes.data : [];
   const categories = categoriesRes.success ? categoriesRes.data : [];
-  const brands = brandsRes.success ? brandsRes.data : [];
 
   return (
     <div className="min-h-screen bg-background pt-28 pb-16">
@@ -35,8 +32,7 @@ export default async function CatalogPage() {
         {/* Catalog Client (Filters + Grid) */}
         <CatalogClient 
           products={products || []} 
-          categories={categories || []} 
-          brands={brands || []} 
+          categories={categories || []}
         />
 
       </div>

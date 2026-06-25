@@ -85,7 +85,7 @@ export const ProductTable: React.FC<ProductTableProps> = ({ data, onEdit }) => {
               <TableHead>Product</TableHead>
               <TableHead>SKU</TableHead>
               <TableHead>Category</TableHead>
-              <TableHead>Brand</TableHead>
+              <TableHead>Features</TableHead>
               <TableHead className="text-right">Actions</TableHead>
             </TableRow>
           </TableHeader>
@@ -122,7 +122,7 @@ export const ProductTable: React.FC<ProductTableProps> = ({ data, onEdit }) => {
                     </TableCell>
                     <TableCell className="text-muted-foreground text-sm">{product.sku}</TableCell>
                     <TableCell>{product.category?.name}</TableCell>
-                    <TableCell>{product.brand?.name || "-"}</TableCell>
+                    <TableCell>{product.features?.length || 0} features</TableCell>
                     <TableCell className="text-right">
                       <Button
                         variant="ghost"

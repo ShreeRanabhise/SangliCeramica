@@ -9,12 +9,11 @@ import { ProductTable } from "./product-table";
 interface ProductClientProps {
   data: any[];
   categories: any[];
-  brands: any[];
   defaultCategory?: string;
   defaultCollection?: string;
 }
 
-export const ProductClient: React.FC<ProductClientProps> = ({ data, categories, brands, defaultCategory, defaultCollection }) => {
+export const ProductClient: React.FC<ProductClientProps> = ({ data, categories, defaultCategory, defaultCollection }) => {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<any | null>(null);
   const [selectedCollection, setSelectedCollection] = useState<string | null>(defaultCollection || null);
@@ -51,7 +50,6 @@ export const ProductClient: React.FC<ProductClientProps> = ({ data, categories, 
         <ProductForm 
           initialData={selectedProduct} 
           categories={categories} 
-          brands={brands} 
           onClose={handleClose} 
           defaultCategory={defaultCategory}
           defaultCollection={defaultCollection}

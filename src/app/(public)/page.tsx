@@ -121,16 +121,8 @@ export default async function HomePage() {
                           />
                         ) : (
                           <div className="w-full h-full flex items-center justify-center bg-secondary">
-                            <span className="text-muted-foreground">No image</span>
                           </div>
                         )}
-                        <div className="absolute top-3 left-3 flex gap-2 flex-wrap">
-                          {product.brand && (
-                            <span className="px-2 py-1 bg-white/90 backdrop-blur-sm text-xs font-medium rounded-md shadow-sm">
-                              {product.brand.name}
-                            </span>
-                          )}
-                        </div>
                       </div>
                       <div className="p-5">
                         <p className="text-sm text-muted-foreground mb-1">{product.category?.name}</p>

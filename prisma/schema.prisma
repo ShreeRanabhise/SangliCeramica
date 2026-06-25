@@ -71,7 +71,6 @@ model Brand {
   name        String
   slug        String    @unique
   logo        String?   // Supabase Storage URL
-  products    Product[]
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 }
@@ -89,8 +88,6 @@ model Product {
   category         Category       @relation(fields: [categoryId], references: [id])
   subcategoryId    String?
   subcategory      Subcategory?   @relation(fields: [subcategoryId], references: [id])
-  brandId          String?
-  brand            Brand?         @relation(fields: [brandId], references: [id])
   
   isAvailable      Boolean        @default(true)
   isFeatured       Boolean        @default(false)
