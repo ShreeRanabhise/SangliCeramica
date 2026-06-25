@@ -14,9 +14,9 @@ export function BrandMarquee({ brands }: { brands: any[] }) {
         <div className="animate-marquee flex whitespace-nowrap items-center group-hover:[animation-play-state:paused]">
           {[...brands, ...brands, ...brands, ...brands].map((brand, i) => (
             <div key={`${brand.id}-${i}`} className="mx-12 shrink-0 flex items-center justify-center opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0">
-              {brand.logoUrl ? (
+              {brand.logo ? (
                 <Image 
-                  src={brand.logoUrl} 
+                  src={brand.logo} 
                   alt={brand.name} 
                   width={150} 
                   height={80} 
