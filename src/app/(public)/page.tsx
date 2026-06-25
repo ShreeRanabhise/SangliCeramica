@@ -42,7 +42,7 @@ export default async function HomePage() {
           <div className="container mx-auto px-4">
             <div className="flex items-end justify-between mb-12">
               <div className="max-w-2xl">
-                <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">Shop by Collection</h2>
+                <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">Explore by Collection</h2>
                 <p className="text-muted-foreground text-lg">Browse our meticulously curated collections designed to inspire your next architectural project.</p>
               </div>
             </div>
