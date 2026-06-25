@@ -1,7 +1,10 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Package, MessageSquare, Tag, Image as ImageIcon } from "lucide-react";
+import { getDashboardMetrics } from "@/actions/dashboard";
 
-export default function AdminDashboard() {
+export default async function AdminDashboard() {
+  const { data } = await getDashboardMetrics();
+  
   return (
     <div className="space-y-6">
       <div>
@@ -18,7 +21,7 @@ export default function AdminDashboard() {
             <Package className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">0</div>
+            <div className="text-2xl font-bold">{data?.productsCount || 0}</div>
           </CardContent>
         </Card>
         
@@ -28,7 +31,7 @@ export default function AdminDashboard() {
             <MessageSquare className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">0</div>
+            <div className="text-2xl font-bold">{data?.inquiriesCount || 0}</div>
           </CardContent>
         </Card>
 
@@ -38,7 +41,7 @@ export default function AdminDashboard() {
             <Tag className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">0</div>
+            <div className="text-2xl font-bold">{data?.brandsCount || 0}</div>
           </CardContent>
         </Card>
 
@@ -48,7 +51,7 @@ export default function AdminDashboard() {
             <ImageIcon className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">0</div>
+            <div className="text-2xl font-bold">{data?.galleryCount || 0}</div>
           </CardContent>
         </Card>
       </div>

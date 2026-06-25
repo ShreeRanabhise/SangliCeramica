@@ -1,11 +1,13 @@
 import { getCollections } from "@/actions/collections";
 import { getProducts } from "@/actions/products";
+import { getBrands } from "@/actions/brands";
 import Link from "next/link";
 import Image from "next/image";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { ArrowRight, MapPin, Sparkles } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import { HeroCarousel } from "@/components/public/hero-carousel";
+import { BrandMarquee } from "@/components/public/brand-marquee";
 
 export const metadata = {
   title: "Sangli Ceramica | Premium Tiles & Sanitaryware Showroom",
@@ -14,9 +16,10 @@ export const metadata = {
 
 export default async function HomePage() {
   // Fetch data on the server
-  const [colRes, prodRes, heroContent] = await Promise.all([
+  const [colRes, prodRes, brandRes, heroContent] = await Promise.all([
     getCollections(),
     getProducts(),
+    getBrands(),
     prisma.homepageContent.findUnique({ where: { section: "HERO" } })
   ]);
 
@@ -24,6 +27,8 @@ export default async function HomePage() {
   // Filter for featured products (up to 4)
   const allProducts = prodRes.success ? prodRes.data : [];
   const featuredProducts = allProducts?.filter((p: any) => p.isFeatured).slice(0, 4) || [];
+  
+  const brands = brandRes.success ? brandRes.data : [];
 
   const heroContentData: any = heroContent?.content || {};
 
@@ -35,6 +40,9 @@ export default async function HomePage() {
         title={heroContentData.title || ""}
         subtitle={heroContentData.subtitle || ""}
       />
+
+      {/* Trusted Brands */}
+      <BrandMarquee brands={brands || []} />
 
       {/* Featured Collections */}
       {collections && collections.length > 0 && (

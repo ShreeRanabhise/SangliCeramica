@@ -61,15 +61,15 @@ export async function Footer() {
             <ul className="space-y-4">
               <li className="flex gap-3 text-sm text-slate-400">
                 <MapPin className="w-5 h-5 text-primary shrink-0" />
-                <span>123 Showroom Ave, Sangli,<br />Maharashtra 416416, India</span>
+                <span className="whitespace-pre-line">{settings?.address || "123 Showroom Ave, Sangli,\nMaharashtra 416416, India"}</span>
               </li>
               <li className="flex gap-3 text-sm text-slate-400">
                 <Phone className="w-5 h-5 text-primary shrink-0" />
-                <span>+91 98765 43210</span>
+                <span>{settings?.phones?.[0] || "+91 98765 43210"}</span>
               </li>
               <li className="flex gap-3 text-sm text-slate-400">
                 <Mail className="w-5 h-5 text-primary shrink-0" />
-                <span>info@sangliceramica.com</span>
+                <span>{settings?.email || "info@sangliceramica.com"}</span>
               </li>
             </ul>
           </div>

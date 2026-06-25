@@ -1,13 +1,16 @@
 import { Metadata } from "next";
 import { ContactForm } from "@/components/public/contact-form";
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
+import { prisma } from "@/lib/prisma";
 
 export const metadata: Metadata = {
   title: "Contact Us | Sangli Ceramica",
   description: "Get in touch with Sangli Ceramica. Visit our showroom, call us, or send an inquiry.",
 };
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const settings = await prisma.contactInformation.findFirst();
+
   return (
     <div className="min-h-screen bg-background pt-28 pb-24">
       <div className="container mx-auto px-4 md:px-6">
@@ -29,10 +32,8 @@ export default function ContactPage() {
                   <MapPin className="w-6 h-6 text-primary" />
                 </div>
                 <h3 className="text-xl font-semibold">Visit Us</h3>
-                <p className="text-muted-foreground">
-                  123 Showroom Avenue,<br />
-                  Sangli, Maharashtra 416416,<br />
-                  India
+                <p className="text-muted-foreground whitespace-pre-line">
+                  {settings?.address || "123 Showroom Avenue,\nSangli, Maharashtra 416416,\nIndia"}
                 </p>
               </div>
 
@@ -41,9 +42,8 @@ export default function ContactPage() {
                   <Phone className="w-6 h-6 text-primary" />
                 </div>
                 <h3 className="text-xl font-semibold">Call Us</h3>
-                <p className="text-muted-foreground">
-                  +91 98765 43210<br />
-                  +91 98765 01234
+                <p className="text-muted-foreground whitespace-pre-line">
+                  {settings?.phones?.length ? settings.phones.join('\n') : "+91 98765 43210\n+91 98765 01234"}
                 </p>
               </div>
 
@@ -52,9 +52,8 @@ export default function ContactPage() {
                   <Mail className="w-6 h-6 text-primary" />
                 </div>
                 <h3 className="text-xl font-semibold">Email Us</h3>
-                <p className="text-muted-foreground">
-                  info@sangliceramica.com<br />
-                  sales@sangliceramica.com
+                <p className="text-muted-foreground whitespace-pre-line">
+                  {settings?.email || "info@sangliceramica.com\nsales@sangliceramica.com"}
                 </p>
               </div>
 
@@ -63,19 +62,16 @@ export default function ContactPage() {
                   <Clock className="w-6 h-6 text-primary" />
                 </div>
                 <h3 className="text-xl font-semibold">Working Hours</h3>
-                <p className="text-muted-foreground">
-                  Monday - Saturday<br />
-                  10:00 AM - 8:00 PM<br />
-                  Sunday: Closed
+                <p className="text-muted-foreground whitespace-pre-line">
+                  {settings?.hours || "Monday - Saturday\n10:00 AM - 8:00 PM\nSunday: Closed"}
                 </p>
               </div>
             </div>
 
             {/* Map Placeholder */}
             <div className="w-full h-[300px] bg-slate-200 rounded-2xl overflow-hidden relative">
-              {/* Replace with actual Google Maps embed */}
               <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d122283.79383679803!2d74.49842490800727!3d16.84074211189495!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc122ebdbce0eb9%3A0xc35dfd974df3b482!2sSangli%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin" 
+                src={settings?.mapUrl || "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d122283.79383679803!2d74.49842490800727!3d16.84074211189495!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc122ebdbce0eb9%3A0xc35dfd974df3b482!2sSangli%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"}
                 width="100%" 
                 height="100%" 
                 style={{ border: 0 }} 
