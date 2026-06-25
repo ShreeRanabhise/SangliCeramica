@@ -1,7 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import { ProductGallery } from "@/components/public/product-gallery";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Check, MessageSquare, ShieldCheck, Truck } from "lucide-react";
 import Link from "next/link";
 
@@ -121,15 +121,13 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row gap-4 mt-auto">
-              <Button size="lg" className="w-full sm:flex-1 h-14 text-base" asChild>
-                <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">
-                  <MessageSquare className="mr-2 w-5 h-5" />
-                  Inquire on WhatsApp
-                </a>
-              </Button>
-              <Button size="lg" variant="outline" className="w-full sm:flex-1 h-14 text-base" asChild>
-                <Link href="/contact">Visit Showroom</Link>
-              </Button>
+              <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className={buttonVariants({ size: "lg", className: "w-full sm:flex-1 h-14 text-base" })}>
+                <MessageSquare className="mr-2 w-5 h-5" />
+                Inquire on WhatsApp
+              </a>
+              <Link href="/contact" className={buttonVariants({ size: "lg", variant: "outline", className: "w-full sm:flex-1 h-14 text-base" })}>
+                Visit Showroom
+              </Link>
             </div>
 
           </div>

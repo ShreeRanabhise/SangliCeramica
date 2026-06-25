@@ -2,7 +2,7 @@ import { getCategories } from "@/actions/categories";
 import { getProducts } from "@/actions/products";
 import Link from "next/link";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { ArrowRight, MapPin, Sparkles } from "lucide-react";
 
 export const metadata = {
@@ -43,12 +43,12 @@ export default async function HomePage() {
             Discover Sangli's most exclusive collection of luxury tiles, elegant sanitaryware, and premium designer doors.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-up [animation-delay:600ms]">
-            <Button size="lg" className="rounded-full px-8 w-full sm:w-auto" asChild>
-              <Link href="/catalog">Explore Collection</Link>
-            </Button>
-            <Button size="lg" variant="outline" className="rounded-full px-8 w-full sm:w-auto bg-white/10 text-white hover:bg-white hover:text-black border-white/30 backdrop-blur-sm" asChild>
-              <Link href="/contact">Visit Showroom</Link>
-            </Button>
+            <Link href="/catalog" className={buttonVariants({ size: "lg", className: "rounded-full px-8 w-full sm:w-auto" })}>
+              Explore Collection
+            </Link>
+            <Link href="/contact" className={buttonVariants({ size: "lg", variant: "outline", className: "rounded-full px-8 w-full sm:w-auto bg-white/10 text-white hover:bg-white hover:text-black border-white/30 backdrop-blur-sm" })}>
+              Visit Showroom
+            </Link>
           </div>
         </div>
       </section>
@@ -144,9 +144,9 @@ export default async function HomePage() {
             </div>
             
             <div className="mt-12 text-center">
-              <Button variant="outline" size="lg" className="rounded-full px-8" asChild>
-                <Link href="/catalog">View Full Catalog <ArrowRight className="ml-2 w-4 h-4" /></Link>
-              </Button>
+              <Link href="/catalog" className={buttonVariants({ variant: "outline", size: "lg", className: "rounded-full px-8" })}>
+                View Full Catalog <ArrowRight className="ml-2 w-4 h-4" />
+              </Link>
             </div>
           </div>
         </section>
@@ -160,12 +160,10 @@ export default async function HomePage() {
             Pictures don't do justice to the textures and finishes of our premium ceramics. Visit our Sangli showroom to feel the difference.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Button size="lg" variant="secondary" className="rounded-full px-8 w-full sm:w-auto" asChild>
-              <Link href="/contact">
-                <MapPin className="mr-2 h-4 w-4" />
-                Get Directions
-              </Link>
-            </Button>
+            <Link href="/contact" className={buttonVariants({ size: "lg", variant: "secondary", className: "rounded-full px-8 w-full sm:w-auto" })}>
+              <MapPin className="mr-2 h-4 w-4" />
+              Get Directions
+            </Link>
           </div>
         </div>
       </section>

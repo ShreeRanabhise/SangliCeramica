@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 
 const navLinks = [
   { name: "Home", href: "/" },
@@ -84,13 +84,9 @@ export function Navbar() {
 
           {/* CTA & Mobile Toggle */}
           <div className="flex items-center gap-4">
-            <Button 
-              variant={!isScrolled && pathname === "/" ? "secondary" : "default"}
-              className="hidden md:flex rounded-full px-6"
-              asChild
-            >
-              <Link href="/contact">Inquire Now</Link>
-            </Button>
+            <Link href="/contact" className={buttonVariants({ variant: !isScrolled && pathname === "/" ? "secondary" : "default", className: "hidden md:flex rounded-full px-6" })}>
+              Inquire Now
+            </Link>
             
             <button
               className="md:hidden p-2"
@@ -128,9 +124,9 @@ export function Navbar() {
                   {link.name}
                 </Link>
               ))}
-              <Button className="w-full mt-4" asChild>
-                <Link href="/contact">Inquire Now</Link>
-              </Button>
+              <Link href="/contact" className={buttonVariants({ className: "w-full mt-4" })}>
+                Inquire Now
+              </Link>
             </div>
           </motion.div>
         )}

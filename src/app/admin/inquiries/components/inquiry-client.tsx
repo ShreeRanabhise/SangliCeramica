@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -107,11 +107,9 @@ export const InquiryClient: React.FC<InquiryClientProps> = ({ data }) => {
                 <Button className="w-full" variant="outline" onClick={() => handleUpdateStatus(selectedInquiry.id, "ARCHIVED")}>
                   Archive
                 </Button>
-                <Button className="w-full bg-green-600 hover:bg-green-700 text-white" asChild>
-                  <a href={`https://wa.me/${selectedInquiry.mobileNumber.replace(/[^0-9]/g, "")}`} target="_blank" rel="noopener noreferrer">
-                    Reply on WhatsApp
-                  </a>
-                </Button>
+                <a href={`https://wa.me/${selectedInquiry.mobileNumber.replace(/[^0-9]/g, "")}`} target="_blank" rel="noopener noreferrer" className={buttonVariants({ className: "w-full bg-green-600 hover:bg-green-700 text-white" })}>
+                  Reply on WhatsApp
+                </a>
               </div>
             </div>
           )}

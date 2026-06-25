@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Globe, MapPin, Phone, Mail, ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 
 export function Footer() {
   return (
@@ -68,9 +68,9 @@ export function Footer() {
             <p className="text-sm text-slate-400 mb-4">
               Experience our premium collections in person. Get expert advice for your project.
             </p>
-            <Button className="w-full" variant="default" asChild>
-              <Link href="/contact">Get Directions</Link>
-            </Button>
+            <Link href="/contact" className={buttonVariants({ className: "w-full", variant: "default" })}>
+              Get Directions
+            </Link>
           </div>
 
         </div>
