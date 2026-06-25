@@ -60,37 +60,6 @@ export default async function HomePage() {
       {/* 2. Brands Section */}
       <BrandMarquee brands={brands || []} />
 
-      {/* 3. Categories Section */}
-      {categories.length > 0 && (
-        <section className="py-20 bg-muted/30">
-          <div className="container mx-auto px-4">
-            <div className="text-center max-w-2xl mx-auto mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">Explore Categories</h2>
-              <p className="text-muted-foreground text-lg">Find exactly what you need for your perfect space.</p>
-            </div>
-            
-            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
-              {categories.map((cat: any) => (
-                <Link 
-                  key={cat.id} 
-                  href={`/catalog?category=${cat.id}`}
-                  className="group bg-card border rounded-2xl p-6 text-center hover:shadow-md hover:border-primary/50 transition-all"
-                >
-                  <div className="mx-auto w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4 text-primary group-hover:scale-110 transition-transform">
-                    {cat.iconUrl ? (
-                      <img src={cat.iconUrl} alt={cat.name} className="w-8 h-8 object-contain" />
-                    ) : (
-                      <Sparkles className="w-8 h-8" />
-                    )}
-                  </div>
-                  <h3 className="font-semibold text-sm">{cat.name}</h3>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
       {/* 4. Collections Section */}
       {collections && collections.length > 0 && (
         <section className="py-24 bg-background">
@@ -106,7 +75,7 @@ export default async function HomePage() {
               {collections.map((col: any) => (
                 <Link 
                   key={col.id} 
-                  href={`/collections/${col.id.toLowerCase()}`}
+                  href={`/collections/${col.collection.toLowerCase()}`}
                   className="group relative h-[400px] rounded-2xl overflow-hidden block"
                 >
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-10" />
