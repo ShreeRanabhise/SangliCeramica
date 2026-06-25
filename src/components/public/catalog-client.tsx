@@ -15,6 +15,7 @@ interface CatalogClientProps {
 
 export function CatalogClient({ products, categories, brands }: CatalogClientProps) {
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCollection, setSelectedCollection] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedBrand, setSelectedBrand] = useState<string | null>(null);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
@@ -23,16 +24,33 @@ export function CatalogClient({ products, categories, brands }: CatalogClientPro
     return products.filter((p) => {
       const matchesSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
                             p.sku.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesCollection = selectedCollection ? p.category?.collection === selectedCollection : true;
       const matchesCategory = selectedCategory ? p.categoryId === selectedCategory : true;
       const matchesBrand = selectedBrand ? p.brandId === selectedBrand : true;
-      return matchesSearch && matchesCategory && matchesBrand;
+      return matchesSearch && matchesCollection && matchesCategory && matchesBrand;
     });
-  }, [products, searchQuery, selectedCategory, selectedBrand]);
+  }, [products, searchQuery, selectedCollection, selectedCategory, selectedBrand]);
 
   const clearFilters = () => {
     setSearchQuery("");
+    setSelectedCollection(null);
     setSelectedCategory(null);
     setSelectedBrand(null);
+  };
+
+  const collections = [
+    { id: "TILES", name: "Tiles" },
+    { id: "SANITARYWARE", name: "Sanitaryware" },
+    { id: "DOORS", name: "Doors" },
+  ];
+
+  const visibleCategories = selectedCollection 
+    ? categories.filter(c => c.collection === selectedCollection)
+    : categories;
+
+  const handleCollectionChange = (id: string) => {
+    setSelectedCollection(id);
+    setSelectedCategory(null); // Reset category when collection changes
   };
 
   return (
@@ -68,13 +86,36 @@ export function CatalogClient({ products, categories, brands }: CatalogClientPro
 
         <div className="space-y-4">
           <div className="flex items-center justify-between">
+            <h3 className="font-semibold text-lg">Collections</h3>
+            {selectedCollection && (
+              <button onClick={() => { setSelectedCollection(null); setSelectedCategory(null); }} className="text-xs text-muted-foreground hover:text-primary">Clear</button>
+            )}
+          </div>
+          <div className="flex flex-col gap-2">
+            {collections.map((col) => (
+              <label key={col.id} className="flex items-center gap-2 cursor-pointer group">
+                <input 
+                  type="radio" 
+                  name="collection" 
+                  checked={selectedCollection === col.id}
+                  onChange={() => handleCollectionChange(col.id)}
+                  className="rounded-full border-gray-300 text-primary focus:ring-primary"
+                />
+                <span className="text-sm group-hover:text-primary transition-colors">{col.name}</span>
+              </label>
+            ))}
+          </div>
+        </div>
+
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
             <h3 className="font-semibold text-lg">Categories</h3>
             {selectedCategory && (
               <button onClick={() => setSelectedCategory(null)} className="text-xs text-muted-foreground hover:text-primary">Clear</button>
             )}
           </div>
           <div className="flex flex-col gap-2">
-            {categories.map((cat) => (
+            {visibleCategories.map((cat) => (
               <label key={cat.id} className="flex items-center gap-2 cursor-pointer group">
                 <input 
                   type="radio" 
@@ -112,7 +153,7 @@ export function CatalogClient({ products, categories, brands }: CatalogClientPro
           </div>
         </div>
 
-        {(searchQuery || selectedCategory || selectedBrand) && (
+        {(searchQuery || selectedCollection || selectedCategory || selectedBrand) && (
           <Button variant="outline" className="w-full" onClick={clearFilters}>
             <X className="mr-2 h-4 w-4" /> Clear All Filters
           </Button>

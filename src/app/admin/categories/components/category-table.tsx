@@ -84,6 +84,7 @@ export const CategoryTable: React.FC<CategoryTableProps> = ({ data, onEdit }) =>
           <TableHeader>
             <TableRow>
               <TableHead className="w-[100px]">Icon</TableHead>
+              <TableHead>Collection</TableHead>
               <TableHead>Name</TableHead>
               <TableHead>Slug</TableHead>
               <TableHead>Subcategories</TableHead>
@@ -112,6 +113,7 @@ export const CategoryTable: React.FC<CategoryTableProps> = ({ data, onEdit }) =>
                       </div>
                     )}
                   </TableCell>
+                  <TableCell className="capitalize">{category.collection?.toLowerCase()}</TableCell>
                   <TableCell className="font-medium">{category.name}</TableCell>
                   <TableCell>{category.slug}</TableCell>
                   <TableCell>{category._count?.subcategories || 0}</TableCell>

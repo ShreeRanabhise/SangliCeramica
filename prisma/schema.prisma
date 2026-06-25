@@ -13,6 +13,12 @@ enum Role {
   EDITOR
 }
 
+enum CollectionName {
+  TILES
+  SANITARYWARE
+  DOORS
+}
+
 model User {
   id        String   @id @default(uuid()) // Maps to Supabase Auth User ID
   email     String   @unique
@@ -31,6 +37,7 @@ model Category {
   slug        String        @unique
   description String?
   icon        String?       // Supabase Storage URL
+  collection  CollectionName @default(TILES)
   order       Int           @default(0)
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt

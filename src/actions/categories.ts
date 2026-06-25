@@ -24,6 +24,7 @@ export async function createCategory(formData: FormData) {
     const name = formData.get("name") as string;
     const description = formData.get("description") as string;
     const icon = formData.get("icon") as string;
+    const collection = formData.get("collection") as "TILES" | "SANITARYWARE" | "DOORS";
 
     if (!name) return { success: false, error: "Name is required" };
 
@@ -35,6 +36,7 @@ export async function createCategory(formData: FormData) {
         slug,
         description,
         icon,
+        collection,
       },
     });
 
@@ -53,6 +55,7 @@ export async function updateCategory(id: string, formData: FormData) {
     const name = formData.get("name") as string;
     const description = formData.get("description") as string;
     const icon = formData.get("icon") as string;
+    const collection = formData.get("collection") as "TILES" | "SANITARYWARE" | "DOORS";
 
     if (!name) return { success: false, error: "Name is required" };
 
@@ -65,6 +68,7 @@ export async function updateCategory(id: string, formData: FormData) {
         slug,
         description,
         icon,
+        collection,
       },
     });
 
