@@ -73,7 +73,7 @@ export const BrandForm: React.FC<BrandFormProps> = ({ initialData, onClose }) =>
               disabled={loading}
               onChange={(url) => setLogoUrl(url)}
               onRemove={() => setLogoUrl("")}
-              bucket="brands"
+              folder="brands"
             />
           </div>
 

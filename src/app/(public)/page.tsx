@@ -4,7 +4,7 @@ import { getBrands } from "@/actions/brands";
 import Link from "next/link";
 import Image from "next/image";
 import { Button, buttonVariants } from "@/components/ui/button";
-import { ArrowRight, MapPin, Sparkles } from "lucide-react";
+import { ArrowRight, MapPin, Sparkles, FileText, Download } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import { HeroCarousel } from "@/components/public/hero-carousel";
 import { BrandMarquee } from "@/components/public/brand-marquee";
@@ -15,36 +15,83 @@ export const metadata = {
 };
 
 export default async function HomePage() {
-  // Fetch data on the server
-  const [colRes, prodRes, brandRes, heroContent] = await Promise.all([
+  // Fetch data on the server concurrently
+  const [colRes, prodRes, brandRes, carouselRes, categories, catalogues, gallery] = await Promise.all([
     getCollections(),
     getProducts(),
     getBrands(),
-    prisma.homepageContent.findUnique({ where: { section: "HERO" } })
+    prisma.carouselImage.findMany({ where: { isActive: true }, orderBy: { order: "asc" } }),
+    prisma.category.findMany({ orderBy: { name: "asc" } }),
+    prisma.catalogue.findMany({ where: { isActive: true }, orderBy: { createdAt: "desc" } }),
+    prisma.galleryMedia.findMany({ take: 6, orderBy: { order: "asc" } })
   ]);
 
   const collections = colRes.success ? colRes.data : [];
-  // Filter for featured products (up to 4)
   const allProducts = prodRes.success ? prodRes.data : [];
   const featuredProducts = allProducts?.filter((p: any) => p.isFeatured).slice(0, 4) || [];
-  
   const brands = brandRes.success ? brandRes.data : [];
-
-  const heroContentData: any = heroContent?.content || {};
+  
+  // Format carousel images for HeroCarousel component
+  // We use the first image's title/subtitle as fallback if HeroCarousel only supports global title
+  // Currently HeroCarousel just takes arrays of strings and a global title. We can upgrade it later if needed,
+  // but for now we'll pass the images array.
+  const carouselImageUrls = carouselRes.map(img => img.imageUrl);
+  const mainTitle = carouselRes[0]?.title || "The Pinnacle of Elegance";
+  const mainSubtitle = carouselRes[0]?.subtitle || "Discover Sangli's most exclusive collection.";
 
   return (
     <>
-      {/* Hero Section */}
-      <HeroCarousel 
-        images={heroContentData.carouselImages?.map((img: any) => img.url) || []}
-        title={heroContentData.title || ""}
-        subtitle={heroContentData.subtitle || ""}
-      />
+      {/* 1. Carousel Section */}
+      {carouselImageUrls.length > 0 ? (
+        <HeroCarousel 
+          images={carouselImageUrls}
+          title={mainTitle}
+          subtitle={mainSubtitle}
+        />
+      ) : (
+        <div className="w-full h-[60vh] bg-slate-900 flex items-center justify-center">
+          <div className="text-center text-white">
+            <h1 className="text-4xl md:text-6xl font-bold mb-4">{mainTitle}</h1>
+            <p className="text-lg text-slate-300">{mainSubtitle}</p>
+          </div>
+        </div>
+      )}
 
-      {/* Trusted Brands */}
+      {/* 2. Brands Section */}
       <BrandMarquee brands={brands || []} />
 
-      {/* Featured Collections */}
+      {/* 3. Categories Section */}
+      {categories.length > 0 && (
+        <section className="py-20 bg-muted/30">
+          <div className="container mx-auto px-4">
+            <div className="text-center max-w-2xl mx-auto mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">Explore Categories</h2>
+              <p className="text-muted-foreground text-lg">Find exactly what you need for your perfect space.</p>
+            </div>
+            
+            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
+              {categories.map((cat: any) => (
+                <Link 
+                  key={cat.id} 
+                  href={`/catalog?category=${cat.id}`}
+                  className="group bg-card border rounded-2xl p-6 text-center hover:shadow-md hover:border-primary/50 transition-all"
+                >
+                  <div className="mx-auto w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4 text-primary group-hover:scale-110 transition-transform">
+                    {cat.iconUrl ? (
+                      <img src={cat.iconUrl} alt={cat.name} className="w-8 h-8 object-contain" />
+                    ) : (
+                      <Sparkles className="w-8 h-8" />
+                    )}
+                  </div>
+                  <h3 className="font-semibold text-sm">{cat.name}</h3>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* 4. Collections Section */}
       {collections && collections.length > 0 && (
         <section className="py-24 bg-background">
           <div className="container mx-auto px-4">
@@ -63,13 +110,11 @@ export default async function HomePage() {
                   className="group relative h-[400px] rounded-2xl overflow-hidden block"
                 >
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-10" />
-                  {col.videoUrl ? (
-                    <video 
-                      src={col.videoUrl} 
-                      autoPlay 
-                      loop 
-                      muted 
-                      playsInline
+                  {col.imageUrl ? (
+                    <Image 
+                      src={col.imageUrl} 
+                      alt={col.title}
+                      fill
                       className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
                     />
                   ) : (
@@ -89,7 +134,7 @@ export default async function HomePage() {
         </section>
       )}
 
-      {/* Featured Products */}
+      {/* 5. Products Section */}
       {featuredProducts.length > 0 && (
         <section className="py-24 bg-muted/50 border-t">
           <div className="container mx-auto px-4">
@@ -132,6 +177,69 @@ export default async function HomePage() {
               <Link href="/catalog" className={buttonVariants({ variant: "outline", size: "lg", className: "rounded-full px-8" })}>
                 View Full Catalog <ArrowRight className="ml-2 w-4 h-4" />
               </Link>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* 6. Gallery / Showroom Glimpse Section */}
+      {gallery.length > 0 && (
+        <section className="py-24 bg-background border-t">
+          <div className="container mx-auto px-4">
+            <div className="flex flex-col md:flex-row items-center justify-between mb-12">
+              <div className="max-w-xl mb-6 md:mb-0">
+                <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">Showroom Glimpse</h2>
+                <p className="text-muted-foreground text-lg">A peek into our luxurious Sangli showroom and recent installations.</p>
+              </div>
+              <Link href="/gallery" className={buttonVariants({ variant: "outline" })}>
+                View Full Gallery <ArrowRight className="ml-2 w-4 h-4" />
+              </Link>
+            </div>
+            
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+              {gallery.map((media: any) => (
+                <div key={media.id} className="relative aspect-square rounded-xl overflow-hidden group">
+                  <Image 
+                    src={media.url} 
+                    alt="Showroom Gallery" 
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* 7. Catalogues Download Section */}
+      {catalogues.length > 0 && (
+        <section className="py-20 bg-muted/80 border-t">
+          <div className="container mx-auto px-4">
+            <div className="bg-card border rounded-3xl p-8 md:p-12 shadow-sm relative overflow-hidden">
+              <div className="absolute -right-20 -top-20 w-64 h-64 bg-primary/10 rounded-full blur-3xl" />
+              <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
+                <div className="max-w-xl">
+                  <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">Download Our Catalogues</h2>
+                  <p className="text-muted-foreground text-lg">Browse our complete range of products, specifications, and design inspirations offline.</p>
+                </div>
+                
+                <div className="flex flex-col gap-4 w-full md:w-auto">
+                  {catalogues.map((cat: any) => (
+                    <a 
+                      key={cat.id} 
+                      href={cat.fileUrl} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className={buttonVariants({ size: "lg", className: "w-full sm:w-auto rounded-xl flex items-center justify-center py-6" })}
+                    >
+                      <Download className="mr-2 h-5 w-5" />
+                      {cat.title}
+                    </a>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </section>

@@ -13,7 +13,7 @@ interface ImageUploadProps {
   onChange: (value: string, publicId: string) => void;
   onRemove: (value: string) => void;
   value: string[];
-  bucket?: string;
+  folder?: string;
 }
 
 export default function ImageUpload({
@@ -21,7 +21,7 @@ export default function ImageUpload({
   onChange,
   onRemove,
   value,
-  bucket = "sangli-ceramica"
+  folder = "general"
 }: ImageUploadProps) {
   const [isUploading, setIsUploading] = useState(false);
   const supabase = createClient();
@@ -34,10 +34,10 @@ export default function ImageUpload({
       const file = e.target.files[0];
       const fileExt = file.name.split('.').pop();
       const fileName = `${uuidv4()}.${fileExt}`;
-      const filePath = `uploads/${fileName}`;
+      const filePath = folder ? `${folder}/${fileName}` : fileName;
 
       const { data, error } = await supabase.storage
-        .from(bucket)
+        .from("sangli-ceramica")
         .upload(filePath, file, {
           cacheControl: '3600',
           upsert: false
@@ -48,7 +48,7 @@ export default function ImageUpload({
       }
 
       const { data: { publicUrl } } = supabase.storage
-        .from(bucket)
+        .from("sangli-ceramica")
         .getPublicUrl(filePath);
 
       onChange(publicUrl, filePath);

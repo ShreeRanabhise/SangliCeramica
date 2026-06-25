@@ -24,7 +24,7 @@ model CollectionMeta {
   collection  CollectionName @unique
   title       String
   tagline     String?
-  videoUrl    String?
+  imageUrl    String?
   updatedAt   DateTime       @updatedAt
 }
 
@@ -174,9 +174,29 @@ model ContactInformation {
   whatsapp     String
   email        String
   hours        String
-  catalogueUrl String?
   socialLinks  Json?
   updatedAt    DateTime @updatedAt
+}
+
+model Catalogue {
+  id         String   @id @default(cuid())
+  title      String
+  fileUrl    String
+  coverImage String?
+  isActive   Boolean  @default(true)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model CarouselImage {
+  id        String   @id @default(cuid())
+  imageUrl  String
+  title     String?
+  subtitle  String?
+  order     Int      @default(0)
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model ActivityLog {

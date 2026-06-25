@@ -89,7 +89,7 @@ export const ContentForm: React.FC<ContentFormProps> = ({ section, initialData }
             value={carouselImages.map(img => img.url)}
             onChange={(url, publicId) => setCarouselImages([...carouselImages, { url, publicId }])}
             onRemove={(url) => setCarouselImages(carouselImages.filter(img => img.url !== url))}
-            bucket="carousel"
+            folder="carousel"
             disabled={loading}
           />
           <p className="text-sm text-muted-foreground">Upload background images for the Hero section. They will slide automatically.</p>

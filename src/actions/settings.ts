@@ -19,7 +19,6 @@ export async function updateSettings(data: {
   whatsapp: string;
   email: string;
   hours: string;
-  catalogueUrl?: string;
   socialLinks?: any;
 }) {
   try {
@@ -29,11 +28,27 @@ export async function updateSettings(data: {
     if (existing) {
       settings = await prisma.contactInformation.update({
         where: { id: existing.id },
-        data
+        data: {
+          address: data.address || existing.address,
+          mapUrl: data.mapUrl || existing.mapUrl,
+          phones: data.phones || existing.phones,
+          whatsapp: data.whatsapp || existing.whatsapp,
+          email: data.email || existing.email,
+          hours: data.hours || existing.hours,
+          socialLinks: data.socialLinks !== undefined ? data.socialLinks : existing.socialLinks,
+        }
       });
     } else {
       settings = await prisma.contactInformation.create({
-        data
+        data: {
+          address: data.address || "",
+          mapUrl: data.mapUrl || "",
+          phones: data.phones || [],
+          whatsapp: data.whatsapp || "",
+          email: data.email || "",
+          hours: data.hours || "",
+          socialLinks: data.socialLinks || {},
+        }
       });
     }
 

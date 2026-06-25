@@ -5,8 +5,11 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { prisma } from "@/lib/prisma";
 
 export async function Footer() {
-  const settings = await prisma.contactInformation.findFirst();
-  const catalogueUrl = settings?.catalogueUrl;
+  const [settings, catalogues] = await Promise.all([
+    prisma.contactInformation.findFirst(),
+    prisma.catalogue.findMany({ where: { isActive: true }, orderBy: { createdAt: "desc" } })
+  ]);
+  const mainCatalogue = catalogues[0];
 
   return (
     <footer className="bg-slate-950 text-slate-300 pt-16 pb-8 border-t border-slate-900">
@@ -46,9 +49,9 @@ export async function Footer() {
                 </li>
               ))}
             </ul>
-            {catalogueUrl && (
+            {mainCatalogue && (
               <div className="mt-6">
-                <a href={catalogueUrl} target="_blank" rel="noopener noreferrer" className={buttonVariants({ variant: "outline", className: "w-full border-slate-700 text-slate-300 hover:text-white hover:bg-slate-800" })}>
+                <a href={mainCatalogue.fileUrl} target="_blank" rel="noopener noreferrer" className={buttonVariants({ variant: "outline", className: "w-full border-slate-700 text-slate-300 hover:text-white hover:bg-slate-800" })}>
                   Download Catalogue
                 </a>
               </div>

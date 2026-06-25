@@ -108,7 +108,7 @@ export const AlbumForm: React.FC<AlbumFormProps> = ({ initialData, onSuccess }) 
           onChange={handleImageUpload}
           onRemove={handleImageRemove}
           disabled={loading}
-          bucket="gallery"
+          folder="gallery"
         />
         <p className="text-xs text-muted-foreground mt-2">
           Note: Images cannot be deleted from this view once saved. You can upload new ones.

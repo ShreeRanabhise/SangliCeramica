@@ -72,16 +72,13 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
         <div className="relative h-[400px] rounded-3xl overflow-hidden shadow-lg flex flex-col justify-end p-8 md:p-12">
           <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10 z-10" />
           
-          {meta?.videoUrl ? (
-            <video 
-              autoPlay 
-              muted 
-              loop 
-              playsInline
+          {meta?.imageUrl ? (
+            <Image 
+              src={meta.imageUrl}
+              alt={meta.title || enumValue}
+              fill
               className="absolute inset-0 w-full h-full object-cover"
-            >
-              <source src={meta.videoUrl} type="video/mp4" />
-            </video>
+            />
           ) : (
             <div className="absolute inset-0 bg-secondary" />
           )}

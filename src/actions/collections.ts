@@ -55,7 +55,7 @@ export async function updateCollection(id: string, formData: FormData) {
   try {
     const title = formData.get("title") as string;
     const tagline = formData.get("tagline") as string;
-    const videoUrl = formData.get("videoUrl") as string;
+    const imageUrl = formData.get("imageUrl") as string;
 
     if (!title) return { success: false, error: "Title is required" };
 
@@ -64,7 +64,7 @@ export async function updateCollection(id: string, formData: FormData) {
       data: {
         title,
         tagline,
-        videoUrl,
+        imageUrl,
       },
     });
 

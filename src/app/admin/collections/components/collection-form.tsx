@@ -18,14 +18,14 @@ interface CollectionFormProps {
 export const CollectionForm: React.FC<CollectionFormProps> = ({ initialData }) => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const [videoUrl, setVideoUrl] = useState<string>(initialData?.videoUrl || "");
+  const [imageUrl, setImageUrl] = useState<string>(initialData?.imageUrl || "");
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       setLoading(true);
       const formData = new FormData(e.currentTarget);
-      formData.set("videoUrl", videoUrl);
+      formData.set("imageUrl", imageUrl);
 
       const response = await updateCollection(initialData.id, formData);
 
@@ -51,7 +51,7 @@ export const CollectionForm: React.FC<CollectionFormProps> = ({ initialData }) =
           </Button>
           <div>
             <h2 className="text-3xl font-bold tracking-tight capitalize">Edit {initialData.collection.toLowerCase()}</h2>
-            <p className="text-sm text-muted-foreground">Update the title, tagline, and background video.</p>
+            <p className="text-sm text-muted-foreground">Update the title, tagline, and background image.</p>
           </div>
         </div>
       </div>
@@ -60,14 +60,14 @@ export const CollectionForm: React.FC<CollectionFormProps> = ({ initialData }) =
       <form onSubmit={onSubmit} className="space-y-8 w-full max-w-2xl">
         <div className="space-y-4">
           <div className="space-y-2">
-            <Label>Background Video (or Image) URL</Label>
-            <p className="text-xs text-muted-foreground mb-2">Upload a short, looping MP4 video for the collection card background.</p>
+            <Label>Background Image URL</Label>
+            <p className="text-xs text-muted-foreground mb-2">Upload a background image for the collection card.</p>
             <ImageUpload
-              value={videoUrl ? [videoUrl] : []}
+              value={imageUrl ? [imageUrl] : []}
               disabled={loading}
-              onChange={(url) => setVideoUrl(url)}
-              onRemove={() => setVideoUrl("")}
-              bucket="collections"
+              onChange={(url) => setImageUrl(url)}
+              onRemove={() => setImageUrl("")}
+              folder="collections"
             />
           </div>
 

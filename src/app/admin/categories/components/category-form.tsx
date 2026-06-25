@@ -75,7 +75,7 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({ initialData, onClose
               disabled={loading}
               onChange={(url) => setIconUrl(url)}
               onRemove={() => setIconUrl("")}
-              bucket="categories"
+              folder="categories"
             />
           </div>
 

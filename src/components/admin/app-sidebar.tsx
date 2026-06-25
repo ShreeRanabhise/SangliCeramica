@@ -11,7 +11,7 @@ import {
   SidebarMenuItem,
   SidebarHeader,
 } from "@/components/ui/sidebar";
-import { Package, FolderTree, Image as ImageIcon, MessageSquare, Tag, LayoutDashboard, Settings, FileText } from "lucide-react";
+import { Package, FolderTree, Image as ImageIcon, MessageSquare, Tag, LayoutDashboard, Settings, FileText, LayoutTemplate } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -22,6 +22,8 @@ const items = [
   { title: "Categories", url: "/admin/categories", icon: FolderTree },
   { title: "Brands", url: "/admin/brands", icon: Tag },
   { title: "Gallery", url: "/admin/gallery", icon: ImageIcon },
+  { title: "Carousel", url: "/admin/carousel", icon: LayoutTemplate },
+  { title: "Catalogues", url: "/admin/catalogues", icon: FileText },
   { title: "Inquiries", url: "/admin/inquiries", icon: MessageSquare },
   { title: "Content", url: "/admin/content", icon: FileText },
   { title: "Settings", url: "/admin/settings", icon: Settings },

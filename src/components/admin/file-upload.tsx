@@ -12,7 +12,7 @@ interface FileUploadProps {
   onChange: (value: string, publicId: string) => void;
   onRemove: (value: string) => void;
   value: string[]; // URLs of the files
-  bucket?: string;
+  folder?: string;
   accept?: string;
 }
 
@@ -21,7 +21,7 @@ export default function FileUpload({
   onChange,
   onRemove,
   value,
-  bucket = "sangli-ceramica",
+  folder = "general",
   accept = "application/pdf"
 }: FileUploadProps) {
   const [isUploading, setIsUploading] = useState(false);
@@ -35,10 +35,10 @@ export default function FileUpload({
       const file = e.target.files[0];
       const fileExt = file.name.split('.').pop();
       const fileName = `${uuidv4()}.${fileExt}`;
-      const filePath = `uploads/${fileName}`;
+      const filePath = folder ? `${folder}/${fileName}` : fileName;
 
       const { data, error } = await supabase.storage
-        .from(bucket)
+        .from("sangli-ceramica")
         .upload(filePath, file, {
           cacheControl: '3600',
           upsert: false
@@ -49,7 +49,7 @@ export default function FileUpload({
       }
 
       const { data: { publicUrl } } = supabase.storage
-        .from(bucket)
+        .from("sangli-ceramica")
         .getPublicUrl(filePath);
 
       onChange(publicUrl, filePath);
@@ -87,7 +87,7 @@ export default function FileUpload({
       <div>
         <input 
           type="file" 
-          id={`file-upload-${bucket}`}
+          id={`file-upload-${folder}`}
           className="hidden" 
           accept={accept}
           onChange={onUpload}
@@ -97,7 +97,7 @@ export default function FileUpload({
           type="button" 
           disabled={disabled || isUploading} 
           variant="secondary" 
-          onClick={() => document.getElementById(`file-upload-${bucket}`)?.click()}
+          onClick={() => document.getElementById(`file-upload-${folder}`)?.click()}
         >
           {isUploading ? (
             <Loader2 className="h-4 w-4 mr-2 animate-spin" />
