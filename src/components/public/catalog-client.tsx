@@ -4,8 +4,9 @@ import { useState, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Search, Filter, X } from "lucide-react";
+import { Search, Filter, X, PackageOpen } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface CatalogClientProps {
   products: any[];
@@ -57,7 +58,7 @@ export function CatalogClient({ products, categories }: CatalogClientProps) {
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input 
             placeholder="Search products..." 
-            className="pl-9"
+            className="pl-9 focus-visible:ring-primary/50 transition-all"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
@@ -74,7 +75,7 @@ export function CatalogClient({ products, categories }: CatalogClientProps) {
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input 
             placeholder="Search products..." 
-            className="pl-9"
+            className="pl-9 focus-visible:ring-primary/50 transition-all bg-card"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
@@ -84,21 +85,22 @@ export function CatalogClient({ products, categories }: CatalogClientProps) {
           <div className="flex items-center justify-between">
             <h3 className="font-semibold text-lg">Collections</h3>
             {selectedCollection && (
-              <button onClick={() => { setSelectedCollection(null); setSelectedCategory(null); }} className="text-xs text-muted-foreground hover:text-primary">Clear</button>
+              <button onClick={() => { setSelectedCollection(null); setSelectedCategory(null); }} className="text-xs font-medium text-muted-foreground hover:text-primary transition-colors">Clear</button>
             )}
           </div>
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-wrap gap-2">
             {collections.map((col) => (
-              <label key={col.id} className="flex items-center gap-2 cursor-pointer group">
-                <input 
-                  type="radio" 
-                  name="collection" 
-                  checked={selectedCollection === col.id}
-                  onChange={() => handleCollectionChange(col.id)}
-                  className="rounded-full border-gray-300 text-primary focus:ring-primary"
-                />
-                <span className="text-sm group-hover:text-primary transition-colors">{col.name}</span>
-              </label>
+              <button
+                key={col.id}
+                onClick={() => handleCollectionChange(col.id)}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+                  selectedCollection === col.id 
+                    ? "bg-primary text-primary-foreground shadow-sm" 
+                    : "bg-muted/50 text-muted-foreground hover:bg-muted hover:text-foreground"
+                }`}
+              >
+                {col.name}
+              </button>
             ))}
           </div>
         </div>
@@ -107,78 +109,117 @@ export function CatalogClient({ products, categories }: CatalogClientProps) {
           <div className="flex items-center justify-between">
             <h3 className="font-semibold text-lg">Categories</h3>
             {selectedCategory && (
-              <button onClick={() => setSelectedCategory(null)} className="text-xs text-muted-foreground hover:text-primary">Clear</button>
+              <button onClick={() => setSelectedCategory(null)} className="text-xs font-medium text-muted-foreground hover:text-primary transition-colors">Clear</button>
             )}
           </div>
           <div className="flex flex-col gap-2">
             {visibleCategories.map((cat) => (
-              <label key={cat.id} className="flex items-center gap-2 cursor-pointer group">
-                <input 
-                  type="radio" 
-                  name="category" 
-                  checked={selectedCategory === cat.id}
-                  onChange={() => setSelectedCategory(cat.id)}
-                  className="rounded-full border-gray-300 text-primary focus:ring-primary"
-                />
-                <span className="text-sm group-hover:text-primary transition-colors">{cat.name}</span>
-              </label>
+              <button
+                key={cat.id}
+                onClick={() => setSelectedCategory(cat.id)}
+                className={`flex items-center justify-between w-full px-3 py-2 rounded-lg text-sm transition-all duration-200 ${
+                  selectedCategory === cat.id
+                    ? "bg-primary/10 text-primary font-medium"
+                    : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                }`}
+              >
+                <span>{cat.name}</span>
+                {selectedCategory === cat.id && (
+                  <motion.div layoutId="active-cat-indicator" className="w-1.5 h-1.5 rounded-full bg-primary" />
+                )}
+              </button>
             ))}
           </div>
         </div>
 
         {(searchQuery || selectedCollection || selectedCategory) && (
-          <Button variant="outline" className="w-full" onClick={clearFilters}>
+          <Button variant="ghost" className="w-full text-muted-foreground hover:text-foreground" onClick={clearFilters}>
             <X className="mr-2 h-4 w-4" /> Clear All Filters
           </Button>
         )}
       </div>
 
       {/* Product Grid */}
-      <div className="flex-1 w-full">
+      <div className="flex-1 w-full min-h-[500px]">
         <div className="mb-6 flex items-center justify-between">
-          <p className="text-muted-foreground text-sm">
-            Showing <span className="font-medium text-foreground">{filteredProducts.length}</span> products
+          <p className="text-muted-foreground text-sm font-medium">
+            Showing <span className="text-foreground font-semibold">{filteredProducts.length}</span> products
           </p>
         </div>
 
         {filteredProducts.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-24 text-center border rounded-xl bg-muted/20">
-            <Filter className="h-12 w-12 text-muted-foreground mb-4 opacity-20" />
-            <h3 className="text-xl font-semibold mb-2">No products found</h3>
-            <p className="text-muted-foreground mb-6">Try adjusting your filters or search query.</p>
-            <Button variant="outline" onClick={clearFilters}>Clear Filters</Button>
-          </div>
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="flex flex-col items-center justify-center py-24 text-center rounded-3xl bg-card border shadow-sm"
+          >
+            <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-6">
+              <PackageOpen className="h-8 w-8 text-primary" />
+            </div>
+            <h3 className="text-2xl font-semibold mb-2">No products found</h3>
+            <p className="text-muted-foreground mb-8 max-w-md">We couldn't find any products matching your current filters. Try adjusting them or clear all filters to see more.</p>
+            <Button onClick={clearFilters} className="rounded-full px-8">Clear Filters</Button>
+          </motion.div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {filteredProducts.map((product) => {
-              const primaryImage = product.images?.find((img: any) => img.isPrimary) || product.images?.[0];
-              return (
-                <Link key={product.id} href={`/catalog/${product.slug}`} className="group block">
-                  <div className="bg-card rounded-xl overflow-hidden border shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-1">
-                    <div className="relative aspect-square bg-muted overflow-hidden">
-                      {primaryImage ? (
-                        <Image 
-                          src={primaryImage.url} 
-                          alt={product.name} 
-                          fill 
-                          className="object-cover transition-transform duration-500 group-hover:scale-110"
-                        />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center bg-secondary">
-                          <span className="text-muted-foreground text-sm">No image</span>
+          <motion.div 
+            layout 
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+          >
+            <AnimatePresence>
+              {filteredProducts.map((product, index) => {
+                const primaryImage = product.images?.find((img: any) => img.isPrimary) || product.images?.[0];
+                return (
+                  <motion.div
+                    key={product.id}
+                    layout
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.9 }}
+                    transition={{ duration: 0.2, delay: index < 12 ? index * 0.05 : 0 }}
+                  >
+                    <Link href={`/catalog/${product.slug}`} className="group block h-full">
+                      <div className="bg-card h-full rounded-2xl overflow-hidden border shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-2">
+                        <div className="relative aspect-square bg-muted overflow-hidden">
+                          {primaryImage ? (
+                            <Image 
+                              src={primaryImage.url} 
+                              alt={product.name} 
+                              fill 
+                              className="object-cover transition-transform duration-700 group-hover:scale-110"
+                            />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center bg-secondary">
+                              <span className="text-muted-foreground text-sm font-medium">No Image</span>
+                            </div>
+                          )}
+                          
+                          {/* Optional Category Badge Overlay */}
+                          <div className="absolute top-3 left-3 bg-background/80 backdrop-blur-md px-2.5 py-1 rounded-full border shadow-sm">
+                            <p className="text-[10px] font-semibold uppercase tracking-wider text-foreground">
+                              {product.category?.name || "Uncategorized"}
+                            </p>
+                          </div>
                         </div>
-                      )}
-                    </div>
-                    <div className="p-4">
-                      <p className="text-xs text-muted-foreground mb-1 uppercase tracking-wider">{product.category?.name}</p>
-                      <h3 className="font-semibold text-base line-clamp-1 group-hover:text-primary transition-colors">{product.name}</h3>
-                      <p className="text-xs text-muted-foreground mt-1">SKU: {product.sku}</p>
-                    </div>
-                  </div>
-                </Link>
-              );
-            })}
-          </div>
+                        <div className="p-5">
+                          <h3 className="font-semibold text-lg line-clamp-1 group-hover:text-primary transition-colors mb-1">{product.name}</h3>
+                          <div className="flex items-center justify-between mt-2">
+                            <p className="text-xs text-muted-foreground font-medium bg-muted px-2 py-1 rounded-md">
+                              SKU: {product.sku}
+                            </p>
+                            {product.price && (
+                              <p className="text-sm font-bold text-foreground">
+                                ₹{product.price.toLocaleString('en-IN')}
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </Link>
+                  </motion.div>
+                );
+              })}
+            </AnimatePresence>
+          </motion.div>
         )}
       </div>
     </div>
