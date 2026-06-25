@@ -10,7 +10,6 @@ export async function getProducts() {
       orderBy: { createdAt: "desc" },
       include: {
         category: true,
-        brand: true,
         images: {
           orderBy: { order: "asc" },
         },
@@ -28,7 +27,6 @@ export async function getProduct(id: string) {
       where: { id, isDeleted: false },
       include: {
         category: true,
-        brand: true,
         images: {
           orderBy: { order: "asc" },
         },
@@ -42,7 +40,7 @@ export async function getProduct(id: string) {
 
 export async function createProduct(data: any) {
   try {
-    const { name, sku, description, categoryId, brandId, features, specifications, isFeatured, images } = data;
+    const { name, sku, description, categoryId, features, specifications, isFeatured, images } = data;
 
     if (!name || !sku || !categoryId) {
       return { success: false, error: "Name, SKU, and Category are required." };
@@ -57,7 +55,6 @@ export async function createProduct(data: any) {
         sku,
         description: description || "",
         categoryId,
-        brandId: brandId || null,
         features: features || [],
         specifications: specifications || {},
         isFeatured: isFeatured || false,
@@ -84,7 +81,7 @@ export async function createProduct(data: any) {
 
 export async function updateProduct(id: string, data: any) {
   try {
-    const { name, sku, description, categoryId, brandId, features, specifications, isFeatured, images } = data;
+    const { name, sku, description, categoryId, features, specifications, isFeatured, images } = data;
 
     if (!name || !sku || !categoryId) {
       return { success: false, error: "Name, SKU, and Category are required." };
@@ -106,7 +103,6 @@ export async function updateProduct(id: string, data: any) {
         sku,
         description: description || "",
         categoryId,
-        brandId: brandId || null,
         features: features || [],
         specifications: specifications || {},
         isFeatured: isFeatured || false,
