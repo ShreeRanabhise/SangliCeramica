@@ -69,6 +69,8 @@ export async function updateCollection(id: string, formData: FormData) {
     });
 
     revalidatePath("/admin/collections");
+    revalidatePath("/collections");
+    revalidatePath("/", "layout");
     return { success: true, data: collection };
   } catch (error: any) {
     return { success: false, error: error.message };
