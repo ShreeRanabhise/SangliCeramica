@@ -62,7 +62,7 @@ export const BrandTable: React.FC<BrandTableProps> = ({ data, onEdit }) => {
             <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
             <AlertDialogDescription>
               This action cannot be undone. This will permanently delete the
-              brand. If there are products linked to this brand, they might also be affected.
+              brand.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -85,14 +85,13 @@ export const BrandTable: React.FC<BrandTableProps> = ({ data, onEdit }) => {
               <TableHead className="w-[100px]">Logo</TableHead>
               <TableHead>Name</TableHead>
               <TableHead>Slug</TableHead>
-              <TableHead>Products</TableHead>
               <TableHead className="text-right">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {data.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={5} className="text-center py-8 text-muted-foreground">
+                <TableCell colSpan={4} className="text-center py-8 text-muted-foreground">
                   No brands found. Create one to get started.
                 </TableCell>
               </TableRow>
@@ -112,7 +111,6 @@ export const BrandTable: React.FC<BrandTableProps> = ({ data, onEdit }) => {
                   </TableCell>
                   <TableCell className="font-medium">{brand.name}</TableCell>
                   <TableCell>{brand.slug}</TableCell>
-                  <TableCell>{brand._count?.products || 0}</TableCell>
                   <TableCell className="text-right">
                     <Button
                       variant="ghost"

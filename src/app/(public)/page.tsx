@@ -1,4 +1,4 @@
-import { getCategories } from "@/actions/categories";
+import { getCollections } from "@/actions/collections";
 import { getProducts } from "@/actions/products";
 import Link from "next/link";
 import Image from "next/image";
@@ -12,12 +12,12 @@ export const metadata = {
 
 export default async function HomePage() {
   // Fetch data on the server
-  const [catRes, prodRes] = await Promise.all([
-    getCategories(),
+  const [colRes, prodRes] = await Promise.all([
+    getCollections(),
     getProducts()
   ]);
 
-  const categories = catRes.success ? catRes.data : [];
+  const collections = colRes.success ? colRes.data : [];
   // Filter for featured products (up to 4)
   const allProducts = prodRes.success ? prodRes.data : [];
   const featuredProducts = allProducts?.filter((p: any) => p.isFeatured).slice(0, 4) || [];
@@ -53,38 +53,40 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Featured Categories */}
-      {categories && categories.length > 0 && (
+      {/* Featured Collections */}
+      {collections && collections.length > 0 && (
         <section className="py-24 bg-background">
           <div className="container mx-auto px-4">
             <div className="flex items-end justify-between mb-12">
               <div className="max-w-2xl">
-                <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">Shop by Category</h2>
+                <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">Shop by Collection</h2>
                 <p className="text-muted-foreground text-lg">Browse our meticulously curated collections designed to inspire your next architectural project.</p>
               </div>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {categories.slice(0, 3).map((category: any) => (
+              {collections.map((col: any) => (
                 <Link 
-                  key={category.id} 
-                  href={`/catalog?category=${category.slug}`}
+                  key={col.id} 
+                  href="/catalog"
                   className="group relative h-[400px] rounded-2xl overflow-hidden block"
                 >
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-10" />
-                  {category.icon ? (
-                    <Image 
-                      src={category.icon} 
-                      alt={category.name} 
-                      fill 
-                      className="object-cover transition-transform duration-700 group-hover:scale-105" 
+                  {col.videoUrl ? (
+                    <video 
+                      src={col.videoUrl} 
+                      autoPlay 
+                      loop 
+                      muted 
+                      playsInline
+                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
                     />
                   ) : (
-                    <div className="w-full h-full bg-slate-200" />
+                    <div className="absolute inset-0 w-full h-full bg-slate-800" />
                   )}
                   <div className="absolute bottom-0 left-0 w-full p-8 z-20">
-                    <h3 className="text-2xl font-bold text-white mb-2">{category.name}</h3>
-                    <p className="text-white/80 text-sm line-clamp-2">{category.description}</p>
+                    <h3 className="text-2xl font-bold text-white mb-2">{col.title}</h3>
+                    <p className="text-white/80 text-sm line-clamp-2">{col.tagline}</p>
                     <div className="mt-4 inline-flex items-center text-primary text-sm font-semibold opacity-0 -translate-x-4 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0">
                       View Collection <ArrowRight className="ml-2 w-4 h-4" />
                     </div>
