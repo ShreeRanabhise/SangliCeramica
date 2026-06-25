@@ -8,6 +8,7 @@ import { ArrowRight, MapPin, Sparkles, FileText, Download } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import { HeroCarousel } from "@/components/public/hero-carousel";
 import { BrandMarquee } from "@/components/public/brand-marquee";
+import { CatalogueDownloadForm } from "@/components/public/catalogue-download-form";
 
 export const metadata = {
   title: "Sangli Ceramica | Premium Tiles & Sanitaryware Showroom",
@@ -49,10 +50,10 @@ export default async function HomePage() {
           subtitle={mainSubtitle}
         />
       ) : (
-        <div className="w-full h-[60vh] bg-slate-900 flex items-center justify-center">
-          <div className="text-center text-white">
-            <h1 className="text-4xl md:text-6xl font-bold mb-4">{mainTitle}</h1>
-            <p className="text-lg text-slate-300">{mainSubtitle}</p>
+        <div className="w-full h-[50vh] md:h-[60vh] bg-slate-900 flex items-center justify-center">
+          <div className="text-center text-white px-4">
+            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4">{mainTitle}</h1>
+            <p className="text-base md:text-lg text-slate-300">{mainSubtitle}</p>
           </div>
         </div>
       )}
@@ -62,7 +63,7 @@ export default async function HomePage() {
 
       {/* 4. Collections Section */}
       {collections && collections.length > 0 && (
-        <section className="py-24 bg-background">
+        <section className="py-12 md:py-24 bg-background">
           <div className="container mx-auto px-4">
             <div className="flex items-end justify-between mb-12">
               <div className="max-w-2xl">
@@ -103,16 +104,35 @@ export default async function HomePage() {
         </section>
       )}
 
+      {/* Catalogues Download Section (Moved up) */}
+      {catalogues.length > 0 && (
+        <section className="py-12 md:py-20 bg-muted/80 border-y">
+          <div className="container mx-auto px-4">
+            <div className="bg-card border rounded-3xl p-8 md:p-12 shadow-sm relative overflow-hidden">
+              <div className="absolute -right-20 -top-20 w-64 h-64 bg-primary/10 rounded-full blur-3xl" />
+              <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
+                <div className="max-w-xl">
+                  <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">Download Our Catalogues</h2>
+                  <p className="text-muted-foreground text-lg">Browse our complete range of products, specifications, and design inspirations offline by downloading our premium PDF catalogues.</p>
+                </div>
+                
+                <CatalogueDownloadForm catalogues={catalogues} />
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* 5. Products Section */}
       {featuredProducts.length > 0 && (
-        <section className="py-24 bg-muted/50 border-t">
+        <section className="py-12 md:py-24 bg-muted/50 border-t">
           <div className="container mx-auto px-4">
             <div className="text-center max-w-2xl mx-auto mb-16">
               <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">Signature Pieces</h2>
               <p className="text-muted-foreground text-lg">Our most requested and highly rated products, handpicked by our design experts.</p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
               {featuredProducts.map((product: any) => {
                 const primaryImage = product.images?.find((img: any) => img.isPrimary) || product.images?.[0];
                 return (
@@ -144,7 +164,7 @@ export default async function HomePage() {
             
             <div className="mt-12 text-center">
               <Link href="/catalog" className={buttonVariants({ variant: "outline", size: "lg", className: "rounded-full px-8" })}>
-                View Full Catalog <ArrowRight className="ml-2 w-4 h-4" />
+                View All Products <ArrowRight className="ml-2 w-4 h-4" />
               </Link>
             </div>
           </div>
@@ -153,7 +173,7 @@ export default async function HomePage() {
 
       {/* 6. Gallery / Showroom Glimpse Section */}
       {gallery.length > 0 && (
-        <section className="py-24 bg-background border-t">
+        <section className="py-12 md:py-24 bg-background border-t">
           <div className="container mx-auto px-4">
             <div className="flex flex-col md:flex-row items-center justify-between mb-12">
               <div className="max-w-xl mb-6 md:mb-0">
@@ -182,42 +202,10 @@ export default async function HomePage() {
         </section>
       )}
 
-      {/* 7. Catalogues Download Section */}
-      {catalogues.length > 0 && (
-        <section className="py-20 bg-muted/80 border-t">
-          <div className="container mx-auto px-4">
-            <div className="bg-card border rounded-3xl p-8 md:p-12 shadow-sm relative overflow-hidden">
-              <div className="absolute -right-20 -top-20 w-64 h-64 bg-primary/10 rounded-full blur-3xl" />
-              <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
-                <div className="max-w-xl">
-                  <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">Download Our Catalogues</h2>
-                  <p className="text-muted-foreground text-lg">Browse our complete range of products, specifications, and design inspirations offline.</p>
-                </div>
-                
-                <div className="flex flex-col gap-4 w-full md:w-auto">
-                  {catalogues.map((cat: any) => (
-                    <a 
-                      key={cat.id} 
-                      href={cat.fileUrl} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className={buttonVariants({ size: "lg", className: "w-full sm:w-auto rounded-xl flex items-center justify-center py-6" })}
-                    >
-                      <Download className="mr-2 h-5 w-5" />
-                      {cat.title}
-                    </a>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      )}
-
       {/* CTA Section */}
-      <section className="py-24 bg-primary text-primary-foreground">
+      <section className="py-12 md:py-24 bg-primary text-primary-foreground">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-6">Experience it in person</h2>
+          <h2 className="text-2xl md:text-5xl font-bold tracking-tight mb-4 md:mb-6">Experience it in person</h2>
           <p className="text-primary-foreground/80 text-lg md:text-xl max-w-2xl mx-auto mb-10">
             Pictures don't do justice to the textures and finishes of our premium ceramics. Visit our Sangli showroom to feel the difference.
           </p>

@@ -41,7 +41,7 @@ export async function Footer() {
           <div>
             <h3 className="text-white font-semibold mb-4 text-lg">Quick Links</h3>
             <ul className="space-y-3">
-              {["Home", "Catalog", "Gallery", "About Us", "Contact"].map((item) => (
+              {["Home", "Products", "Gallery", "About Us", "Contact"].map((item) => (
                 <li key={item}>
                   <Link href={`/${item.toLowerCase().replace(" ", "-")}`} className="text-slate-400 hover:text-primary transition-colors text-sm flex items-center gap-2 group">
                     <ArrowRight className="w-3 h-3 opacity-0 -ml-5 group-hover:opacity-100 group-hover:ml-0 transition-all" />

@@ -102,7 +102,7 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
             <div className="flex items-center justify-between mb-8">
               <h2 className="text-3xl font-bold tracking-tight">Explore Categories</h2>
               <Link href="/catalog" className="text-primary font-medium hover:underline">
-                View full catalog &rarr;
+                View all products &rarr;
               </Link>
             </div>
             

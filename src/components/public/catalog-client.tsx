@@ -51,7 +51,7 @@ export function CatalogClient({ products, categories }: CatalogClientProps) {
   };
 
   return (
-    <div className="flex flex-col md:flex-row gap-8 items-start">
+    <div className="flex flex-col md:flex-row gap-4 md:gap-8 items-start">
       {/* Mobile Filter Toggle */}
       <div className="w-full md:hidden flex gap-2">
         <div className="relative flex-1">
@@ -163,7 +163,7 @@ export function CatalogClient({ products, categories }: CatalogClientProps) {
         ) : (
           <motion.div 
             layout 
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+            className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-6"
           >
             <AnimatePresence>
               {filteredProducts.map((product, index) => {
