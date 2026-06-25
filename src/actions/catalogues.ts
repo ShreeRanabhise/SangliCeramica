@@ -31,7 +31,7 @@ export async function createCatalogue(data: { title: string; fileUrl: string; co
       data
     });
     revalidatePath("/admin/catalogues");
-    revalidatePath("/");
+    revalidatePath("/", "layout");
     return { success: true, data: catalogue };
   } catch (error: any) {
     return { success: false, error: error.message };
@@ -45,7 +45,7 @@ export async function updateCatalogue(id: string, data: { title?: string; fileUr
       data
     });
     revalidatePath("/admin/catalogues");
-    revalidatePath("/");
+    revalidatePath("/", "layout");
     return { success: true, data: catalogue };
   } catch (error: any) {
     return { success: false, error: error.message };
@@ -58,7 +58,7 @@ export async function deleteCatalogue(id: string) {
       where: { id }
     });
     revalidatePath("/admin/catalogues");
-    revalidatePath("/");
+    revalidatePath("/", "layout");
     return { success: true };
   } catch (error: any) {
     return { success: false, error: error.message };

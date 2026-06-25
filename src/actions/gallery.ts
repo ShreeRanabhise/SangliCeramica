@@ -47,7 +47,7 @@ export async function createAlbum(data: { name: string; slug: string; descriptio
       data
     });
     revalidatePath("/admin/gallery");
-    revalidatePath("/gallery");
+    revalidatePath("/", "layout");
     return { success: true, data: album };
   } catch (error: any) {
     return { success: false, error: error.message };
@@ -61,7 +61,7 @@ export async function updateAlbum(id: string, data: { name?: string; slug?: stri
       data
     });
     revalidatePath("/admin/gallery");
-    revalidatePath("/gallery");
+    revalidatePath("/", "layout");
     return { success: true, data: album };
   } catch (error: any) {
     return { success: false, error: error.message };
@@ -94,7 +94,7 @@ export async function deleteAlbum(id: string) {
       where: { id },
     });
     revalidatePath("/admin/gallery");
-    revalidatePath("/gallery");
+    revalidatePath("/", "layout");
     return { success: true };
   } catch (error: any) {
     return { success: false, error: error.message };
@@ -128,6 +128,7 @@ export async function addMediaToAlbum(albumId: string, mediaFiles: { url: string
     }
 
     revalidatePath("/admin/gallery");
+    revalidatePath("/", "layout");
     return { success: true };
   } catch (error: any) {
     return { success: false, error: error.message };
@@ -147,6 +148,7 @@ export async function deleteMedia(id: string) {
 
     await prisma.galleryMedia.delete({ where: { id } });
     revalidatePath("/admin/gallery");
+    revalidatePath("/", "layout");
     return { success: true };
   } catch (error: any) {
     return { success: false, error: error.message };

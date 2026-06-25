@@ -76,6 +76,7 @@ export async function createProduct(data: any) {
     });
 
     revalidatePath("/admin/products");
+    revalidatePath("/", "layout");
     return { success: true, data: product };
   } catch (error: any) {
     if (error.code === "P2002") {
@@ -130,6 +131,7 @@ export async function updateProduct(id: string, data: any) {
     });
 
     revalidatePath("/admin/products");
+    revalidatePath("/", "layout");
     return { success: true, data: product };
   } catch (error: any) {
     return { success: false, error: error.message };
@@ -143,6 +145,7 @@ export async function softDeleteProduct(id: string) {
       data: { isDeleted: true },
     });
     revalidatePath("/admin/products");
+    revalidatePath("/", "layout");
     return { success: true };
   } catch (error: any) {
     return { success: false, error: error.message };

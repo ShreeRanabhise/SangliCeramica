@@ -31,7 +31,7 @@ export async function createCarouselImage(data: { imageUrl: string; title?: stri
       data
     });
     revalidatePath("/admin/carousel");
-    revalidatePath("/");
+    revalidatePath("/", "layout");
     return { success: true, data: image };
   } catch (error: any) {
     return { success: false, error: error.message };
@@ -45,7 +45,7 @@ export async function updateCarouselImage(id: string, data: { imageUrl?: string;
       data
     });
     revalidatePath("/admin/carousel");
-    revalidatePath("/");
+    revalidatePath("/", "layout");
     return { success: true, data: image };
   } catch (error: any) {
     return { success: false, error: error.message };
@@ -58,7 +58,7 @@ export async function deleteCarouselImage(id: string) {
       where: { id }
     });
     revalidatePath("/admin/carousel");
-    revalidatePath("/");
+    revalidatePath("/", "layout");
     return { success: true };
   } catch (error: any) {
     return { success: false, error: error.message };

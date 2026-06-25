@@ -32,6 +32,7 @@ export async function createBrand(formData: FormData) {
     });
 
     revalidatePath("/admin/brands");
+    revalidatePath("/", "layout");
     return { success: true, data: brand };
   } catch (error: any) {
     if (error.code === "P2002") {
@@ -60,6 +61,7 @@ export async function updateBrand(id: string, formData: FormData) {
     });
 
     revalidatePath("/admin/brands");
+    revalidatePath("/", "layout");
     return { success: true, data: brand };
   } catch (error: any) {
     return { success: false, error: error.message };
@@ -72,6 +74,7 @@ export async function deleteBrand(id: string) {
       where: { id },
     });
     revalidatePath("/admin/brands");
+    revalidatePath("/", "layout");
     return { success: true };
   } catch (error: any) {
     return { success: false, error: error.message };

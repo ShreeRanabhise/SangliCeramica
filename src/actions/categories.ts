@@ -41,6 +41,7 @@ export async function createCategory(formData: FormData) {
     });
 
     revalidatePath("/admin/categories");
+    revalidatePath("/", "layout");
     return { success: true, data: category };
   } catch (error: any) {
     if (error.code === "P2002") {
@@ -73,6 +74,7 @@ export async function updateCategory(id: string, formData: FormData) {
     });
 
     revalidatePath("/admin/categories");
+    revalidatePath("/", "layout");
     return { success: true, data: category };
   } catch (error: any) {
     return { success: false, error: error.message };
@@ -85,6 +87,7 @@ export async function deleteCategory(id: string) {
       where: { id },
     });
     revalidatePath("/admin/categories");
+    revalidatePath("/", "layout");
     return { success: true };
   } catch (error: any) {
     return { success: false, error: error.message };
