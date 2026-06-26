@@ -19,7 +19,7 @@ export function HeroCarousel({ images, title, subtitle }: HeroCarouselProps) {
     
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % images.length);
-    }, 5000); // Change image every 5 seconds
+    }, 3000); // Change image every 3 seconds
 
     return () => clearInterval(interval);
   }, [images]);
@@ -30,7 +30,7 @@ export function HeroCarousel({ images, title, subtitle }: HeroCarouselProps) {
     : ["https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2940&auto=format&fit=crop"];
 
   return (
-    <section className="relative w-full h-[90vh] min-h-[600px] flex items-center justify-center overflow-hidden">
+    <section className="relative w-full h-[50vh] min-h-[400px] flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0 bg-slate-950/40 z-10" />
       
       {backgroundImages.map((src, index) => (
@@ -41,12 +41,12 @@ export function HeroCarousel({ images, title, subtitle }: HeroCarouselProps) {
         />
       ))}
       
-      <div className="container relative z-20 mx-auto px-4 text-center">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-sm font-medium mb-6 animate-fade-in-up">
+      <div className="container relative z-20 mx-auto px-4 text-center mt-12 md:mt-16">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-xs md:text-sm font-medium mb-4 animate-fade-in-up">
           <Sparkles className="w-4 h-4 text-primary" />
           <span>Premium Showroom Experience</span>
         </div>
-        <h1 className="text-5xl md:text-7xl font-bold text-white tracking-tight mb-6 animate-fade-in-up [animation-delay:200ms]">
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight mb-4 animate-fade-in-up [animation-delay:200ms]">
           {title ? (
             <div dangerouslySetInnerHTML={{ __html: title.replace(/\n/g, '<br />') }} />
           ) : (
@@ -56,14 +56,14 @@ export function HeroCarousel({ images, title, subtitle }: HeroCarouselProps) {
             </>
           )}
         </h1>
-        <p className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto mb-10 animate-fade-in-up [animation-delay:400ms]">
+        <p className="text-base md:text-lg text-white/90 max-w-2xl mx-auto mb-6 md:mb-8 animate-fade-in-up [animation-delay:400ms]">
           {subtitle || "Discover Sangli's most exclusive collection of luxury tiles, elegant sanitaryware, and premium designer doors."}
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-up [animation-delay:600ms]">
-          <Link href="/catalog" className={buttonVariants({ size: "lg", className: "rounded-full px-8 w-full sm:w-auto" })}>
+          <Link href="/catalog" className={buttonVariants({ size: "lg", className: "rounded-full px-6 w-full sm:w-auto" })}>
             Explore Collection
           </Link>
-          <Link href="/contact" className={buttonVariants({ size: "lg", variant: "outline", className: "rounded-full px-8 w-full sm:w-auto bg-white/10 text-white hover:bg-white hover:text-black border-white/30 backdrop-blur-sm" })}>
+          <Link href="/contact" className={buttonVariants({ size: "lg", variant: "outline", className: "rounded-full px-6 w-full sm:w-auto bg-white/10 text-white hover:bg-white hover:text-black border-white/30 backdrop-blur-sm" })}>
             Visit Showroom
           </Link>
         </div>

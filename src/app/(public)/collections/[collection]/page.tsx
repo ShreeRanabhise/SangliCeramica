@@ -68,29 +68,14 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
     <div className="min-h-screen bg-background pt-28 pb-24">
       
       {/* Hero Section */}
-      <div className="container mx-auto px-4 md:px-6 mb-16">
-        <div className="relative h-[400px] rounded-3xl overflow-hidden shadow-lg flex flex-col justify-end p-8 md:p-12">
-          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10 z-10" />
-          
-          {meta?.imageUrl ? (
-            <Image 
-              src={meta.imageUrl}
-              alt={meta.title || enumValue}
-              fill
-              className="absolute inset-0 w-full h-full object-cover"
-            />
-          ) : (
-            <div className="absolute inset-0 bg-secondary" />
-          )}
-
-          <div className="relative z-20 max-w-2xl">
-            <h1 className="text-4xl md:text-6xl font-bold text-white mb-4 tracking-tight">
-              {meta?.title || enumValue}
-            </h1>
-            <p className="text-lg md:text-xl text-white/80 font-medium">
-              {meta?.tagline || `Discover our exclusive range of ${enumValue.toLowerCase()}.`}
-            </p>
-          </div>
+      <div className="container mx-auto px-4 md:px-6 mb-12 mt-8">
+        <div className="max-w-3xl">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4">
+            {meta?.title || enumValue}
+          </h1>
+          <p className="text-lg md:text-xl text-muted-foreground font-medium">
+            {meta?.tagline || `Discover our exclusive range of ${enumValue.toLowerCase()}.`}
+          </p>
         </div>
       </div>
 

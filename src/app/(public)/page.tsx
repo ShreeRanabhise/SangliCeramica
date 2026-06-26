@@ -104,24 +104,7 @@ export default async function HomePage() {
         </section>
       )}
 
-      {/* Catalogues Download Section (Moved up) */}
-      {catalogues.length > 0 && (
-        <section className="py-12 md:py-20 bg-muted/80 border-y">
-          <div className="container mx-auto px-4">
-            <div className="bg-card border rounded-3xl p-8 md:p-12 shadow-sm relative overflow-hidden">
-              <div className="absolute -right-20 -top-20 w-64 h-64 bg-primary/10 rounded-full blur-3xl" />
-              <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
-                <div className="max-w-xl">
-                  <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">Download Our Catalogues</h2>
-                  <p className="text-muted-foreground text-lg">Browse our complete range of products, specifications, and design inspirations offline by downloading our premium PDF catalogues.</p>
-                </div>
-                
-                <CatalogueDownloadForm catalogues={catalogues} />
-              </div>
-            </div>
-          </div>
-        </section>
-      )}
+
 
       {/* 5. Products Section */}
       {featuredProducts.length > 0 && (
@@ -171,32 +154,20 @@ export default async function HomePage() {
         </section>
       )}
 
-      {/* 6. Gallery / Showroom Glimpse Section */}
-      {gallery.length > 0 && (
+      {/* Catalogues Download Section */}
+      {catalogues.length > 0 && (
         <section className="py-12 md:py-24 bg-background border-t">
           <div className="container mx-auto px-4">
-            <div className="flex flex-col md:flex-row items-center justify-between mb-12">
-              <div className="max-w-xl mb-6 md:mb-0">
-                <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">Showroom Glimpse</h2>
-                <p className="text-muted-foreground text-lg">A peek into our luxurious Sangli showroom and recent installations.</p>
-              </div>
-              <Link href="/gallery" className={buttonVariants({ variant: "outline" })}>
-                View Full Gallery <ArrowRight className="ml-2 w-4 h-4" />
-              </Link>
-            </div>
-            
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-              {gallery.map((media: any) => (
-                <div key={media.id} className="relative aspect-square rounded-xl overflow-hidden group">
-                  <Image 
-                    src={media.url} 
-                    alt="Showroom Gallery" 
-                    fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            <div className="bg-card border rounded-3xl p-8 md:p-12 shadow-sm relative overflow-hidden">
+              <div className="absolute -right-20 -top-20 w-64 h-64 bg-primary/10 rounded-full blur-3xl" />
+              <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
+                <div className="max-w-xl">
+                  <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">Download Our Catalogues</h2>
+                  <p className="text-muted-foreground text-lg">Browse our complete range of products, specifications, and design inspirations offline by downloading our premium PDF catalogues.</p>
                 </div>
-              ))}
+                
+                <CatalogueDownloadForm catalogues={catalogues} />
+              </div>
             </div>
           </div>
         </section>
