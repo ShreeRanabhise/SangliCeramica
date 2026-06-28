@@ -48,7 +48,6 @@ export async function Footer() {
                 { name: "Products", href: "/products" },
                 { name: "Gallery", href: "/gallery" },
                 { name: "About Us", href: "/about" },
-                { name: "Download Catalogue", href: "/#catalogues" },
                 { name: "Contact", href: "/contact" },
               ].map((item) => (
                 <li key={item.name}>
@@ -97,10 +96,10 @@ export async function Footer() {
                 <MapPin className="w-4 h-4" />
                 Get Directions
               </Link>
-              {mainCatalogue && (
-                <a href={mainCatalogue.fileUrl} target="_blank" rel="noopener noreferrer" className={buttonVariants({ variant: "outline", className: "w-full justify-start gap-3 h-12 border-slate-800 text-slate-300 hover:text-white hover:bg-slate-800/80" })}>
+              {catalogues.length > 0 && (
+                <Link href="/#catalogues" className={buttonVariants({ variant: "outline", className: "w-full justify-start gap-3 h-12 border-slate-800 text-slate-300 hover:text-white hover:bg-slate-800/80" })}>
                   Download Catalogue
-                </a>
+                </Link>
               )}
             </div>
           </div>

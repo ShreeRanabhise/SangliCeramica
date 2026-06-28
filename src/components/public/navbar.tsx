@@ -86,9 +86,6 @@ export function Navbar() {
           {/* CTA & Mobile Toggle */}
           <div className="flex items-center gap-4">
             <div className="hidden md:flex items-center gap-2">
-              <Link href="/#catalogues" className={buttonVariants({ variant: !isScrolled && pathname === "/" ? "default" : "secondary", className: "rounded-full px-6" })}>
-                Download Catalogue
-              </Link>
               <Link href="/contact" className={buttonVariants({ variant: !isScrolled && pathname === "/" ? "secondary" : "default", className: "rounded-full px-6" })}>
                 Inquire Now
               </Link>
@@ -131,10 +128,11 @@ export function Navbar() {
                 </Link>
               ))}
               <div className="flex flex-col gap-3 mt-2">
-                <Link href="/#catalogues" className={buttonVariants({ variant: "secondary", className: "w-full" })} onClick={() => setMobileMenuOpen(false)}>
-                  Download Catalogue
-                </Link>
-                <Link href="/contact" className={buttonVariants({ className: "w-full" })} onClick={() => setMobileMenuOpen(false)}>
+                <Link
+                  href="/contact"
+                  className={buttonVariants({ variant: "default", className: "w-full justify-center h-12 text-base" })}
+                  onClick={() => setMobileMenuOpen(false)}
+                >
                   Inquire Now
                 </Link>
               </div>
