@@ -97,7 +97,7 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
                 <Link 
                   key={cat.id} 
                   href={`/catalog?category=${cat.id}`}
-                  className="group relative h-48 rounded-2xl overflow-hidden block border shadow-sm hover:shadow-md transition-all hover:-translate-y-1"
+                  className="group relative aspect-[3/2] rounded-2xl overflow-hidden block border shadow-sm hover:shadow-md transition-all hover:-translate-y-1"
                 >
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-10" />
                   {cat.icon ? (
@@ -139,7 +139,7 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
                 return (
                   <Link key={product.id} href={`/catalog/${product.slug}`} className="group block">
                     <div className="bg-card rounded-xl overflow-hidden border shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-1">
-                      <div className="relative aspect-square bg-muted overflow-hidden">
+                      <div className="relative aspect-[3/2] bg-muted overflow-hidden">
                         {primaryImage ? (
                           <Image 
                             src={primaryImage.url} 

@@ -178,7 +178,7 @@ export function CatalogClient({ products, categories }: CatalogClientProps) {
                   >
                     <Link href={`/catalog/${product.slug}`} className="group block h-full">
                       <div className="bg-card h-full rounded-2xl overflow-hidden border shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-2">
-                        <div className="relative aspect-square bg-muted overflow-hidden">
+                        <div className="relative aspect-[3/2] bg-muted overflow-hidden">
                           {primaryImage ? (
                             <Image 
                               src={primaryImage.url} 

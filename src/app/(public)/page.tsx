@@ -77,7 +77,7 @@ export default async function HomePage() {
                 <Link 
                   key={col.id} 
                   href={`/collections/${col.collection.toLowerCase()}`}
-                  className="group relative h-[400px] rounded-2xl overflow-hidden block"
+                  className="group relative aspect-[3/2] rounded-2xl overflow-hidden block"
                 >
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-10" />
                   {col.imageUrl ? (
@@ -118,7 +118,7 @@ export default async function HomePage() {
                 return (
                   <Link key={product.id} href={`/catalog/${product.slug}`} className="group block">
                     <div className="bg-card rounded-2xl overflow-hidden border shadow-sm transition-shadow hover:shadow-md">
-                      <div className="relative aspect-[4/5] bg-muted overflow-hidden">
+                      <div className="relative aspect-[3/2] bg-muted overflow-hidden">
                         {primaryImage ? (
                           <Image 
                             src={primaryImage.url} 
