@@ -9,7 +9,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "sonner";
 import { createBranch, updateBranch } from "@/actions/branches";
 import { Loader2, ArrowLeft, Plus, Trash } from "lucide-react";
-import { ImageUpload } from "@/components/ui/image-upload";
+import ImageUpload from "@/components/admin/image-upload";
 
 interface BranchFormProps {
   initialData?: any | null;
