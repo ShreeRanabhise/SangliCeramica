@@ -85,9 +85,14 @@ export function Navbar() {
 
           {/* CTA & Mobile Toggle */}
           <div className="flex items-center gap-4">
-            <Link href="/contact" className={buttonVariants({ variant: !isScrolled && pathname === "/" ? "secondary" : "default", className: "hidden md:flex rounded-full px-6" })}>
-              Inquire Now
-            </Link>
+            <div className="hidden md:flex items-center gap-2">
+              <Link href="/#catalogues" className={buttonVariants({ variant: !isScrolled && pathname === "/" ? "outline" : "outline", className: cn("rounded-full px-6", !isScrolled && pathname === "/" && "text-white border-white/50 hover:bg-white/10 hover:text-white") })}>
+                Download Catalogue
+              </Link>
+              <Link href="/contact" className={buttonVariants({ variant: !isScrolled && pathname === "/" ? "secondary" : "default", className: "rounded-full px-6" })}>
+                Inquire Now
+              </Link>
+            </div>
             
             <button
               className="md:hidden p-2"
@@ -125,9 +130,14 @@ export function Navbar() {
                   {link.name}
                 </Link>
               ))}
-              <Link href="/contact" className={buttonVariants({ className: "w-full mt-4" })}>
-                Inquire Now
-              </Link>
+              <div className="flex flex-col gap-3 mt-2">
+                <Link href="/#catalogues" className={buttonVariants({ variant: "outline", className: "w-full" })} onClick={() => setMobileMenuOpen(false)}>
+                  Download Catalogue
+                </Link>
+                <Link href="/contact" className={buttonVariants({ className: "w-full" })} onClick={() => setMobileMenuOpen(false)}>
+                  Inquire Now
+                </Link>
+              </div>
             </div>
           </motion.div>
         )}

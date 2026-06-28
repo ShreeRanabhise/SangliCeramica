@@ -155,7 +155,7 @@ export default async function HomePage() {
 
       {/* Catalogues Download Section */}
       {catalogues.length > 0 && (
-        <section className="py-12 md:py-16 bg-primary border-t border-primary/20">
+        <section id="catalogues" className="py-12 md:py-16 bg-primary border-t border-primary/20">
           <div className="container mx-auto px-4">
             <div className="flex flex-col md:flex-row items-center justify-between gap-8">
               <div className="max-w-xl text-primary-foreground">

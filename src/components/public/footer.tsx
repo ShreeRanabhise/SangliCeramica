@@ -43,11 +43,18 @@ export async function Footer() {
           <div>
             <h3 className="text-white font-semibold mb-6 text-lg tracking-wide">Quick Links</h3>
             <ul className="space-y-4">
-              {["Home", "Products", "Gallery", "About Us", "Contact"].map((item) => (
-                <li key={item}>
-                  <Link href={`/${item.toLowerCase().replace(" ", "-")}`} className="text-slate-400 hover:text-primary transition-colors text-sm flex items-center gap-2 group w-fit">
+              {[
+                { name: "Home", href: "/" },
+                { name: "Products", href: "/catalog" },
+                { name: "Gallery", href: "/gallery" },
+                { name: "About Us", href: "/about" },
+                { name: "Download Catalogue", href: "/#catalogues" },
+                { name: "Contact", href: "/contact" },
+              ].map((item) => (
+                <li key={item.name}>
+                  <Link href={item.href} className="text-slate-400 hover:text-primary transition-colors text-sm flex items-center gap-2 group w-fit">
                     <span className="h-px w-0 bg-primary group-hover:w-4 transition-all duration-300" />
-                    {item}
+                    {item.name}
                   </Link>
                 </li>
               ))}
