@@ -63,9 +63,9 @@ export default async function HomePage() {
 
       {/* 4. Collections Section */}
       {collections && collections.length > 0 && (
-        <section className="py-12 md:py-24 bg-background">
+        <section className="py-4 md:py-8 bg-background">
           <div className="container mx-auto px-4">
-            <div className="flex items-end justify-between mb-12">
+            <div className="flex items-end justify-between mb-4">
               <div className="max-w-2xl">
                 <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">Explore by Collection</h2>
                 <p className="text-muted-foreground text-lg">Browse our meticulously curated collections designed to inspire your next architectural project.</p>
@@ -108,9 +108,9 @@ export default async function HomePage() {
 
       {/* 5. Products Section */}
       {featuredProducts.length > 0 && (
-        <section className="py-12 md:py-24 bg-muted/50 border-t">
+        <section className="py-4 md:py-8 bg-muted/50 border-t">
           <div className="container mx-auto px-4">
-            <div className="text-center max-w-2xl mx-auto mb-16">
+            <div className="text-center max-w-2xl mx-auto mb-6">
               <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">Signature Pieces</h2>
               <p className="text-muted-foreground text-lg">Our most requested and highly rated products, handpicked by our design experts.</p>
             </div>
@@ -145,7 +145,7 @@ export default async function HomePage() {
               })}
             </div>
             
-            <div className="mt-12 text-center">
+            <div className="mt-6 text-center">
               <Link href="/catalog" className={buttonVariants({ variant: "outline", size: "lg", className: "rounded-full px-8" })}>
                 View All Products <ArrowRight className="ml-2 w-4 h-4" />
               </Link>
@@ -156,9 +156,9 @@ export default async function HomePage() {
 
       {/* Catalogues Download Section */}
       {catalogues.length > 0 && (
-        <section className="py-12 md:py-24 bg-background border-t">
+        <section className="py-4 md:py-8 bg-background border-t">
           <div className="container mx-auto px-4">
-            <div className="bg-card border rounded-3xl p-8 md:p-12 shadow-sm relative overflow-hidden">
+            <div className="bg-card border rounded-3xl p-4 md:p-6 shadow-sm relative overflow-hidden">
               <div className="absolute -right-20 -top-20 w-64 h-64 bg-primary/10 rounded-full blur-3xl" />
               <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
                 <div className="max-w-xl">
@@ -174,10 +174,10 @@ export default async function HomePage() {
       )}
 
       {/* CTA Section */}
-      <section className="py-12 md:py-24 bg-primary text-primary-foreground">
+      <section className="py-4 md:py-8 bg-primary text-primary-foreground">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-2xl md:text-5xl font-bold tracking-tight mb-4 md:mb-6">Experience it in person</h2>
-          <p className="text-primary-foreground/80 text-lg md:text-xl max-w-2xl mx-auto mb-10">
+          <h2 className="text-2xl md:text-5xl font-bold tracking-tight mb-2 md:mb-4">Experience it in person</h2>
+          <p className="text-primary-foreground/80 text-lg md:text-xl max-w-2xl mx-auto mb-4">
             Pictures don't do justice to the textures and finishes of our premium ceramics. Visit our Sangli showroom to feel the difference.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">

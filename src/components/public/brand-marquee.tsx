@@ -6,8 +6,8 @@ export function BrandMarquee({ brands }: { brands: any[] }) {
   if (!brands || brands.length === 0) return null;
 
   return (
-    <section className="py-16 bg-white overflow-hidden border-t">
-      <div className="container mx-auto px-4 mb-8 text-center">
+    <section className="py-4 bg-white overflow-hidden border-t">
+      <div className="container mx-auto px-4 mb-4 text-center">
         <h2 className="text-2xl font-bold tracking-tight text-slate-800">Trusted Partner Brands</h2>
       </div>
       <div className="relative flex overflow-hidden w-full group">

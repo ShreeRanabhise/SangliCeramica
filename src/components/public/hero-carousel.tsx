@@ -41,8 +41,8 @@ export function HeroCarousel({ images, title, subtitle }: HeroCarouselProps) {
         />
       ))}
       
-      <div className="container relative z-20 mx-auto px-4 text-center mt-12 md:mt-16">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-xs md:text-sm font-medium mb-4 animate-fade-in-up">
+      <div className="container relative z-20 mx-auto px-4 text-center mt-4 md:mt-6">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-xs md:text-sm font-medium mb-2 animate-fade-in-up">
           <Sparkles className="w-4 h-4 text-primary" />
           <span>Premium Showroom Experience</span>
         </div>
