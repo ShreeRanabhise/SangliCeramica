@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import Image from "next/image";
+import { NavCard } from "@/components/ui/nav-card";
 import Link from "next/link";
 import { CollectionName } from "@prisma/client";
 
@@ -94,7 +95,7 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
             
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
               {categories.map((cat) => (
-                <Link 
+                <NavCard 
                   key={cat.id} 
                   href={`/catalog?category=${cat.id}`}
                   className="group relative aspect-[3/2] rounded-2xl overflow-hidden block border shadow-sm hover:shadow-md transition-all hover:-translate-y-1"
@@ -115,7 +116,7 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
                   <div className="absolute bottom-4 left-4 z-20 pr-4">
                     <h3 className="text-white font-semibold text-lg">{cat.name}</h3>
                   </div>
-                </Link>
+                </NavCard>
               ))}
             </div>
           </div>
@@ -137,7 +138,7 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
               {randomizedProducts.map((product) => {
                 const primaryImage = product.images?.[0]; // We filtered for isPrimary in the query
                 return (
-                  <Link key={product.id} href={`/catalog/${product.slug}`} className="group block">
+                  <NavCard key={product.id} href={`/catalog/${product.slug}`} className="group block">
                     <div className="bg-card rounded-xl overflow-hidden border shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-1">
                       <div className="relative aspect-[3/2] bg-muted overflow-hidden">
                         {primaryImage ? (
@@ -163,7 +164,7 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
                         )}
                       </div>
                     </div>
-                  </Link>
+                  </NavCard>
                 );
               })}
             </div>

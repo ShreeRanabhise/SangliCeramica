@@ -1,6 +1,7 @@
 import { getCollections } from "@/actions/collections";
 import { getProducts } from "@/actions/products";
 import { getBrands } from "@/actions/brands";
+import { NavCard } from "@/components/ui/nav-card";
 import Link from "next/link";
 import Image from "next/image";
 import { Button, buttonVariants } from "@/components/ui/button";
@@ -74,7 +75,7 @@ export default async function HomePage() {
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {collections.map((col: any) => (
-                <Link 
+                <NavCard 
                   key={col.id} 
                   href={`/collections/${col.collection.toLowerCase()}`}
                   className="group relative aspect-[3/2] rounded-2xl overflow-hidden block"
@@ -94,7 +95,7 @@ export default async function HomePage() {
                     <h3 className="text-2xl font-bold text-white mb-2">{col.title}</h3>
                     <p className="text-white/80 text-sm line-clamp-2">{col.tagline}</p>
                   </div>
-                </Link>
+                </NavCard>
               ))}
             </div>
           </div>
@@ -116,7 +117,7 @@ export default async function HomePage() {
               {featuredProducts.map((product: any) => {
                 const primaryImage = product.images?.find((img: any) => img.isPrimary) || product.images?.[0];
                 return (
-                  <Link key={product.id} href={`/catalog/${product.slug}`} className="group block">
+                  <NavCard key={product.id} href={`/catalog/${product.slug}`} className="group block rounded-2xl">
                     <div className="bg-card rounded-2xl overflow-hidden border shadow-sm transition-shadow hover:shadow-md">
                       <div className="relative aspect-[3/2] bg-muted overflow-hidden">
                         {primaryImage ? (
@@ -139,15 +140,17 @@ export default async function HomePage() {
                         <p className="text-sm text-muted-foreground line-clamp-2 mt-2">{product.size}</p>
                       </div>
                     </div>
-                  </Link>
+                  </NavCard>
                 )
               })}
             </div>
             
             <div className="mt-6 text-center">
-              <Link href="/catalog" className={buttonVariants({ variant: "outline", size: "lg", className: "rounded-full px-8" })}>
-                View All Products <ArrowRight className="ml-2 w-4 h-4" />
-              </Link>
+              <NavCard href="/catalog" className="inline-block">
+                <div className={buttonVariants({ variant: "outline", size: "lg", className: "rounded-full px-8 pointer-events-none" })}>
+                  View All Products <ArrowRight className="ml-2 w-4 h-4" />
+                </div>
+              </NavCard>
             </div>
           </div>
         </section>

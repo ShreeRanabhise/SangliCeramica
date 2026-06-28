@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from "react";
 import Image from "next/image";
-import Link from "next/link";
+import { NavCard } from "@/components/ui/nav-card";
 import { Button } from "@/components/ui/button";
 import { Search, Filter, X, PackageOpen } from "lucide-react";
 import { Input } from "@/components/ui/input";
@@ -176,7 +176,7 @@ export function CatalogClient({ products, categories }: CatalogClientProps) {
                     exit={{ opacity: 0, scale: 0.9 }}
                     transition={{ duration: 0.2, delay: index < 12 ? index * 0.05 : 0 }}
                   >
-                    <Link href={`/catalog/${product.slug}`} className="group block h-full">
+                    <NavCard href={`/catalog/${product.slug}`} className="group block h-full">
                       <div className="bg-card h-full rounded-2xl overflow-hidden border shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-2">
                         <div className="relative aspect-[3/2] bg-muted overflow-hidden">
                           {primaryImage ? (
@@ -210,7 +210,7 @@ export function CatalogClient({ products, categories }: CatalogClientProps) {
                           </div>
                         </div>
                       </div>
-                    </Link>
+                    </NavCard>
                   </motion.div>
                 );
               })}
