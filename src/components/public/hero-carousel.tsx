@@ -63,7 +63,7 @@ export function HeroCarousel({ images, title, subtitle }: HeroCarouselProps) {
           <Link href="/collections" className={buttonVariants({ size: "lg", className: "rounded-full px-6 w-full sm:w-auto" })}>
             Explore Collection
           </Link>
-          <Link href="/contact" className={buttonVariants({ size: "lg", variant: "outline", className: "rounded-full px-6 w-full sm:w-auto bg-white/10 text-white hover:bg-white hover:text-black border-white/30 backdrop-blur-sm" })}>
+          <Link href="/showrooms" className={buttonVariants({ size: "lg", variant: "outline", className: "rounded-full px-6 w-full sm:w-auto bg-white/10 text-white hover:bg-white hover:text-black border-white/30 backdrop-blur-sm" })}>
             Visit Showroom
           </Link>
         </div>

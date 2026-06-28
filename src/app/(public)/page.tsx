@@ -180,7 +180,7 @@ export default async function HomePage() {
             Pictures don't do justice to the textures and finishes of our premium ceramics. Visit our Sangli showroom to feel the difference.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link href="/contact" className={buttonVariants({ size: "lg", variant: "secondary", className: "rounded-full px-8 w-full sm:w-auto" })}>
+            <Link href="/showrooms" className={buttonVariants({ size: "lg", variant: "secondary", className: "rounded-full px-8 w-full sm:w-auto" })}>
               <MapPin className="mr-2 h-4 w-4" />
               Get Directions
             </Link>

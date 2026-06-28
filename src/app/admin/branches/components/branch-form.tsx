@@ -9,6 +9,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "sonner";
 import { createBranch, updateBranch } from "@/actions/branches";
 import { Loader2, ArrowLeft, Plus, Trash } from "lucide-react";
+import { ImageUpload } from "@/components/ui/image-upload";
 
 interface BranchFormProps {
   initialData?: any | null;
@@ -19,6 +20,7 @@ export const BranchForm: React.FC<BranchFormProps> = ({ initialData, onClose }) 
   const [loading, setLoading] = useState(false);
   const [isPrimary, setIsPrimary] = useState(initialData?.isPrimary || false);
   const [phones, setPhones] = useState<string[]>(initialData?.phones || [""]);
+  const [imageUrl, setImageUrl] = useState<string>(initialData?.imageUrl || "");
 
   const title = initialData ? "Edit Branch" : "Create Branch";
   const description = initialData ? "Edit an existing branch." : "Add a new physical branch.";
@@ -47,6 +49,7 @@ export const BranchForm: React.FC<BranchFormProps> = ({ initialData, onClose }) 
         isPrimary,
         address: formData.get("address"),
         mapUrl: formData.get("mapUrl"),
+        imageUrl,
         phones: filteredPhones,
         whatsapp: formData.get("whatsapp"),
         email: formData.get("email"),
@@ -196,7 +199,16 @@ export const BranchForm: React.FC<BranchFormProps> = ({ initialData, onClose }) 
         </div>
 
         <div className="space-y-4">
-          <h3 className="text-lg font-semibold border-b pb-2">Location</h3>
+          <h3 className="text-lg font-semibold border-b pb-2">Location & Media</h3>
+          <div className="space-y-4 mb-4">
+            <Label>Showroom Image</Label>
+            <ImageUpload 
+              value={imageUrl ? [imageUrl] : []} 
+              disabled={loading} 
+              onChange={(url) => setImageUrl(url)} 
+              onRemove={() => setImageUrl("")} 
+            />
+          </div>
           <div className="space-y-2">
             <Label htmlFor="address">Full Address <span className="text-destructive">*</span></Label>
             <Textarea 

@@ -9,9 +9,9 @@ export const metadata: Metadata = {
 };
 
 export default async function ContactPage() {
-  const [settings, branches] = await Promise.all([
+  const [settings, primaryBranch] = await Promise.all([
     prisma.contactInformation.findFirst(),
-    prisma.branch.findMany({ orderBy: { order: "asc" } })
+    prisma.branch.findFirst({ where: { isPrimary: true } })
   ]);
 
   return (
@@ -27,81 +27,45 @@ export default async function ContactPage() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
           
-          {/* Left: Contact Info (Branches) */}
-          <div className="space-y-12">
-            {branches.length === 0 ? (
-              <div className="p-8 text-center text-muted-foreground border rounded-2xl bg-muted/20">
-                No branches configured yet.
-              </div>
-            ) : (
-              branches.map((branch, idx) => (
-                <div key={branch.id} className="space-y-6">
-                  <div>
-                    <h2 className="text-2xl font-bold mb-1">{branch.name}</h2>
-                    {branch.isPrimary && <span className="text-xs font-semibold px-2 py-1 bg-primary/10 text-primary rounded-full">Primary Location</span>}
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    <div className="space-y-3 p-5 bg-muted/50 rounded-2xl border">
-                      <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center mb-2">
-                        <MapPin className="w-5 h-5 text-primary" />
-                      </div>
-                      <h3 className="text-lg font-semibold">Visit Us</h3>
-                      <p className="text-muted-foreground whitespace-pre-line text-sm">
-                        {branch.address}
-                      </p>
-                    </div>
-
-                    <div className="space-y-3 p-5 bg-muted/50 rounded-2xl border">
-                      <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center mb-2">
-                        <Phone className="w-5 h-5 text-primary" />
-                      </div>
-                      <h3 className="text-lg font-semibold">Call Us</h3>
-                      <p className="text-muted-foreground whitespace-pre-line text-sm">
-                        {branch.phones?.length ? branch.phones.join('\n') : "N/A"}
-                      </p>
-                    </div>
-
-                    <div className="space-y-3 p-5 bg-muted/50 rounded-2xl border">
-                      <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center mb-2">
-                        <Mail className="w-5 h-5 text-primary" />
-                      </div>
-                      <h3 className="text-lg font-semibold">Email Us</h3>
-                      <p className="text-muted-foreground whitespace-pre-line text-sm">
-                        {branch.email || settings?.email || "N/A"}
-                      </p>
-                    </div>
-
-                    <div className="space-y-3 p-5 bg-muted/50 rounded-2xl border">
-                      <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center mb-2">
-                        <Clock className="w-5 h-5 text-primary" />
-                      </div>
-                      <h3 className="text-lg font-semibold">Working Hours</h3>
-                      <p className="text-muted-foreground whitespace-pre-line text-sm">
-                        {branch.hours || "N/A"}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Map */}
-                  {branch.mapUrl && (
-                    <div className="w-full h-[300px] bg-slate-200 rounded-2xl overflow-hidden relative">
-                      <iframe 
-                        src={branch.mapUrl}
-                        width="100%" 
-                        height="100%" 
-                        style={{ border: 0 }} 
-                        allowFullScreen 
-                        loading="lazy" 
-                        referrerPolicy="no-referrer-when-downgrade"
-                      ></iframe>
-                    </div>
-                  )}
-
-                  {idx !== branches.length - 1 && <hr className="my-12 border-slate-200" />}
+          {/* Left: Contact Info */}
+          <div className="space-y-8">
+            <div className="space-y-6">
+              <div className="flex items-start gap-4 p-6 bg-muted/30 rounded-2xl border">
+                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center shrink-0">
+                  <Phone className="w-6 h-6 text-primary" />
                 </div>
-              ))
-            )}
+                <div>
+                  <h3 className="text-xl font-bold mb-2">Call Us</h3>
+                  <p className="text-muted-foreground">
+                    {primaryBranch?.phones?.length ? primaryBranch.phones.join('\n') : "N/A"}
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4 p-6 bg-muted/30 rounded-2xl border">
+                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center shrink-0">
+                  <Mail className="w-6 h-6 text-primary" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold mb-2">Email Us</h3>
+                  <p className="text-muted-foreground">
+                    {primaryBranch?.email || settings?.email || "N/A"}
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4 p-6 bg-muted/30 rounded-2xl border">
+                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center shrink-0">
+                  <Clock className="w-6 h-6 text-primary" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold mb-2">Working Hours</h3>
+                  <p className="text-muted-foreground">
+                    {primaryBranch?.hours || "N/A"}
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* Right: Contact Form */}
