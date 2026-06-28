@@ -65,20 +65,20 @@ export async function Footer() {
             <h3 className="text-white font-semibold mb-6 text-lg tracking-wide">Contact Us</h3>
             <ul className="space-y-5">
               <li className="flex gap-4 text-sm text-slate-400 items-start">
-                <div className="mt-1 w-8 h-8 rounded-full bg-slate-900 flex items-center justify-center shrink-0 border border-slate-800">
-                  <MapPin className="w-4 h-4 text-primary" />
+                <div className="mt-1 w-8 h-8 rounded-full bg-slate-900 flex items-center justify-center shrink-0 border border-white/80">
+                  <MapPin className="w-4 h-4 text-white" />
                 </div>
                 <span className="whitespace-pre-line leading-relaxed">{primaryBranch?.address || "Please configure a primary branch in admin."}</span>
               </li>
               <li className="flex gap-4 text-sm text-slate-400 items-center">
-                <div className="w-8 h-8 rounded-full bg-slate-900 flex items-center justify-center shrink-0 border border-slate-800">
-                  <Phone className="w-4 h-4 text-primary" />
+                <div className="w-8 h-8 rounded-full bg-slate-900 flex items-center justify-center shrink-0 border border-white/80">
+                  <Phone className="w-4 h-4 text-white" />
                 </div>
                 <span>{primaryBranch?.phones?.[0] || "+91 98765 43210"}</span>
               </li>
               <li className="flex gap-4 text-sm text-slate-400 items-center">
-                <div className="w-8 h-8 rounded-full bg-slate-900 flex items-center justify-center shrink-0 border border-slate-800">
-                  <Mail className="w-4 h-4 text-primary" />
+                <div className="w-8 h-8 rounded-full bg-slate-900 flex items-center justify-center shrink-0 border border-white/80">
+                  <Mail className="w-4 h-4 text-white" />
                 </div>
                 <span>{primaryBranch?.email || settings?.email || "info@sangliceramica.com"}</span>
               </li>
