@@ -50,7 +50,7 @@ export default async function HomePage() {
           subtitle={mainSubtitle}
         />
       ) : (
-        <div className="w-full aspect-[2/1] bg-slate-900 flex items-center justify-center">
+        <div className="w-full aspect-[5/2] bg-slate-900 flex items-center justify-center">
           <div className="text-center text-white px-4">
             <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4">{mainTitle}</h1>
             <p className="text-base md:text-lg text-slate-300">{mainSubtitle}</p>
