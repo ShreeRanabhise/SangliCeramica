@@ -26,6 +26,14 @@ export const ProductForm: React.FC<ProductFormProps> = ({ initialData, categorie
   const initCollection = initialData?.category?.collection || defaultCollection || "TILES";
   const [selectedCollection, setSelectedCollection] = useState<string>(initCollection);
   
+  const standardSizes = [
+    "300x300 mm", "300x450 mm", "300x600 mm", "600x600 mm",
+    "600x1200 mm", "800x800 mm", "800x1600 mm", "1200x1200 mm",
+    "1200x1800 mm", "1200x2400 mm", "7x3 ft", "8x4 ft", "Standard"
+  ];
+  const initSize = initialData?.size || "";
+  const [isCustomSize, setIsCustomSize] = useState<boolean>(initSize ? !standardSizes.includes(initSize) : false);
+
   const filteredCategories = categories.filter(c => c.collection === selectedCollection);
 
   const title = initialData ? "Edit Product" : "Create Product";
@@ -109,29 +117,32 @@ export const ProductForm: React.FC<ProductFormProps> = ({ initialData, categorie
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="size">Size</Label>
-            <select 
-              id="size" 
-              name="size" 
-              disabled={loading} 
-              defaultValue={initialData?.size || ""} 
-              className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
-            >
-              <option value="">Select a size (optional)</option>
-              <option value="300x300 mm">300x300 mm</option>
-              <option value="300x450 mm">300x450 mm</option>
-              <option value="300x600 mm">300x600 mm</option>
-              <option value="600x600 mm">600x600 mm</option>
-              <option value="600x1200 mm">600x1200 mm</option>
-              <option value="800x800 mm">800x800 mm</option>
-              <option value="800x1600 mm">800x1600 mm</option>
-              <option value="1200x1200 mm">1200x1200 mm</option>
-              <option value="1200x1800 mm">1200x1800 mm</option>
-              <option value="1200x2400 mm">1200x2400 mm</option>
-              <option value="7x3 ft">7x3 ft</option>
-              <option value="8x4 ft">8x4 ft</option>
-              <option value="Standard">Standard</option>
-            </select>
+            <div className="flex items-center justify-between">
+              <Label htmlFor="size">Size</Label>
+              <button 
+                type="button" 
+                onClick={() => setIsCustomSize(!isCustomSize)}
+                className="text-xs text-primary hover:underline font-medium"
+              >
+                {isCustomSize ? "Use Predefined Sizes" : "Add Custom Size"}
+              </button>
+            </div>
+            {isCustomSize ? (
+              <Input id="size" name="size" disabled={loading} defaultValue={initialData?.size || ""} placeholder="e.g. 1000x1000 mm" />
+            ) : (
+              <select 
+                id="size" 
+                name="size" 
+                disabled={loading} 
+                defaultValue={initialData?.size || ""} 
+                className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                <option value="">Select a size (optional)</option>
+                {standardSizes.map(size => (
+                  <option key={size} value={size}>{size}</option>
+                ))}
+              </select>
+            )}
           </div>
 
           <div className="space-y-2">
