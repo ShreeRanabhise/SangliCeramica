@@ -110,7 +110,22 @@ export const ProductForm: React.FC<ProductFormProps> = ({ initialData, categorie
           
           <div className="space-y-2">
             <Label htmlFor="size">Size</Label>
-            <Input id="size" name="size" disabled={loading} defaultValue={initialData?.size || ""} placeholder="e.g. 600x1200 mm" />
+            <Input id="size" name="size" list="size-options" disabled={loading} defaultValue={initialData?.size || ""} placeholder="Select or type a size (e.g. 600x1200 mm)" />
+            <datalist id="size-options">
+              <option value="300x300 mm" />
+              <option value="300x450 mm" />
+              <option value="300x600 mm" />
+              <option value="600x600 mm" />
+              <option value="600x1200 mm" />
+              <option value="800x800 mm" />
+              <option value="800x1600 mm" />
+              <option value="1200x1200 mm" />
+              <option value="1200x1800 mm" />
+              <option value="1200x2400 mm" />
+              <option value="7x3 ft" />
+              <option value="8x4 ft" />
+              <option value="Standard" />
+            </datalist>
           </div>
 
           <div className="space-y-2">
