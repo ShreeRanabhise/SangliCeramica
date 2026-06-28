@@ -54,6 +54,7 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
     },
     include: {
       category: true,
+      brand: true,
       images: {
         where: { isPrimary: true },
         take: 1
@@ -153,7 +154,9 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
                         )}
                       </div>
                       <div className="p-4">
-                        <p className="text-xs text-muted-foreground mb-1 uppercase tracking-wider">{product.category?.name}</p>
+                        <p className="text-xs text-muted-foreground mb-1 uppercase tracking-wider">
+                          {product.brand?.name || product.category?.name}
+                        </p>
                         <h3 className="font-semibold text-base line-clamp-1 group-hover:text-primary transition-colors">{product.name}</h3>
                         {product.size && (
                           <p className="text-xs text-muted-foreground mt-1">Size: {product.size}</p>

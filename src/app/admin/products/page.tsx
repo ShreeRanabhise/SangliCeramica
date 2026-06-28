@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import { getProducts } from "@/actions/products";
 import { getCategories } from "@/actions/categories";
+import { getBrands } from "@/actions/brands";
 import { ProductClient } from "./components/product-client";
 
 export const metadata: Metadata = {
@@ -8,9 +9,10 @@ export const metadata: Metadata = {
 };
 
 export default async function ProductsPage() {
-  const [productsRes, categoriesRes] = await Promise.all([
+  const [productsRes, categoriesRes, brandsRes] = await Promise.all([
     getProducts(),
     getCategories(),
+    getBrands(),
   ]);
 
   if (!productsRes.success) {
@@ -26,6 +28,7 @@ export default async function ProductsPage() {
       <ProductClient 
         data={productsRes.data || []} 
         categories={categoriesRes.data || []}
+        brands={brandsRes.data || []}
       />
     </div>
   );

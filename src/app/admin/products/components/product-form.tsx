@@ -12,12 +12,13 @@ import ImageUpload from "@/components/admin/image-upload";
 interface ProductFormProps {
   initialData?: any | null;
   categories: any[];
+  brands: any[];
   onClose: () => void;
   defaultCategory?: string;
   defaultCollection?: string;
 }
 
-export const ProductForm: React.FC<ProductFormProps> = ({ initialData, categories, onClose, defaultCategory, defaultCollection }) => {
+export const ProductForm: React.FC<ProductFormProps> = ({ initialData, categories, brands, onClose, defaultCategory, defaultCollection }) => {
   const [loading, setLoading] = useState(false);
   
   const [images, setImages] = useState<any[]>(initialData?.images || []);
@@ -40,11 +41,13 @@ export const ProductForm: React.FC<ProductFormProps> = ({ initialData, categorie
       const name = formData.get("name") as string;
       const size = formData.get("size") as string;
       const categoryId = formData.get("categoryId") as string;
+      const brandId = formData.get("brandId") as string;
 
       const payload = {
         name,
         size,
         categoryId,
+        brandId,
         images,
       };
 
@@ -138,6 +141,22 @@ export const ProductForm: React.FC<ProductFormProps> = ({ initialData, categorie
               <option value="" disabled>Select a category</option>
               {filteredCategories.map((c: any) => (
                 <option key={c.id} value={c.id}>{c.name}</option>
+              ))}
+            </select>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="brandId">Brand</Label>
+            <select 
+              id="brandId" 
+              name="brandId" 
+              disabled={loading} 
+              defaultValue={initialData?.brandId || ""} 
+              className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              <option value="">Select a brand (optional)</option>
+              {brands.map((b: any) => (
+                <option key={b.id} value={b.id}>{b.name}</option>
               ))}
             </select>
           </div>

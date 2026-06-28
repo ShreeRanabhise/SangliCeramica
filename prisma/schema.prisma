@@ -72,6 +72,7 @@ model Brand {
   logo        String?   // Supabase Storage URL
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
+  products    Product[]
 }
 
 model Product {
@@ -82,6 +83,9 @@ model Product {
   
   categoryId       String
   category         Category       @relation(fields: [categoryId], references: [id])
+  
+  brandId          String?
+  brand            Brand?         @relation(fields: [brandId], references: [id])
   
   isAvailable      Boolean        @default(true)
   

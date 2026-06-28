@@ -195,7 +195,7 @@ export function CatalogClient({ products, categories }: CatalogClientProps) {
                           {/* Optional Category Badge Overlay */}
                           <div className="absolute top-3 left-3 bg-background/80 backdrop-blur-md px-2.5 py-1 rounded-full border shadow-sm">
                             <p className="text-[10px] font-semibold uppercase tracking-wider text-foreground">
-                              {product.category?.name || "Uncategorized"}
+                              {product.brand?.name || product.category?.name || "Uncategorized"}
                             </p>
                           </div>
                         </div>

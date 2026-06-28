@@ -10,6 +10,7 @@ export async function getProducts() {
       orderBy: { createdAt: "desc" },
       include: {
         category: true,
+        brand: true,
         images: {
           orderBy: { order: "asc" },
         },
@@ -27,6 +28,7 @@ export async function getProduct(id: string) {
       where: { id, isDeleted: false },
       include: {
         category: true,
+        brand: true,
         images: {
           orderBy: { order: "asc" },
         },
@@ -40,7 +42,7 @@ export async function getProduct(id: string) {
 
 export async function createProduct(data: any) {
   try {
-    const { name, size, categoryId, images } = data;
+    const { name, size, categoryId, brandId, images } = data;
 
     if (!name || !categoryId) {
       return { success: false, error: "Name and Category are required." };
@@ -54,6 +56,7 @@ export async function createProduct(data: any) {
         slug,
         size,
         categoryId,
+        brandId: brandId || null,
         images: {
           create: images.map((img: any, index: number) => ({
             url: img.url,
@@ -78,7 +81,7 @@ export async function createProduct(data: any) {
 
 export async function updateProduct(id: string, data: any) {
   try {
-    const { name, size, categoryId, images } = data;
+    const { name, size, categoryId, brandId, images } = data;
 
     if (!name || !categoryId) {
       return { success: false, error: "Name and Category are required." };
@@ -97,6 +100,7 @@ export async function updateProduct(id: string, data: any) {
         slug,
         size,
         categoryId,
+        brandId: brandId || null,
         images: {
           create: images.map((img: any, index: number) => ({
             url: img.url,

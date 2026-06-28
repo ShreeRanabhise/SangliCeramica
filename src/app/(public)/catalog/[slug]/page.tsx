@@ -27,6 +27,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
     where: { slug, isDeleted: false },
     include: {
       category: true,
+      brand: true,
       images: {
         orderBy: { order: "asc" }
       }
@@ -68,7 +69,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
             {/* Badges */}
             <div className="flex items-center gap-3 mb-4">
               <span className="px-3 py-1 bg-muted text-foreground text-xs font-semibold uppercase tracking-wider rounded-full">
-                {product.category.name}
+                {product.brand?.name || product.category?.name}
               </span>
             </div>
 

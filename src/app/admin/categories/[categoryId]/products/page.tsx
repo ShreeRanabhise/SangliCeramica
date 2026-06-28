@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import { getProducts } from "@/actions/products";
 import { getCategories } from "@/actions/categories";
+import { getBrands } from "@/actions/brands";
 import { ProductClient } from "@/app/admin/products/components/product-client";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
@@ -16,9 +17,10 @@ export default async function CategoryProductsPage({
 }) {
   const { categoryId } = await params;
   
-  const [productsRes, categoriesRes] = await Promise.all([
+  const [productsRes, categoriesRes, brandsRes] = await Promise.all([
     getProducts(),
     getCategories(),
+    getBrands(),
   ]);
 
   if (!productsRes.success) {
@@ -49,6 +51,7 @@ export default async function CategoryProductsPage({
       <ProductClient 
         data={filteredProducts} 
         categories={categoriesRes.data || []}
+        brands={brandsRes.data || []}
         defaultCategory={categoryId}
         defaultCollection={category?.collection}
       />
