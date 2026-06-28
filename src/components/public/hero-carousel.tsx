@@ -60,7 +60,7 @@ export function HeroCarousel({ images, title, subtitle }: HeroCarouselProps) {
           {subtitle || "Discover Sangli's most exclusive collection of luxury tiles, elegant sanitaryware, and premium designer doors."}
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-up [animation-delay:600ms]">
-          <Link href="/catalog" className={buttonVariants({ size: "lg", className: "rounded-full px-6 w-full sm:w-auto" })}>
+          <Link href="/collections" className={buttonVariants({ size: "lg", className: "rounded-full px-6 w-full sm:w-auto" })}>
             Explore Collection
           </Link>
           <Link href="/contact" className={buttonVariants({ size: "lg", variant: "outline", className: "rounded-full px-6 w-full sm:w-auto bg-white/10 text-white hover:bg-white hover:text-black border-white/30 backdrop-blur-sm" })}>

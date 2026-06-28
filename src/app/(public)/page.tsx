@@ -93,9 +93,6 @@ export default async function HomePage() {
                   <div className="absolute bottom-0 left-0 w-full p-8 z-20">
                     <h3 className="text-2xl font-bold text-white mb-2">{col.title}</h3>
                     <p className="text-white/80 text-sm line-clamp-2">{col.tagline}</p>
-                    <div className="mt-4 inline-flex items-center text-primary text-sm font-semibold opacity-0 -translate-x-4 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0">
-                      View Collection <ArrowRight className="ml-2 w-4 h-4" />
-                    </div>
                   </div>
                 </Link>
               ))}
