@@ -7,10 +7,7 @@ export function BrandMarquee({ brands }: { brands: any[] }) {
 
   return (
     <section className="py-4 bg-white overflow-hidden border-t">
-      <div className="container mx-auto px-4 mb-4 text-center">
-        <h2 className="text-2xl font-bold tracking-tight text-slate-800">Trusted Partner Brands</h2>
-      </div>
-      <div className="relative flex overflow-hidden w-full group">
+      <div className="relative flex overflow-hidden w-full flex-col justify-center items-center group">
         <div className="flex w-max animate-marquee group-hover:[animation-play-state:paused] gap-12 md:gap-20 items-center justify-center px-6">
           {[...brands, ...brands, ...brands].map((brand, idx) => (
             <div key={`${brand.id}-${idx}`} className="flex items-center justify-center opacity-70 hover:opacity-100 transition-opacity min-w-[150px]">
