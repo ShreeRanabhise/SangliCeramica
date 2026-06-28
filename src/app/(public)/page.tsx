@@ -155,16 +155,17 @@ export default async function HomePage() {
 
       {/* Catalogues Download Section */}
       {catalogues.length > 0 && (
-        <section className="py-4 md:py-8 bg-background border-t">
+        <section className="py-12 md:py-16 bg-muted/30 border-t">
           <div className="container mx-auto px-4">
-            <div className="bg-card border rounded-3xl p-4 md:p-6 shadow-sm relative overflow-hidden">
-              <div className="absolute -right-20 -top-20 w-64 h-64 bg-primary/10 rounded-full blur-3xl" />
-              <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
-                <div className="max-w-xl">
-                  <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">Download Our Catalogues</h2>
-                  <p className="text-muted-foreground text-lg">Browse our complete range of products, specifications, and design inspirations offline by downloading our premium PDF catalogues.</p>
-                </div>
-                
+            <div className="flex flex-col md:flex-row items-center justify-between gap-8 bg-background p-8 md:p-12 rounded-2xl border shadow-sm">
+              <div className="max-w-xl">
+                <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4 text-foreground">Download Our Catalogues</h2>
+                <p className="text-muted-foreground text-lg leading-relaxed">
+                  Browse our complete range of products, specifications, and design inspirations offline by downloading our premium PDF catalogues.
+                </p>
+              </div>
+              
+              <div className="w-full md:w-auto shrink-0">
                 <CatalogueDownloadForm catalogues={catalogues} />
               </div>
             </div>
@@ -173,17 +174,19 @@ export default async function HomePage() {
       )}
 
       {/* CTA Section */}
-      <section className="py-4 md:py-8 bg-primary text-primary-foreground">
+      <section className="py-16 md:py-24 bg-muted/50 border-t">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-2xl md:text-5xl font-bold tracking-tight mb-2 md:mb-4">Experience it in person</h2>
-          <p className="text-primary-foreground/80 text-lg md:text-xl max-w-2xl mx-auto mb-4">
-            Pictures don't do justice to the textures and finishes of our premium ceramics. Visit our Sangli showroom to feel the difference.
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link href="/showrooms" className={buttonVariants({ size: "lg", variant: "secondary", className: "rounded-full px-8 w-full sm:w-auto" })}>
-              <MapPin className="mr-2 h-4 w-4" />
-              Get Directions
-            </Link>
+          <div className="max-w-3xl mx-auto">
+            <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4 text-foreground">Experience it in person</h2>
+            <p className="text-muted-foreground text-lg md:text-xl mb-8 leading-relaxed">
+              Pictures don't do justice to the textures and finishes of our premium ceramics. Visit our Sangli showroom to feel the difference.
+            </p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <Link href="/showrooms" className={buttonVariants({ size: "lg", className: "px-8 w-full sm:w-auto" })}>
+                <MapPin className="mr-2 h-4 w-4" />
+                Get Directions
+              </Link>
+            </div>
           </div>
         </div>
       </section>
