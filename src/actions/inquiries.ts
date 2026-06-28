@@ -1,6 +1,7 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
+import { revalidatePath } from "next/cache";
 
 export async function submitInquiry(formData: FormData) {
   try {
@@ -46,6 +47,7 @@ export async function updateInquiryStatus(id: string, status: string, notes?: st
       where: { id },
       data: { status, notes },
     });
+    revalidatePath("/admin/inquiries");
     return { success: true };
   } catch (error: any) {
     return { success: false, error: error.message };
@@ -57,6 +59,7 @@ export async function deleteInquiry(id: string) {
     await prisma.inquiry.delete({
       where: { id },
     });
+    revalidatePath("/admin/inquiries");
     return { success: true };
   } catch (error: any) {
     return { success: false, error: error.message };
