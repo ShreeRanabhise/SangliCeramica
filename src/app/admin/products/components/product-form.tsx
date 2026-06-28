@@ -3,11 +3,10 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { createProduct, updateProduct } from "@/actions/products";
-import { Loader2, ArrowLeft, Plus, Trash2 } from "lucide-react";
+import { Loader2, ArrowLeft } from "lucide-react";
 import ImageUpload from "@/components/admin/image-upload";
 
 interface ProductFormProps {
@@ -21,39 +20,16 @@ interface ProductFormProps {
 export const ProductForm: React.FC<ProductFormProps> = ({ initialData, categories, onClose, defaultCategory, defaultCollection }) => {
   const [loading, setLoading] = useState(false);
   
-  // States for complex fields
   const [images, setImages] = useState<any[]>(initialData?.images || []);
-  const [features, setFeatures] = useState<string[]>(initialData?.features || [""]);
   
-  // Hierarchical selection
   const initCollection = initialData?.category?.collection || defaultCollection || "TILES";
   const [selectedCollection, setSelectedCollection] = useState<string>(initCollection);
   
   const filteredCategories = categories.filter(c => c.collection === selectedCollection);
-  
-  // Parse specifications if they exist
-  const initSpecs = initialData?.specifications ? Object.entries(initialData.specifications).map(([key, value]) => ({ key, value })) : [{ key: "", value: "" }];
-  const [specifications, setSpecifications] = useState<any[]>(initSpecs);
 
   const title = initialData ? "Edit Product" : "Create Product";
-  const description = initialData ? "Edit an existing product's details and gallery." : "Add a new product to your inventory.";
+  const description = initialData ? "Edit an existing product's details and images." : "Add a new product to your inventory.";
   const action = initialData ? "Save changes" : "Create";
-
-  const handleAddFeature = () => setFeatures([...features, ""]);
-  const handleRemoveFeature = (idx: number) => setFeatures(features.filter((_, i) => i !== idx));
-  const handleFeatureChange = (idx: number, val: string) => {
-    const newF = [...features];
-    newF[idx] = val;
-    setFeatures(newF);
-  };
-
-  const handleAddSpec = () => setSpecifications([...specifications, { key: "", value: "" }]);
-  const handleRemoveSpec = (idx: number) => setSpecifications(specifications.filter((_, i) => i !== idx));
-  const handleSpecChange = (idx: number, field: "key" | "value", val: string) => {
-    const newS = [...specifications];
-    newS[idx][field] = val;
-    setSpecifications(newS);
-  };
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -62,40 +38,13 @@ export const ProductForm: React.FC<ProductFormProps> = ({ initialData, categorie
       const formData = new FormData(e.currentTarget);
       
       const name = formData.get("name") as string;
-      const code = formData.get("code") as string;
-      const productId = formData.get("productId") as string;
-      const price = formData.get("price") as string;
-      const quantity = formData.get("quantity") as string;
       const size = formData.get("size") as string;
-      const color = formData.get("color") as string;
-      const finish = formData.get("finish") as string;
-      const desc = formData.get("description") as string;
       const categoryId = formData.get("categoryId") as string;
-      const isFeatured = formData.get("isFeatured") === "on";
-
-      const cleanedFeatures = features.filter(f => f.trim() !== "");
-      
-      const cleanedSpecs: Record<string, string> = {};
-      specifications.forEach(s => {
-        if (s.key.trim() !== "" && s.value.trim() !== "") {
-          cleanedSpecs[s.key] = s.value;
-        }
-      });
 
       const payload = {
         name,
-        code,
-        productId,
-        price,
-        quantity,
         size,
-        color,
-        finish,
-        description: desc,
         categoryId,
-        isFeatured,
-        features: cleanedFeatures,
-        specifications: cleanedSpecs,
         images,
       };
 
@@ -157,38 +106,8 @@ export const ProductForm: React.FC<ProductFormProps> = ({ initialData, categorie
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="code">Code <span className="text-destructive">*</span></Label>
-            <Input id="code" name="code" disabled={loading} defaultValue={initialData?.code || ""} placeholder="e.g. TILE-STAT-01" required />
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="productId">Product ID</Label>
-            <Input id="productId" name="productId" disabled={loading} defaultValue={initialData?.productId || ""} placeholder="Custom Product ID (Optional)" />
-          </div>
-          
-          <div className="space-y-2">
-            <Label htmlFor="price">Price (₹)</Label>
-            <Input id="price" name="price" type="number" step="0.01" disabled={loading} defaultValue={initialData?.price || ""} placeholder="0.00" />
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="quantity">Quantity</Label>
-            <Input id="quantity" name="quantity" type="number" disabled={loading} defaultValue={initialData?.quantity || ""} placeholder="Available Stock" />
-          </div>
-
-          <div className="space-y-2">
             <Label htmlFor="size">Size</Label>
             <Input id="size" name="size" disabled={loading} defaultValue={initialData?.size || ""} placeholder="e.g. 600x1200 mm" />
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="color">Colour</Label>
-            <Input id="color" name="color" disabled={loading} defaultValue={initialData?.color || ""} placeholder="e.g. White" />
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="finish">Finish</Label>
-            <Input id="finish" name="finish" disabled={loading} defaultValue={initialData?.finish || ""} placeholder="e.g. Glossy, Matte" />
           </div>
 
           <div className="space-y-2">
@@ -222,53 +141,6 @@ export const ProductForm: React.FC<ProductFormProps> = ({ initialData, categorie
               ))}
             </select>
           </div>
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="description">Description</Label>
-          <Textarea id="description" name="description" disabled={loading} defaultValue={initialData?.description || ""} placeholder="Detailed product description..." rows={5} />
-        </div>
-
-        <div className="flex items-center gap-2">
-          <input type="checkbox" id="isFeatured" name="isFeatured" defaultChecked={initialData?.isFeatured} className="w-4 h-4 rounded border-gray-300" />
-          <Label htmlFor="isFeatured" className="font-normal cursor-pointer">Feature this product on the homepage</Label>
-        </div>
-
-        {/* Features Array */}
-        <div className="p-4 border rounded-lg bg-card space-y-4">
-          <div className="flex items-center justify-between">
-            <h3 className="text-lg font-semibold">Key Features</h3>
-            <Button type="button" variant="outline" size="sm" onClick={handleAddFeature}>
-              <Plus className="h-4 w-4 mr-2" /> Add Feature
-            </Button>
-          </div>
-          {features.map((f, i) => (
-            <div key={i} className="flex items-center gap-2">
-              <Input value={f} onChange={(e) => handleFeatureChange(i, e.target.value)} placeholder="e.g. Scratch resistant" />
-              <Button type="button" variant="ghost" size="icon" className="text-destructive" onClick={() => handleRemoveFeature(i)}>
-                <Trash2 className="h-4 w-4" />
-              </Button>
-            </div>
-          ))}
-        </div>
-
-        {/* Specifications JSON */}
-        <div className="p-4 border rounded-lg bg-card space-y-4">
-          <div className="flex items-center justify-between">
-            <h3 className="text-lg font-semibold">Specifications</h3>
-            <Button type="button" variant="outline" size="sm" onClick={handleAddSpec}>
-              <Plus className="h-4 w-4 mr-2" /> Add Spec
-            </Button>
-          </div>
-          {specifications.map((s, i) => (
-            <div key={i} className="flex items-center gap-2">
-              <Input className="w-1/3" value={s.key} onChange={(e) => handleSpecChange(i, "key", e.target.value)} placeholder="e.g. Dimensions" />
-              <Input className="w-full" value={s.value} onChange={(e) => handleSpecChange(i, "value", e.target.value)} placeholder="e.g. 600x1200 mm" />
-              <Button type="button" variant="ghost" size="icon" className="text-destructive" onClick={() => handleRemoveSpec(i)}>
-                <Trash2 className="h-4 w-4" />
-              </Button>
-            </div>
-          ))}
         </div>
 
         <div className="flex gap-4">

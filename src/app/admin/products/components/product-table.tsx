@@ -83,9 +83,8 @@ export const ProductTable: React.FC<ProductTableProps> = ({ data, onEdit }) => {
             <TableRow>
               <TableHead className="w-[80px]">Image</TableHead>
               <TableHead>Product</TableHead>
-              <TableHead>Code</TableHead>
+              <TableHead>Size</TableHead>
               <TableHead>Category</TableHead>
-              <TableHead>Features</TableHead>
               <TableHead className="text-right">Actions</TableHead>
             </TableRow>
           </TableHeader>
@@ -116,13 +115,11 @@ export const ProductTable: React.FC<ProductTableProps> = ({ data, onEdit }) => {
                       <div className="flex flex-col">
                         <span className="font-medium flex items-center gap-2">
                           {product.name}
-                          {product.isFeatured && <Star className="h-3 w-3 fill-yellow-500 text-yellow-500" />}
                         </span>
                       </div>
                     </TableCell>
-                    <TableCell className="text-muted-foreground text-sm">{product.code}</TableCell>
+                    <TableCell className="text-muted-foreground text-sm">{product.size || "-"}</TableCell>
                     <TableCell>{product.category?.name}</TableCell>
-                    <TableCell>{product.features?.length || 0} features</TableCell>
                     <TableCell className="text-right">
                       <Button
                         variant="ghost"

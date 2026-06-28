@@ -21,8 +21,7 @@ export function CatalogClient({ products, categories }: CatalogClientProps) {
 
   const filteredProducts = useMemo(() => {
     return products.filter((p) => {
-      const matchesSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                            p.sku.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase());
       const matchesCollection = selectedCollection ? p.category?.collection === selectedCollection : true;
       const matchesCategory = selectedCategory ? p.categoryId === selectedCategory : true;
       return matchesSearch && matchesCollection && matchesCategory;
@@ -203,12 +202,9 @@ export function CatalogClient({ products, categories }: CatalogClientProps) {
                         <div className="p-5">
                           <h3 className="font-semibold text-lg line-clamp-1 group-hover:text-primary transition-colors mb-1">{product.name}</h3>
                           <div className="flex items-center justify-between mt-2">
-                            <p className="text-xs text-muted-foreground font-medium bg-muted px-2 py-1 rounded-md">
-                              SKU: {product.sku}
-                            </p>
-                            {product.price && (
-                              <p className="text-sm font-bold text-foreground">
-                                ₹{product.price.toLocaleString('en-IN')}
+                            {product.size && (
+                              <p className="text-xs text-muted-foreground font-medium bg-muted px-2 py-1 rounded-md">
+                                Size: {product.size}
                               </p>
                             )}
                           </div>

@@ -40,10 +40,10 @@ export async function getProduct(id: string) {
 
 export async function createProduct(data: any) {
   try {
-    const { name, code, productId, price, quantity, size, color, finish, description, categoryId, features, specifications, isFeatured, images } = data;
+    const { name, size, categoryId, images } = data;
 
-    if (!name || !code || !categoryId) {
-      return { success: false, error: "Name, Code, and Category are required." };
+    if (!name || !categoryId) {
+      return { success: false, error: "Name and Category are required." };
     }
 
     const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, "-");
@@ -52,18 +52,8 @@ export async function createProduct(data: any) {
       data: {
         name,
         slug,
-        code,
-        productId,
-        price: price ? parseFloat(price) : null,
-        quantity: quantity ? parseInt(quantity) : null,
         size,
-        color,
-        finish,
-        description: description || "",
         categoryId,
-        features: features || [],
-        specifications: specifications || {},
-        isFeatured: isFeatured || false,
         images: {
           create: images.map((img: any, index: number) => ({
             url: img.url,
@@ -80,7 +70,7 @@ export async function createProduct(data: any) {
     return { success: true, data: product };
   } catch (error: any) {
     if (error.code === "P2002") {
-      return { success: false, error: "Product with this Code or Name already exists." };
+      return { success: false, error: "Product with this Name already exists." };
     }
     return { success: false, error: error.message };
   }
@@ -88,16 +78,14 @@ export async function createProduct(data: any) {
 
 export async function updateProduct(id: string, data: any) {
   try {
-    const { name, code, productId, price, quantity, size, color, finish, description, categoryId, features, specifications, isFeatured, images } = data;
+    const { name, size, categoryId, images } = data;
 
-    if (!name || !code || !categoryId) {
-      return { success: false, error: "Name, Code, and Category are required." };
+    if (!name || !categoryId) {
+      return { success: false, error: "Name and Category are required." };
     }
 
     const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, "-");
 
-    // We delete old images and recreate them to simplify reordering/updating
-    // In a huge prod app, we might diff them, but for this scale, recreation is safest
     await prisma.productImage.deleteMany({
       where: { productId: id },
     });
@@ -107,18 +95,8 @@ export async function updateProduct(id: string, data: any) {
       data: {
         name,
         slug,
-        code,
-        productId,
-        price: price ? parseFloat(price) : null,
-        quantity: quantity ? parseInt(quantity) : null,
         size,
-        color,
-        finish,
-        description: description || "",
         categoryId,
-        features: features || [],
-        specifications: specifications || {},
-        isFeatured: isFeatured || false,
         images: {
           create: images.map((img: any, index: number) => ({
             url: img.url,

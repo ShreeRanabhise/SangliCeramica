@@ -1,8 +1,8 @@
 import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import { ProductGallery } from "@/components/public/product-gallery";
-import { Button, buttonVariants } from "@/components/ui/button";
-import { Check, MessageSquare, ShieldCheck, Truck } from "lucide-react";
+import { buttonVariants } from "@/components/ui/button";
+import { MessageSquare, ShieldCheck, Truck } from "lucide-react";
 import Link from "next/link";
 
 interface ProductPageProps {
@@ -17,7 +17,6 @@ export async function generateMetadata({ params }: ProductPageProps) {
   
   return {
     title: `${product.name} | Sangli Ceramica`,
-    description: product.description,
   };
 }
 
@@ -38,12 +37,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
     notFound();
   }
 
-  // Parse specifications
-  const specs = product.specifications as Record<string, string>;
-  const hasSpecs = specs && Object.keys(specs).length > 0;
-
   // Generate a WhatsApp inquiry message
-  const inquiryMessage = encodeURIComponent(`Hello Sangli Ceramica, I am interested in the product: ${product.name} (Code: ${product.code}). Could you provide more details?`);
+  const inquiryMessage = encodeURIComponent(`Hello Sangli Ceramica, I am interested in the product: ${product.name}. Could you provide more details?`);
   const whatsappUrl = `https://wa.me/919876543210?text=${inquiryMessage}`;
 
   return (
@@ -77,62 +72,16 @@ export default async function ProductPage({ params }: ProductPageProps) {
               </span>
             </div>
 
-            <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">{product.name}</h1>
-            <div className="flex flex-wrap gap-4 text-sm text-muted-foreground mb-6">
-              <span>Code: <strong className="text-foreground">{product.code}</strong></span>
-              {product.productId && <span>Product ID: <strong className="text-foreground">{product.productId}</strong></span>}
-            </div>
+            <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-6">{product.name}</h1>
 
-            {product.price && (
-              <div className="mb-6">
-                <span className="text-2xl font-bold text-foreground">₹{product.price.toLocaleString('en-IN')}</span>
-                {product.quantity !== null && (
-                  <span className="ml-4 text-sm text-muted-foreground border-l pl-4 border-border/50">
-                    {product.quantity > 0 ? `${product.quantity} in stock` : "Out of stock"}
-                  </span>
-                )}
-              </div>
-            )}
-
-            <div className="grid grid-cols-2 gap-4 mb-8 bg-muted/30 p-4 rounded-xl border border-border/50">
+            <div className="grid grid-cols-1 gap-4 mb-8 bg-muted/30 p-4 rounded-xl border border-border/50 max-w-sm">
               {product.size && (
                 <div>
                   <div className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Size</div>
                   <div className="font-medium">{product.size}</div>
                 </div>
               )}
-              {product.color && (
-                <div>
-                  <div className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Colour</div>
-                  <div className="font-medium">{product.color}</div>
-                </div>
-              )}
-              {product.finish && (
-                <div>
-                  <div className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Finish</div>
-                  <div className="font-medium">{product.finish}</div>
-                </div>
-              )}
             </div>
-
-            <div className="prose prose-slate dark:prose-invert mb-8">
-              <p className="text-lg leading-relaxed text-foreground/80">{product.description}</p>
-            </div>
-
-            {/* Features (if any) */}
-            {product.features && product.features.length > 0 && (
-              <div className="mb-8">
-                <h3 className="font-semibold text-lg mb-4">Key Features</h3>
-                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {product.features.map((feature, i) => (
-                    <li key={i} className="flex items-start gap-2">
-                      <Check className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-                      <span className="text-muted-foreground">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
 
             <div className="bg-muted/50 rounded-2xl p-6 mb-8 border flex flex-col sm:flex-row gap-4 items-center justify-between">
               <div className="flex items-center gap-4 text-sm font-medium">
@@ -160,21 +109,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
           </div>
         </div>
-
-        {/* Specifications Section */}
-        {hasSpecs && (
-          <div className="mt-24 border-t pt-16">
-            <h2 className="text-3xl font-bold tracking-tight mb-8">Technical Specifications</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-4 max-w-4xl">
-              {Object.entries(specs).map(([key, value]) => (
-                <div key={key} className="flex flex-col sm:flex-row sm:items-center justify-between py-3 border-b border-border/50">
-                  <span className="font-medium text-muted-foreground">{key}</span>
-                  <span className="font-semibold text-foreground text-right">{value}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
 
       </div>
     </div>

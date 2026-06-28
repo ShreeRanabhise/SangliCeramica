@@ -155,9 +155,8 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
                       <div className="p-4">
                         <p className="text-xs text-muted-foreground mb-1 uppercase tracking-wider">{product.category?.name}</p>
                         <h3 className="font-semibold text-base line-clamp-1 group-hover:text-primary transition-colors">{product.name}</h3>
-                        <p className="text-xs text-muted-foreground mt-1">Code: {product.code}</p>
-                        {product.price && (
-                          <p className="text-sm font-semibold mt-2">₹{product.price.toLocaleString('en-IN')}</p>
+                        {product.size && (
+                          <p className="text-xs text-muted-foreground mt-1">Size: {product.size}</p>
                         )}
                       </div>
                     </div>
