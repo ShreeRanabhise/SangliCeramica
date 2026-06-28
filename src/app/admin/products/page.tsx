@@ -5,7 +5,7 @@ import { getBrands } from "@/actions/brands";
 import { ProductClient } from "./components/product-client";
 
 export const metadata: Metadata = {
-  title: "Product Management | Sangli Ceramica Admin",
+  title: "Products | Sangli Ceramica Admin",
 };
 
 export default async function ProductsPage() {

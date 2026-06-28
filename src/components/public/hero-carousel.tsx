@@ -30,7 +30,7 @@ export function HeroCarousel({ images, title, subtitle }: HeroCarouselProps) {
     : ["https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2940&auto=format&fit=crop"];
 
   return (
-    <section className="relative w-full aspect-[5/2] flex items-center justify-center overflow-hidden">
+    <section className="relative w-full min-h-[80vh] md:min-h-[600px] md:aspect-[5/2] flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0 bg-slate-950/40 z-10" />
       
       {backgroundImages.map((src, index) => (

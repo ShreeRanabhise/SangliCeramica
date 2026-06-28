@@ -7,7 +7,7 @@ import { Edit, FolderOpen } from "lucide-react";
 import Image from "next/image";
 
 export const metadata: Metadata = {
-  title: "Collections Management | Sangli Ceramica Admin",
+  title: "Collections | Sangli Ceramica Admin",
 };
 
 export default async function CollectionsPage() {

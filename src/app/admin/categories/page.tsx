@@ -3,7 +3,7 @@ import { getCategories } from "@/actions/categories";
 import { CategoryClient } from "./components/category-client";
 
 export const metadata: Metadata = {
-  title: "Category Management | Sangli Ceramica Admin",
+  title: "Categories | Sangli Ceramica Admin",
 };
 
 export default async function CategoriesPage() {

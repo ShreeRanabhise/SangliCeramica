@@ -3,7 +3,7 @@ import Image from "next/image";
 import { CheckCircle2 } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "About Us | Sangli Ceramica",
+  title: "About | Sangli Ceramica",
   description: "Learn about Sangli Ceramica, the premium showroom for luxury tiles, sanitaryware, and doors.",
 };
 

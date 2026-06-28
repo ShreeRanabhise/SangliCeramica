@@ -3,7 +3,7 @@ import { getAlbums } from "@/actions/gallery";
 import { AlbumClient } from "./components/album-client";
 
 export const metadata: Metadata = {
-  title: "Gallery Management | Sangli Ceramica Admin",
+  title: "Gallery | Sangli Ceramica Admin",
 };
 
 export default async function GalleryPage() {

@@ -4,7 +4,7 @@ import { MapPin, Phone, Mail, Clock } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 
 export const metadata: Metadata = {
-  title: "Contact Us | Sangli Ceramica",
+  title: "Contact | Sangli Ceramica",
   description: "Get in touch with Sangli Ceramica. Visit our showroom, call us, or send an inquiry.",
 };
 

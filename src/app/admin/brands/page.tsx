@@ -3,7 +3,7 @@ import { getBrands } from "@/actions/brands";
 import { BrandClient } from "./components/brand-client";
 
 export const metadata: Metadata = {
-  title: "Brand Management | Sangli Ceramica Admin",
+  title: "Brands | Sangli Ceramica Admin",
 };
 
 export default async function BrandsPage() {

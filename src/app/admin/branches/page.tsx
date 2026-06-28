@@ -3,7 +3,7 @@ import { getBranches } from "@/actions/branches";
 import { BranchClient } from "./components/branch-client";
 
 export const metadata: Metadata = {
-  title: "Branch Management | Sangli Ceramica Admin",
+  title: "Branches | Sangli Ceramica Admin",
 };
 
 export default async function BranchesPage() {

@@ -3,7 +3,7 @@ import { ProfileClient } from "./components/profile-client";
 import { createClient } from "@/lib/supabase/server";
 
 export const metadata: Metadata = {
-  title: "Admin Profile | Sangli Ceramica",
+  title: "Profile | Sangli Ceramica Admin",
 };
 
 export default async function ProfilePage() {

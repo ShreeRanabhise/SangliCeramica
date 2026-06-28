@@ -45,7 +45,7 @@ export async function Footer() {
             <ul className="space-y-4">
               {[
                 { name: "Home", href: "/" },
-                { name: "Products", href: "/catalog" },
+                { name: "Products", href: "/products" },
                 { name: "Gallery", href: "/gallery" },
                 { name: "About Us", href: "/about" },
                 { name: "Download Catalogue", href: "/#catalogues" },

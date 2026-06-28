@@ -4,7 +4,7 @@ import { ContentForm } from "./components/content-form";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export const metadata: Metadata = {
-  title: "Content Management | Sangli Ceramica Admin",
+  title: "Content | Sangli Ceramica Admin",
 };
 
 export default async function ContentPage() {

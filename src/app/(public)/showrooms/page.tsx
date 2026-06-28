@@ -4,7 +4,7 @@ import Image from "next/image";
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Our Showrooms | Sangli Ceramica",
+  title: "Showrooms | Sangli Ceramica",
   description: "Visit our showrooms to experience premium luxury tiles, sanitaryware, and doors.",
 };
 

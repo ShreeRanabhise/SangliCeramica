@@ -88,7 +88,7 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
           <div className="mb-20">
             <div className="flex items-center justify-between mb-8">
               <h2 className="text-3xl font-bold tracking-tight">Explore Categories</h2>
-              <Link href="/catalog" className="text-primary font-medium hover:underline">
+              <Link href="/products" className="text-primary font-medium hover:underline">
                 View all products &rarr;
               </Link>
             </div>
@@ -97,7 +97,7 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
               {categories.map((cat) => (
                 <NavCard 
                   key={cat.id} 
-                  href={`/catalog?category=${cat.id}`}
+                  href={`/products?category=${cat.id}`}
                   className="group relative aspect-[3/2] rounded-2xl overflow-hidden block border shadow-sm hover:shadow-md transition-all hover:-translate-y-1"
                 >
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-10" />
@@ -138,7 +138,7 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
               {randomizedProducts.map((product) => {
                 const primaryImage = product.images?.[0]; // We filtered for isPrimary in the query
                 return (
-                  <NavCard key={product.id} href={`/catalog/${product.slug}`} className="group block">
+                  <NavCard key={product.id} href={`/products/${product.slug}`} className="group block">
                     <div className="bg-card rounded-xl overflow-hidden border shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-1">
                       <div className="relative aspect-[3/2] bg-muted overflow-hidden">
                         {primaryImage ? (

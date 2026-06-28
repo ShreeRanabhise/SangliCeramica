@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Search, Filter, X, PackageOpen } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { motion, AnimatePresence } from "framer-motion";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 
 interface CatalogClientProps {
   products: any[];
@@ -49,6 +50,67 @@ export function CatalogClient({ products, categories }: CatalogClientProps) {
     setSelectedCategory(null); // Reset category when collection changes
   };
 
+  const FilterSidebar = () => (
+    <>
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <h3 className="font-semibold text-lg">Collections</h3>
+          {selectedCollection && (
+            <button onClick={() => { setSelectedCollection(null); setSelectedCategory(null); }} className="text-xs font-medium text-muted-foreground hover:text-primary transition-colors">Clear</button>
+          )}
+        </div>
+        <div className="flex flex-wrap gap-2">
+          {collections.map((col) => (
+            <button
+              key={col.id}
+              onClick={() => handleCollectionChange(col.id)}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+                selectedCollection === col.id 
+                  ? "bg-primary text-primary-foreground shadow-sm" 
+                  : "bg-muted/50 text-muted-foreground hover:bg-muted hover:text-foreground"
+              }`}
+            >
+              {col.name}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="space-y-4 mt-8">
+        <div className="flex items-center justify-between">
+          <h3 className="font-semibold text-lg">Categories</h3>
+          {selectedCategory && (
+            <button onClick={() => setSelectedCategory(null)} className="text-xs font-medium text-muted-foreground hover:text-primary transition-colors">Clear</button>
+          )}
+        </div>
+        <div className="flex flex-col gap-2">
+          {visibleCategories.map((cat) => (
+            <button
+              key={cat.id}
+              onClick={() => setSelectedCategory(cat.id)}
+              className={`flex items-center justify-between w-full px-3 py-2 rounded-lg text-sm transition-all duration-200 ${
+                selectedCategory === cat.id
+                  ? "bg-primary/10 text-primary font-medium"
+                  : "text-muted-foreground hover:bg-muted hover:text-foreground"
+              }`}
+            >
+              <span>{cat.name}</span>
+              {selectedCategory === cat.id && (
+                <motion.div layoutId="active-cat-indicator" className="w-1.5 h-1.5 rounded-full bg-primary" />
+              )}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {(searchQuery || selectedCollection || selectedCategory) && (
+        <Button variant="ghost" className="w-full text-muted-foreground hover:text-foreground mt-8" onClick={clearFilters}>
+          <X className="mr-2 h-4 w-4" /> Clear All Filters
+        </Button>
+      )}
+    </>
+  );
+
   return (
     <div className="flex flex-col md:flex-row gap-4 md:gap-8 items-start">
       {/* Mobile Filter Toggle */}
@@ -62,15 +124,26 @@ export function CatalogClient({ products, categories }: CatalogClientProps) {
             onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
-        <Button variant="outline" size="icon" onClick={() => setIsFilterOpen(!isFilterOpen)}>
-          <Filter className="h-4 w-4" />
-        </Button>
+        <Sheet open={isFilterOpen} onOpenChange={setIsFilterOpen}>
+          <SheetTrigger>
+            <div className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 w-10">
+              <Filter className="h-4 w-4" />
+            </div>
+          </SheetTrigger>
+          <SheetContent side="bottom" className="h-[85vh] rounded-t-3xl overflow-y-auto">
+            <SheetHeader className="mb-6 text-left">
+              <SheetTitle>Filter Products</SheetTitle>
+            </SheetHeader>
+            <div className="pb-10">
+              <FilterSidebar />
+            </div>
+          </SheetContent>
+        </Sheet>
       </div>
 
-      {/* Sidebar Filters */}
-      <div className={`w-full md:w-64 shrink-0 space-y-8 ${isFilterOpen ? 'block' : 'hidden md:block'}`}>
-        
-        <div className="hidden md:block relative">
+      {/* Desktop Sidebar Filters */}
+      <div className="hidden md:block w-64 shrink-0 space-y-8">
+        <div className="relative">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input 
             placeholder="Search products..." 
@@ -79,63 +152,7 @@ export function CatalogClient({ products, categories }: CatalogClientProps) {
             onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
-
-        <div className="space-y-4">
-          <div className="flex items-center justify-between">
-            <h3 className="font-semibold text-lg">Collections</h3>
-            {selectedCollection && (
-              <button onClick={() => { setSelectedCollection(null); setSelectedCategory(null); }} className="text-xs font-medium text-muted-foreground hover:text-primary transition-colors">Clear</button>
-            )}
-          </div>
-          <div className="flex flex-wrap gap-2">
-            {collections.map((col) => (
-              <button
-                key={col.id}
-                onClick={() => handleCollectionChange(col.id)}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
-                  selectedCollection === col.id 
-                    ? "bg-primary text-primary-foreground shadow-sm" 
-                    : "bg-muted/50 text-muted-foreground hover:bg-muted hover:text-foreground"
-                }`}
-              >
-                {col.name}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        <div className="space-y-4">
-          <div className="flex items-center justify-between">
-            <h3 className="font-semibold text-lg">Categories</h3>
-            {selectedCategory && (
-              <button onClick={() => setSelectedCategory(null)} className="text-xs font-medium text-muted-foreground hover:text-primary transition-colors">Clear</button>
-            )}
-          </div>
-          <div className="flex flex-col gap-2">
-            {visibleCategories.map((cat) => (
-              <button
-                key={cat.id}
-                onClick={() => setSelectedCategory(cat.id)}
-                className={`flex items-center justify-between w-full px-3 py-2 rounded-lg text-sm transition-all duration-200 ${
-                  selectedCategory === cat.id
-                    ? "bg-primary/10 text-primary font-medium"
-                    : "text-muted-foreground hover:bg-muted hover:text-foreground"
-                }`}
-              >
-                <span>{cat.name}</span>
-                {selectedCategory === cat.id && (
-                  <motion.div layoutId="active-cat-indicator" className="w-1.5 h-1.5 rounded-full bg-primary" />
-                )}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {(searchQuery || selectedCollection || selectedCategory) && (
-          <Button variant="ghost" className="w-full text-muted-foreground hover:text-foreground" onClick={clearFilters}>
-            <X className="mr-2 h-4 w-4" /> Clear All Filters
-          </Button>
-        )}
+        <FilterSidebar />
       </div>
 
       {/* Product Grid */}
@@ -176,7 +193,7 @@ export function CatalogClient({ products, categories }: CatalogClientProps) {
                     exit={{ opacity: 0, scale: 0.9 }}
                     transition={{ duration: 0.2, delay: index < 12 ? index * 0.05 : 0 }}
                   >
-                    <NavCard href={`/catalog/${product.slug}`} className="group block h-full">
+                    <NavCard href={`/products/${product.slug}`} className="group block h-full">
                       <div className="bg-card h-full rounded-2xl overflow-hidden border shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-2">
                         <div className="relative aspect-[3/2] bg-muted overflow-hidden">
                           {primaryImage ? (
