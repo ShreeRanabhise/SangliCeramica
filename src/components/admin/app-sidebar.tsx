@@ -115,8 +115,7 @@ export function AppSidebar({ user }: { user: any }) {
         <SidebarMenu>
           <SidebarMenuItem>
             <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <SidebarMenuButton size="lg" className="w-full flex items-center gap-3">
+              <DropdownMenuTrigger className="w-full flex items-center gap-3 p-2 hover:bg-muted rounded-md transition-colors text-left outline-none focus:ring-2 focus:ring-ring">
                   <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
                     <User className="w-4 h-4 text-primary" />
                   </div>
@@ -126,7 +125,6 @@ export function AppSidebar({ user }: { user: any }) {
                       {user?.email || "admin@example.com"}
                     </span>
                   </div>
-                </SidebarMenuButton>
               </DropdownMenuTrigger>
               <DropdownMenuContent side="right" align="end" className="w-56">
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
