@@ -110,22 +110,28 @@ export const ProductForm: React.FC<ProductFormProps> = ({ initialData, categorie
           
           <div className="space-y-2">
             <Label htmlFor="size">Size</Label>
-            <Input id="size" name="size" list="size-options" disabled={loading} defaultValue={initialData?.size || ""} placeholder="Select or type a size (e.g. 600x1200 mm)" />
-            <datalist id="size-options">
-              <option value="300x300 mm" />
-              <option value="300x450 mm" />
-              <option value="300x600 mm" />
-              <option value="600x600 mm" />
-              <option value="600x1200 mm" />
-              <option value="800x800 mm" />
-              <option value="800x1600 mm" />
-              <option value="1200x1200 mm" />
-              <option value="1200x1800 mm" />
-              <option value="1200x2400 mm" />
-              <option value="7x3 ft" />
-              <option value="8x4 ft" />
-              <option value="Standard" />
-            </datalist>
+            <select 
+              id="size" 
+              name="size" 
+              disabled={loading} 
+              defaultValue={initialData?.size || ""} 
+              className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              <option value="">Select a size (optional)</option>
+              <option value="300x300 mm">300x300 mm</option>
+              <option value="300x450 mm">300x450 mm</option>
+              <option value="300x600 mm">300x600 mm</option>
+              <option value="600x600 mm">600x600 mm</option>
+              <option value="600x1200 mm">600x1200 mm</option>
+              <option value="800x800 mm">800x800 mm</option>
+              <option value="800x1600 mm">800x1600 mm</option>
+              <option value="1200x1200 mm">1200x1200 mm</option>
+              <option value="1200x1800 mm">1200x1800 mm</option>
+              <option value="1200x2400 mm">1200x2400 mm</option>
+              <option value="7x3 ft">7x3 ft</option>
+              <option value="8x4 ft">8x4 ft</option>
+              <option value="Standard">Standard</option>
+            </select>
           </div>
 
           <div className="space-y-2">
