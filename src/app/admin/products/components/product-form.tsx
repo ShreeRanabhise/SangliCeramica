@@ -27,9 +27,12 @@ export const ProductForm: React.FC<ProductFormProps> = ({ initialData, categorie
   const [selectedCollection, setSelectedCollection] = useState<string>(initCollection);
   
   const standardSizes = [
-    "300x300 mm", "300x450 mm", "300x600 mm", "600x600 mm",
-    "600x1200 mm", "800x800 mm", "800x1600 mm", "1200x1200 mm",
-    "1200x1800 mm", "1200x2400 mm", "7x3 ft", "8x4 ft", "Standard"
+    "20x20 mm", "25x25 mm", "48x48 mm", "50x50 mm", "75x150 mm", 
+    "75x300 mm", "100x200 mm", "100x300 mm", "150x600 mm", "200x1000 mm", 
+    "200x1200 mm", "200x1500 mm", "250x375 mm", "300x300 mm", "300x450 mm", 
+    "300x600 mm", "300x900 mm", "300x1800 mm", "400x400 mm", "400x800 mm", 
+    "500x500 mm", "600x600 mm", "600x1200 mm", "800x800 mm", "800x1600 mm", 
+    "1000x1000 mm", "1200x1200 mm", "1200x1800 mm", "1200x2400 mm", "1600x3200 mm"
   ];
   const initSize = initialData?.size || "";
   const [isCustomSize, setIsCustomSize] = useState<boolean>(initSize ? !standardSizes.includes(initSize) : false);
