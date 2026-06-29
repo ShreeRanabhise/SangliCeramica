@@ -58,7 +58,7 @@ export function Navbar() {
                 "font-black text-2xl tracking-tighter transition-colors",
                 lightText ? "text-white" : "text-foreground"
               )}>
-                SANGLI<span className="font-light text-primary">CERAMICA</span>
+                SANGLI <span className="font-light text-primary">CERAMICA</span>
               </span>
             </Link>
 
