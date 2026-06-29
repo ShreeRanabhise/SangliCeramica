@@ -23,8 +23,10 @@ export function MobileNav() {
           const isActive = pathname === link.href || (link.href !== "/" && pathname.startsWith(link.href + "/"));
           const Icon = link.icon;
           
+          const Component = link.name === "Products" ? NavCard : Link;
+          
           return (
-            <NavCard
+            <Component
               key={link.name}
               href={link.href}
               className={cn(
@@ -36,7 +38,7 @@ export function MobileNav() {
             >
               <Icon className={cn("w-5 h-5 mb-1", isActive && "fill-current")} />
               <span className="text-[10px] font-medium leading-none">{link.name}</span>
-            </NavCard>
+            </Component>
           );
         })}
       </div>
