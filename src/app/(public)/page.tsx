@@ -142,6 +142,17 @@ export default async function HomePage() {
                   </NavCard>
                 )
               })}
+              
+              <Link 
+                href="/products" 
+                className="group flex flex-col items-center justify-center rounded-2xl shrink-0 w-[70vw] md:w-[300px] lg:w-[280px] snap-center bg-muted/50 border border-dashed border-border hover:border-solid hover:bg-muted transition-all duration-300 min-h-[300px]"
+              >
+                <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                  <ArrowRight className="w-8 h-8 text-primary" />
+                </div>
+                <h3 className="font-semibold text-xl group-hover:text-primary transition-colors">Explore More</h3>
+                <p className="text-sm text-muted-foreground mt-2">View all products</p>
+              </Link>
             </div>
             
             <div className="mt-6 text-center">
