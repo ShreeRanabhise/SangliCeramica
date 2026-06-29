@@ -33,7 +33,7 @@ export async function Footer() {
               Premium showroom specializing in luxury tiles, elegant sanitaryware, and premium doors. Transform your spaces with our exclusive collections.
             </p>
             <div className="flex gap-3 pt-2">
-              <a href="#" className="w-10 h-10 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center hover:bg-primary hover:border-primary hover:text-primary-foreground transition-all duration-300 hover:-translate-y-1">
+              <a href="https://sangliceramica.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center hover:bg-primary hover:border-primary hover:text-primary-foreground transition-all duration-300 hover:-translate-y-1">
                 <Globe className="w-4 h-4" />
               </a>
             </div>
