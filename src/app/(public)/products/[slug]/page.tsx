@@ -95,10 +95,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
                   <ShieldCheck className="w-5 h-5 text-primary" />
                   <span>Premium Quality</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <Truck className="w-5 h-5 text-primary" />
-                  <span>Safe Delivery</span>
-                </div>
               </div>
             </div>
 
@@ -108,7 +104,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 <MessageSquare className="mr-2 w-5 h-5" />
                 Inquire on WhatsApp
               </a>
-              <Link href="/contact" className={buttonVariants({ size: "lg", variant: "outline", className: "w-full sm:flex-1 h-14 text-base" })}>
+              <Link href="/showrooms" className={buttonVariants({ size: "lg", variant: "outline", className: "w-full sm:flex-1 h-14 text-base" })}>
                 Visit Showroom
               </Link>
             </div>
