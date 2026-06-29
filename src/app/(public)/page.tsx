@@ -170,8 +170,8 @@ export default async function HomePage() {
       {catalogues.length > 0 && (
         <section id="catalogues" className="py-16 md:py-24 bg-primary/5 border-t">
           <div className="w-full max-w-[1400px] mx-auto px-4 md:px-6">
-            <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
-              <div className="w-full lg:w-1/2">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-12">
+              <div className="w-full md:w-1/2">
                 <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-6 text-foreground">
                   Download Our Master Catalogue
                 </h2>
@@ -194,7 +194,7 @@ export default async function HomePage() {
                 </div>
               </div>
               
-              <div className="w-full lg:w-5/12 shrink-0">
+              <div className="w-full md:w-5/12 shrink-0">
                 <CatalogueDownloadForm catalogue={catalogues[0]} />
               </div>
             </div>
