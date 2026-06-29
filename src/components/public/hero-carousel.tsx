@@ -42,10 +42,6 @@ export function HeroCarousel({ images, title, subtitle }: HeroCarouselProps) {
       ))}
       
       <div className="container relative z-20 mx-auto px-4 text-center mt-4 md:mt-6">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-xs md:text-sm font-medium mb-2 animate-fade-in-up">
-          <Sparkles className="w-4 h-4 text-primary" />
-          <span>Premium Showroom Experience</span>
-        </div>
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight mb-4 animate-fade-in-up [animation-delay:200ms] whitespace-pre-wrap">
           {title || "The Pinnacle of Elegance"}
         </h1>
