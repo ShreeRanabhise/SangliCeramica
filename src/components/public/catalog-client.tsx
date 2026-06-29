@@ -52,7 +52,7 @@ export function CatalogClient({ products, categories, initialCategory, initialCo
     setSelectedCategory(null); // Reset category when collection changes
   };
 
-  const FilterSidebar = () => (
+  const FilterSidebar = ({ isMobile = false }: { isMobile?: boolean }) => (
     <>
       <div className="space-y-4">
         <div className="flex items-center justify-between">
@@ -102,10 +102,16 @@ export function CatalogClient({ products, categories, initialCategory, initialCo
         </div>
       </div>
 
-      {(searchQuery || selectedCollection || selectedCategory) && (
-        <Button variant="ghost" className="w-full text-muted-foreground hover:text-foreground mt-8" onClick={clearFilters}>
-          <X className="mr-2 h-4 w-4" /> Clear All Filters
+      {isMobile ? (
+        <Button className="w-full mt-8 rounded-full" onClick={() => setIsFilterOpen(false)}>
+          Continue
         </Button>
+      ) : (
+        (searchQuery || selectedCollection || selectedCategory) && (
+          <Button variant="ghost" className="w-full text-muted-foreground hover:text-foreground mt-8" onClick={clearFilters}>
+            <X className="mr-2 h-4 w-4" /> Clear All Filters
+          </Button>
+        )
       )}
     </>
   );
@@ -134,7 +140,7 @@ export function CatalogClient({ products, categories, initialCategory, initialCo
               <SheetTitle>Filter Products</SheetTitle>
             </SheetHeader>
             <div className="pb-10">
-              <FilterSidebar />
+              <FilterSidebar isMobile={true} />
             </div>
           </SheetContent>
         </Sheet>
