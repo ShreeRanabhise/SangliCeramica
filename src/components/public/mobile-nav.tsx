@@ -30,14 +30,16 @@ export function MobileNav() {
               key={link.name}
               href={link.href}
               className={cn(
-                "flex flex-col items-center justify-center p-2 min-w-[4.5rem] rounded-xl transition-all",
+                "block p-2 min-w-[4.5rem] rounded-xl transition-all",
                 isActive 
                   ? "text-primary bg-primary/10" 
                   : "text-muted-foreground hover:text-foreground hover:bg-muted"
               )}
             >
-              <Icon className={cn("w-5 h-5 mb-1", isActive && "fill-current")} />
-              <span className="text-[10px] font-medium leading-none">{link.name}</span>
+              <div className="flex flex-col items-center justify-center w-full h-full">
+                <Icon className={cn("w-5 h-5 mb-1", isActive && "fill-current")} />
+                <span className="text-[10px] font-medium leading-none">{link.name}</span>
+              </div>
             </Component>
           );
         })}
