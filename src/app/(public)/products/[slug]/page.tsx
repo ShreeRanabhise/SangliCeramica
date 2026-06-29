@@ -2,7 +2,7 @@ import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import { ProductGallery } from "@/components/public/product-gallery";
 import { buttonVariants } from "@/components/ui/button";
-import { MessageSquare, ShieldCheck, Truck } from "lucide-react";
+import { MessageSquare, ShieldCheck, Truck, BadgeCheck, Handshake } from "lucide-react";
 import Link from "next/link";
 import { BackButton } from "@/components/ui/back-button";
 
@@ -90,10 +90,18 @@ export default async function ProductPage({ params }: ProductPageProps) {
             </div>
 
             <div className="bg-muted/50 rounded-2xl p-6 mb-8 border flex flex-col sm:flex-row gap-4 items-center justify-between">
-              <div className="flex items-center gap-4 text-sm font-medium">
+              <div className="flex flex-wrap items-center gap-4 text-sm font-medium">
                 <div className="flex items-center gap-2">
                   <ShieldCheck className="w-5 h-5 text-primary" />
                   <span>Premium Quality</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <BadgeCheck className="w-5 h-5 text-primary" />
+                  <span>Genuine Products</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Handshake className="w-5 h-5 text-primary" />
+                  <span>Trusted Partners</span>
                 </div>
               </div>
             </div>
