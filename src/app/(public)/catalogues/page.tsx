@@ -31,15 +31,25 @@ export default async function CataloguesPage() {
           </p>
         </div>
 
-        {/* Catalogues Grid */}
+        {/* Catalogue Download Form */}
         {catalogues.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-            {catalogues.map((catalogue: any) => (
-              <CatalogueDownloadForm key={catalogue.id} catalogue={catalogue} />
-            ))}
+          <div className="flex flex-col md:flex-row gap-12 items-center">
+            <div className="w-full md:w-1/2">
+               <div className="aspect-[4/3] rounded-2xl bg-muted/30 border border-border/50 flex items-center justify-center p-8 text-center relative overflow-hidden">
+                 <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent pointer-events-none" />
+                 <div>
+                   <FileText className="h-20 w-20 text-primary/40 mx-auto mb-6" />
+                   <h3 className="text-2xl font-bold mb-2">Sangli Ceramica</h3>
+                   <p className="text-muted-foreground font-medium">Master Collection 2026</p>
+                 </div>
+               </div>
+            </div>
+            <div className="w-full md:w-1/2 max-w-md">
+              <CatalogueDownloadForm catalogue={catalogues[0]} />
+            </div>
           </div>
         ) : (
-          <div className="bg-muted/30 border border-dashed rounded-2xl p-12 text-center max-w-2xl">
+          <div className="bg-muted/30 border border-dashed rounded-2xl p-12 text-center max-w-2xl mx-auto">
             <Download className="h-12 w-12 text-muted-foreground mx-auto mb-4 opacity-50" />
             <h3 className="text-xl font-semibold mb-2">No catalogues available</h3>
             <p className="text-muted-foreground">Check back later for our updated product catalogues.</p>

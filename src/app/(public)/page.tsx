@@ -160,30 +160,33 @@ export default async function HomePage() {
       {catalogues.length > 0 && (
         <section id="catalogues" className="py-16 md:py-24 bg-primary/5 border-t">
           <div className="container mx-auto px-4 md:px-6">
-            <div className="flex flex-col md:flex-row items-center justify-between gap-8 mb-12">
-              <div className="max-w-2xl">
-                <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4 text-foreground">Download Our Catalogues</h2>
-                <p className="text-muted-foreground text-lg leading-relaxed">
-                  Browse our complete range of products, specifications, and design inspirations offline by downloading our premium PDF catalogues.
+            <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
+              <div className="w-full lg:w-1/2">
+                <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-6 text-foreground">
+                  Download Our Master Catalogue
+                </h2>
+                <p className="text-muted-foreground text-lg md:text-xl leading-relaxed mb-8">
+                  Browse our complete range of premium tiles, elegant sanitaryware, and luxury doors offline. Get your copy of our comprehensive PDF catalogue today and find the perfect inspiration for your space.
                 </p>
-              </div>
-              <Link href="/catalogues" className={buttonVariants({ variant: "outline", className: "shrink-0 hidden md:inline-flex" })}>
-                View All <ArrowRight className="ml-2 w-4 h-4" />
-              </Link>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-              {catalogues.slice(0, 3).map((catalogue: any) => (
-                <div key={catalogue.id} className="h-full">
-                  <CatalogueDownloadForm catalogue={catalogue} />
+                <div className="hidden md:flex flex-wrap items-center gap-6 text-sm font-medium text-muted-foreground">
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                      <FileText className="w-4 h-4 text-primary" />
+                    </div>
+                    Complete Collection
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                      <Download className="w-4 h-4 text-primary" />
+                    </div>
+                    High-Quality PDF
+                  </div>
                 </div>
-              ))}
-            </div>
-            
-            <div className="mt-8 md:hidden text-center">
-              <Link href="/catalogues" className={buttonVariants({ variant: "outline", className: "w-full" })}>
-                View All Catalogues <ArrowRight className="ml-2 w-4 h-4" />
-              </Link>
+              </div>
+              
+              <div className="w-full lg:w-5/12 shrink-0">
+                <CatalogueDownloadForm catalogue={catalogues[0]} />
+              </div>
             </div>
           </div>
         </section>
