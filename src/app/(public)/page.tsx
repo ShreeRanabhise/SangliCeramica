@@ -91,8 +91,8 @@ export default async function HomePage() {
                   ) : (
                     <div className="absolute inset-0 w-full h-full bg-slate-800" />
                   )}
-                  <div className="absolute bottom-0 left-0 w-full p-8 z-20">
-                    <h3 className="text-2xl font-bold text-white mb-2">{col.title}</h3>
+                  <div className="absolute bottom-0 left-0 w-full p-6 md:p-8 z-20">
+                    <h3 className="text-xl md:text-2xl font-bold text-white mb-2">{col.title}</h3>
                     <p className="text-white/80 text-sm line-clamp-2">{col.tagline}</p>
                   </div>
                 </NavCard>
