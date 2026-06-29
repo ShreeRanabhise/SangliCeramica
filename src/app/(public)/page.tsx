@@ -151,7 +151,7 @@ export default async function HomePage() {
             </div>
             
             <div className="mt-6 text-center">
-              <NavCard href="/products" className="inline-block">
+              <NavCard href="/products" className="inline-block" bareSpinner={true}>
                 <div className={buttonVariants({ variant: "outline", size: "lg", className: "rounded-full px-8 pointer-events-none" })}>
                   View All Products <ArrowRight className="ml-2 w-4 h-4" />
                 </div>

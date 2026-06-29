@@ -10,9 +10,10 @@ interface NavCardProps extends React.ComponentPropsWithoutRef<typeof Link> {
   children: React.ReactNode;
   className?: string;
   activeClassName?: string;
+  bareSpinner?: boolean;
 }
 
-function NavCardInner({ children, className, activeClassName, onClick, href, ...props }: NavCardProps) {
+function NavCardInner({ children, className, activeClassName, bareSpinner, onClick, href, ...props }: NavCardProps) {
   const [isNavigating, setIsNavigating] = useState(false);
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -67,9 +68,13 @@ function NavCardInner({ children, className, activeClassName, onClick, href, ...
       
       {isNavigating && (
         <div className="absolute inset-0 z-50 flex items-center justify-center bg-background/20 backdrop-blur-[1px]">
-          <div className="bg-background/90 p-3 rounded-full shadow-xl">
-            <Loader2 className="w-8 h-8 text-primary animate-spin" />
-          </div>
+          {bareSpinner ? (
+            <Loader2 className="w-5 h-5 text-primary animate-spin" />
+          ) : (
+            <div className="bg-background/90 p-3 rounded-full shadow-xl">
+              <Loader2 className="w-8 h-8 text-primary animate-spin" />
+            </div>
+          )}
         </div>
       )}
     </Link>

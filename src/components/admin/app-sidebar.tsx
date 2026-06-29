@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import {
   Sidebar,
   SidebarContent,
@@ -12,7 +13,7 @@ import {
   SidebarHeader,
   SidebarFooter,
 } from "@/components/ui/sidebar";
-import { Package, FolderTree, Image as ImageIcon, MessageSquare, Tag, LayoutDashboard, Settings, FileText, LayoutTemplate, MapPin, User, LogOut } from "lucide-react";
+import { Package, FolderTree, Image as ImageIcon, MessageSquare, Tag, LayoutDashboard, Settings, FileText, LayoutTemplate, MapPin, User, LogOut, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { NavCard } from "@/components/ui/nav-card";
 import { usePathname, useRouter } from "next/navigation";
@@ -68,7 +69,10 @@ export function AppSidebar({ user }: { user: any }) {
   const pathname = usePathname();
   const router = useRouter();
 
+  const [isSigningOut, setIsSigningOut] = useState(false);
+
   const handleSignOut = async () => {
+    setIsSigningOut(true);
     await signOut();
     router.push("/");
     router.refresh();
@@ -91,7 +95,7 @@ export function AppSidebar({ user }: { user: any }) {
                   return (
                     <SidebarMenuItem key={item.title}>
                       <SidebarMenuButton isActive={isActive}>
-                        <NavCard href={item.url} className="w-full h-full block">
+                        <NavCard href={item.url} className="w-full h-full block" bareSpinner={true}>
                           <div className="flex items-center gap-2 w-full h-full">
                             <item.icon className="h-4 w-4 shrink-0" />
                             <span>{item.title}</span>
@@ -122,9 +126,10 @@ export function AppSidebar({ user }: { user: any }) {
         <button 
           onClick={handleSignOut}
           title="Sign Out"
+          disabled={isSigningOut}
           className="p-2 text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-md transition-colors"
         >
-          <LogOut className="w-5 h-5" />
+          {isSigningOut ? <Loader2 className="w-5 h-5 animate-spin" /> : <LogOut className="w-5 h-5" />}
         </button>
       </SidebarFooter>
     </Sidebar>
