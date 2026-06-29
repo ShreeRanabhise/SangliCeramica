@@ -9,7 +9,6 @@ import { ArrowRight, MapPin, Sparkles, FileText, Download } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import { HeroCarousel } from "@/components/public/hero-carousel";
 import { BrandMarquee } from "@/components/public/brand-marquee";
-import { CatalogueDownloadForm } from "@/components/public/catalogue-download-form";
 
 export const metadata = {
   title: "Sangli Ceramica | Premium Tiles & Sanitaryware Showroom",
@@ -151,26 +150,6 @@ export default async function HomePage() {
                   View All Products <ArrowRight className="ml-2 w-4 h-4" />
                 </div>
               </NavCard>
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Catalogues Download Section */}
-      {catalogues.length > 0 && (
-        <section id="catalogues" className="py-12 md:py-16 bg-primary border-t border-primary/20">
-          <div className="container mx-auto px-4">
-            <div className="flex flex-col md:flex-row items-center justify-between gap-8">
-              <div className="max-w-xl text-primary-foreground">
-                <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">Download Our Catalogues</h2>
-                <p className="text-primary-foreground/80 text-lg leading-relaxed">
-                  Browse our complete range of products, specifications, and design inspirations offline by downloading our premium PDF catalogues.
-                </p>
-              </div>
-              
-              <div className="w-full md:w-auto shrink-0 text-foreground">
-                <CatalogueDownloadForm catalogues={catalogues} />
-              </div>
             </div>
           </div>
         </section>

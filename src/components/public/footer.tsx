@@ -97,7 +97,7 @@ export async function Footer() {
                 Get Directions
               </Link>
               {catalogues.length > 0 && (
-                <Link href="/#catalogues" className={buttonVariants({ variant: "outline", className: "w-full justify-start gap-3 h-12 border-slate-800 text-slate-300 hover:text-white hover:bg-slate-800/80" })}>
+                <Link href="/catalogues" className={buttonVariants({ variant: "outline", className: "w-full justify-start gap-3 h-12 border-white/20 text-slate-300 hover:text-white hover:bg-white/10" })}>
                   Download Catalogue
                 </Link>
               )}
