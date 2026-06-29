@@ -85,21 +85,18 @@ export function CatalogClient({ products, categories, initialCategory, initialCo
             <button onClick={() => setSelectedCategory(null)} className="text-xs font-medium text-muted-foreground hover:text-primary transition-colors">Clear</button>
           )}
         </div>
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-wrap gap-2">
           {visibleCategories.map((cat) => (
             <button
               key={cat.id}
               onClick={() => setSelectedCategory(cat.id)}
-              className={`flex items-center justify-between w-full px-3 py-2 rounded-lg text-sm transition-all duration-200 ${
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
                 selectedCategory === cat.id
-                  ? "bg-primary/10 text-primary font-medium"
-                  : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                  ? "bg-primary text-primary-foreground shadow-sm"
+                  : "bg-muted/50 text-muted-foreground hover:bg-muted hover:text-foreground"
               }`}
             >
-              <span>{cat.name}</span>
-              {selectedCategory === cat.id && (
-                <motion.div layoutId="active-cat-indicator" className="w-1.5 h-1.5 rounded-full bg-primary" />
-              )}
+              {cat.name}
             </button>
           ))}
         </div>

@@ -112,7 +112,7 @@ export default async function HomePage() {
               <p className="text-muted-foreground text-lg">Our most requested and highly rated products, handpicked by our design experts.</p>
             </div>
 
-            <div className="flex overflow-x-auto pb-4 -mx-4 px-4 snap-x snap-mandatory md:grid md:grid-cols-2 lg:grid-cols-4 md:gap-6 md:pb-0 md:mx-0 md:px-0 md:overflow-visible no-scrollbar">
+            <div className="flex overflow-x-auto pb-4 -mx-4 px-4 snap-x snap-mandatory md:grid md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 md:gap-6 md:pb-0 md:mx-0 md:px-0 md:overflow-visible no-scrollbar">
               {featuredProducts.map((product: any) => {
                 const primaryImage = product.images?.find((img: any) => img.isPrimary) || product.images?.[0];
                 return (
