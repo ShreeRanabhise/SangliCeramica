@@ -8,14 +8,24 @@ export const metadata: Metadata = {
   description: "Browse our extensive collection of premium tiles, sanitaryware, and doors.",
 };
 
-export default async function CatalogPage() {
-  const [productsRes, categoriesRes] = await Promise.all([
+export default async function CatalogPage(props: { searchParams: Promise<{ [key: string]: string | string[] | undefined }> }) {
+  const [productsRes, categoriesRes, searchParams] = await Promise.all([
     getProducts(),
     getCategories(),
+    props.searchParams
   ]);
 
   const products = productsRes.success ? productsRes.data : [];
   const categories = categoriesRes.success ? categoriesRes.data : [];
+
+  const categoryId = typeof searchParams.category === "string" ? searchParams.category : undefined;
+  let collectionId: string | undefined = undefined;
+  if (categoryId) {
+    const matchedCategory = categories.find((c: any) => c.id === categoryId);
+    if (matchedCategory) {
+      collectionId = matchedCategory.collection;
+    }
+  }
 
   return (
     <div className="min-h-screen bg-background pt-24 md:pt-28 pb-12 md:pb-16">
@@ -35,6 +45,8 @@ export default async function CatalogPage() {
         <CatalogClient 
           products={products || []} 
           categories={categories || []}
+          initialCategory={categoryId}
+          initialCollection={collectionId}
         />
 
       </div>

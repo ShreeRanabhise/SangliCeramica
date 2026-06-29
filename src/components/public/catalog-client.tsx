@@ -12,12 +12,14 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/co
 interface CatalogClientProps {
   products: any[];
   categories: any[];
+  initialCategory?: string;
+  initialCollection?: string;
 }
 
-export function CatalogClient({ products, categories }: CatalogClientProps) {
+export function CatalogClient({ products, categories, initialCategory, initialCollection }: CatalogClientProps) {
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCollection, setSelectedCollection] = useState<string | null>(null);
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedCollection, setSelectedCollection] = useState<string | null>(initialCollection || null);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(initialCategory || null);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   const filteredProducts = useMemo(() => {
