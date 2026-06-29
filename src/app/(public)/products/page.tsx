@@ -20,7 +20,7 @@ export default async function CatalogPage(props: { searchParams: Promise<{ [key:
 
   const categoryId = typeof searchParams.category === "string" ? searchParams.category : undefined;
   let collectionId: string | undefined = undefined;
-  if (categoryId) {
+  if (categoryId && categories) {
     const matchedCategory = categories.find((c: any) => c.id === categoryId);
     if (matchedCategory) {
       collectionId = matchedCategory.collection;
