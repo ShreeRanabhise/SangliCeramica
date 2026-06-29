@@ -46,7 +46,7 @@ export function Navbar() {
           isScrolled
             ? "bg-background/85 backdrop-blur-xl border rounded-full shadow-lg max-w-5xl"
             : isHome
-              ? "bg-black/20 backdrop-blur-md border border-white/10 rounded-full w-full max-w-7xl shadow-lg"
+              ? "bg-white/10 backdrop-blur-md border border-white/20 rounded-full w-full max-w-7xl shadow-lg"
               : "bg-background/60 backdrop-blur-md border border-border rounded-full w-full max-w-7xl shadow-sm"
         )}
       >
