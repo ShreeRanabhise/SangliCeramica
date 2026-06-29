@@ -77,11 +77,7 @@ export function CatalogueDownloadForm({ catalogue }: CatalogueDownloadFormProps)
             className="bg-background rounded-2xl p-6 shadow-sm border border-border/50 hover:shadow-md transition-shadow w-full h-full flex flex-col justify-between"
           >
             <div className="mb-6">
-              {catalogue.coverImage && (
-                <div className="relative w-full aspect-video mb-4 rounded-xl overflow-hidden shadow-sm">
-                  <img src={catalogue.coverImage} alt={catalogue.title} className="w-full h-full object-cover" />
-                </div>
-              )}
+
               <h3 className="font-semibold text-xl mb-2 flex items-center gap-2">
                 <Download className="h-5 w-5 text-primary shrink-0" /> <span className="truncate">{catalogue.title}</span>
               </h3>

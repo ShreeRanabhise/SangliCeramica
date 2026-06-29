@@ -91,9 +91,11 @@ export function AppSidebar({ user }: { user: any }) {
                   return (
                     <SidebarMenuItem key={item.title}>
                       <SidebarMenuButton isActive={isActive}>
-                        <NavCard href={item.url} className="flex items-center gap-2 w-full h-full">
-                          <item.icon className="h-4 w-4 shrink-0" />
-                          <span>{item.title}</span>
+                        <NavCard href={item.url} className="w-full h-full block">
+                          <div className="flex items-center gap-2 w-full h-full">
+                            <item.icon className="h-4 w-4 shrink-0" />
+                            <span>{item.title}</span>
+                          </div>
                         </NavCard>
                       </SidebarMenuButton>
                     </SidebarMenuItem>

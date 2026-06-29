@@ -164,32 +164,44 @@ export default async function HomePage() {
       {/* Catalogues Download Section */}
       {catalogues.length > 0 && (
         <section id="catalogues" className="py-16 md:py-24 bg-primary/5 border-t">
-          <div className="w-full max-w-[1400px] mx-auto px-4 md:px-6">
-            <div className="flex flex-col md:flex-row items-center justify-between gap-12">
-              <div className="w-full md:w-1/2">
-                <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-6 text-foreground">
-                  Download Our Master Catalogue
-                </h2>
-                <p className="text-muted-foreground text-lg md:text-xl leading-relaxed mb-8">
-                  Browse our complete range of premium tiles, elegant sanitaryware, and luxury doors offline. Get your copy of our comprehensive PDF catalogue today and find the perfect inspiration for your space.
-                </p>
-                <div className="hidden md:flex flex-wrap items-center gap-6 text-sm font-medium text-muted-foreground">
-                  <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-                      <FileText className="w-4 h-4 text-primary" />
-                    </div>
-                    Complete Collection
+          <div className="w-full max-w-[1200px] mx-auto px-4 md:px-6">
+            <div className="text-center max-w-3xl mx-auto mb-12">
+              <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-6 text-foreground">
+                Download Our Master Catalogue
+              </h2>
+              <p className="text-muted-foreground text-lg md:text-xl leading-relaxed">
+                Browse our complete range of premium tiles, elegant sanitaryware, and luxury doors offline. Get your copy of our comprehensive PDF catalogue today and find the perfect inspiration for your space.
+              </p>
+            </div>
+            
+            <div className="flex flex-col md:flex-row items-stretch justify-center gap-8 md:gap-12 max-w-4xl mx-auto">
+              <div className="w-full md:w-1/2 aspect-square rounded-2xl overflow-hidden relative shadow-md bg-muted flex items-center justify-center shrink-0">
+                {catalogues[0].coverImage ? (
+                  <Image 
+                    src={catalogues[0].coverImage} 
+                    alt={catalogues[0].title}
+                    fill
+                    className="object-cover transition-transform duration-700 hover:scale-105"
+                  />
+                ) : (
+                  <div className="text-muted-foreground flex flex-col items-center gap-2">
+                    <FileText className="w-12 h-12" />
+                    <span>Catalogue Preview</span>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-                      <Download className="w-4 h-4 text-primary" />
+                )}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent pointer-events-none" />
+                <div className="absolute bottom-6 left-6 right-6 text-white pointer-events-none">
+                  <div className="flex items-center gap-2 mb-2 text-white/90">
+                    <div className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-sm">
+                      <Download className="w-3 h-3" />
                     </div>
-                    High-Quality PDF
+                    <span className="text-sm font-medium tracking-wide uppercase">Free Download</span>
                   </div>
+                  <h3 className="text-2xl font-bold leading-tight">{catalogues[0].title}</h3>
                 </div>
               </div>
               
-              <div className="w-full md:w-5/12 shrink-0">
+              <div className="w-full md:w-1/2 flex flex-col justify-center shrink-0">
                 <CatalogueDownloadForm catalogue={catalogues[0]} />
               </div>
             </div>
