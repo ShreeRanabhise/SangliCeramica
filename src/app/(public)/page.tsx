@@ -78,7 +78,7 @@ export default async function HomePage() {
                 <NavCard 
                   key={col.id} 
                   href={`/collections/${col.collection.toLowerCase()}`}
-                  className="group relative aspect-[3/2] rounded-2xl overflow-hidden block shrink-0 w-[85vw] snap-center mr-4 md:w-auto md:mr-0 last:mr-0"
+                  className="group relative aspect-[4/3] rounded-2xl overflow-hidden block shrink-0 w-[85vw] snap-center mr-4 md:w-auto md:mr-0 last:mr-0"
                 >
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-10" />
                   {col.imageUrl ? (

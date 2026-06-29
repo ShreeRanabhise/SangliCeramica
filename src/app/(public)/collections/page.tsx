@@ -23,7 +23,7 @@ export default async function CollectionsPage() {
           <Link 
             key={col.id} 
             href={`/collections/${col.collection.toLowerCase()}`}
-            className="group relative h-[400px] rounded-2xl overflow-hidden block"
+            className="group relative aspect-[4/3] rounded-2xl overflow-hidden block"
           >
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-10" />
             {col.imageUrl ? (
