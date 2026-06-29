@@ -136,7 +136,7 @@ export default async function HomePage() {
                         <p className="text-sm text-muted-foreground mb-1">
                           {product.brand?.name || product.category?.name}
                         </p>
-                        <h3 className="font-semibold text-lg line-clamp-1 group-hover:text-primary transition-colors">{product.name}</h3>
+                        <h3 className="font-semibold text-lg group-hover:text-primary transition-colors">{product.name}</h3>
                         <p className="text-sm text-muted-foreground line-clamp-2 mt-2">{product.size}</p>
                       </div>
                     </div>

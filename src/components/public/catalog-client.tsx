@@ -219,7 +219,7 @@ export function CatalogClient({ products, categories, initialCategory, initialCo
                           </div>
                         </div>
                         <div className="p-5">
-                          <h3 className="font-semibold text-lg line-clamp-1 group-hover:text-primary transition-colors mb-1">{product.name}</h3>
+                          <h3 className="font-semibold text-lg group-hover:text-primary transition-colors mb-1">{product.name}</h3>
                           <div className="flex items-center justify-between mt-2">
                             {product.size && (
                               <p className="text-xs text-muted-foreground font-medium bg-muted px-2 py-1 rounded-md">

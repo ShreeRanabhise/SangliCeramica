@@ -158,7 +158,7 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
                         <p className="text-xs text-muted-foreground mb-1 uppercase tracking-wider">
                           {product.brand?.name || product.category?.name}
                         </p>
-                        <h3 className="font-semibold text-base line-clamp-1 group-hover:text-primary transition-colors">{product.name}</h3>
+                        <h3 className="font-semibold text-base group-hover:text-primary transition-colors">{product.name}</h3>
                         {product.size && (
                           <p className="text-xs text-muted-foreground mt-1">Size: {product.size}</p>
                         )}
