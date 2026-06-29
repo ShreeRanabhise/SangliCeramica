@@ -4,6 +4,7 @@ import Image from "next/image";
 import { NavCard } from "@/components/ui/nav-card";
 import Link from "next/link";
 import { CollectionName } from "@prisma/client";
+import { BackButton } from "@/components/ui/back-button";
 
 interface CollectionPageProps {
   params: Promise<{ collection: string }>;
@@ -71,6 +72,9 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
       
       {/* Hero Section */}
       <div className="w-full max-w-[1400px] mx-auto px-4 md:px-6 mb-12 mt-8">
+        <div className="mb-6">
+          <BackButton />
+        </div>
         <div className="max-w-3xl">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4">
             {meta?.title || enumValue}

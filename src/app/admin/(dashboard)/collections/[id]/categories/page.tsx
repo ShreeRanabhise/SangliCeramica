@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { getCategories } from "@/actions/categories";
-import { CategoryClient } from "@/app/admin/categories/components/category-client";
+import { CategoryClient } from "@/app/admin/(dashboard)/categories/components/category-client";
 import { CollectionName } from "@prisma/client";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";

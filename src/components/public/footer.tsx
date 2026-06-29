@@ -112,6 +112,7 @@ export async function Footer() {
             &copy; {new Date().getFullYear()} Sangli Ceramica. All rights reserved.
           </p>
           <div className="flex gap-6 text-sm text-slate-500">
+            <Link href="/admin/login" className="hover:text-primary transition-colors">Admin Login</Link>
             <Link href="/privacy" className="hover:text-primary transition-colors">Privacy Policy</Link>
             <Link href="/terms" className="hover:text-primary transition-colors">Terms of Service</Link>
           </div>

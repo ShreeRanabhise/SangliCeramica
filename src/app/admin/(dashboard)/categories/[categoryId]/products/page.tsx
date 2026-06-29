@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { getProducts } from "@/actions/products";
 import { getCategories } from "@/actions/categories";
 import { getBrands } from "@/actions/brands";
-import { ProductClient } from "@/app/admin/products/components/product-client";
+import { ProductClient } from "@/app/admin/(dashboard)/products/components/product-client";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 

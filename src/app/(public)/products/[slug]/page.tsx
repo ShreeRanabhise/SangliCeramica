@@ -4,6 +4,7 @@ import { ProductGallery } from "@/components/public/product-gallery";
 import { buttonVariants } from "@/components/ui/button";
 import { MessageSquare, ShieldCheck, Truck } from "lucide-react";
 import Link from "next/link";
+import { BackButton } from "@/components/ui/back-button";
 
 interface ProductPageProps {
   params: Promise<{ slug: string }>;
@@ -46,8 +47,12 @@ export default async function ProductPage({ params }: ProductPageProps) {
     <div className="min-h-screen bg-background pt-28 pb-24">
       <div className="container mx-auto px-4 md:px-6">
         
+        <div className="mb-4">
+          <BackButton />
+        </div>
+
         {/* Breadcrumbs */}
-        <div className="flex items-center gap-2 text-sm text-muted-foreground mb-8">
+        <div className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
           <Link href="/" className="hover:text-primary transition-colors">Home</Link>
           <span>/</span>
           <Link href="/products" className="hover:text-primary transition-colors">Products</Link>
