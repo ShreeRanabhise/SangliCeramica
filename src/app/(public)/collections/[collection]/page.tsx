@@ -70,7 +70,7 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
     <div className="min-h-screen bg-background pt-28 pb-24">
       
       {/* Hero Section */}
-      <div className="container mx-auto px-4 md:px-6 mb-12 mt-8">
+      <div className="w-full max-w-[1400px] mx-auto px-4 md:px-6 mb-12 mt-8">
         <div className="max-w-3xl">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4">
             {meta?.title || enumValue}
@@ -81,7 +81,7 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
         </div>
       </div>
 
-      <div className="container mx-auto px-4 md:px-6">
+      <div className="w-full max-w-[1400px] mx-auto px-4 md:px-6">
         
         {/* Categories Grid */}
         {categories.length > 0 && (

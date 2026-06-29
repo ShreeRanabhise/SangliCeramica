@@ -12,7 +12,7 @@ export default async function CollectionsPage() {
   const collections = colRes.success ? colRes.data : [];
 
   return (
-    <div className="container mx-auto px-4 py-12 md:py-24">
+    <div className="w-full max-w-[1400px] mx-auto px-4 py-12 md:py-24">
       <div className="max-w-2xl mb-12">
         <h1 className="text-3xl md:text-5xl font-bold tracking-tight mb-4">Our Collections</h1>
         <p className="text-muted-foreground text-lg">Browse our meticulously curated collections designed to inspire your next architectural project.</p>

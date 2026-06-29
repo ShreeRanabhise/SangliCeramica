@@ -65,7 +65,7 @@ export default async function HomePage() {
       {/* 4. Collections Section */}
       {collections && collections.length > 0 && (
         <section className="py-4 md:py-8 bg-background">
-          <div className="container mx-auto px-4">
+          <div className="w-full max-w-[1400px] mx-auto px-4">
             <div className="flex items-end justify-between mb-4">
               <div className="max-w-2xl">
                 <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">Explore by Collection</h2>
@@ -107,7 +107,7 @@ export default async function HomePage() {
       {/* 5. Products Section */}
       {featuredProducts.length > 0 && (
         <section className="py-4 md:py-8 bg-muted/50 border-t">
-          <div className="container mx-auto px-4">
+          <div className="w-full max-w-[1400px] mx-auto px-4">
             <div className="text-center max-w-2xl mx-auto mb-6">
               <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">Signature Pieces</h2>
               <p className="text-muted-foreground text-lg">Our most requested and highly rated products, handpicked by our design experts.</p>
@@ -159,7 +159,7 @@ export default async function HomePage() {
       {/* Catalogues Download Section */}
       {catalogues.length > 0 && (
         <section id="catalogues" className="py-16 md:py-24 bg-primary/5 border-t">
-          <div className="container mx-auto px-4 md:px-6">
+          <div className="w-full max-w-[1400px] mx-auto px-4 md:px-6">
             <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
               <div className="w-full lg:w-1/2">
                 <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-6 text-foreground">
@@ -194,7 +194,7 @@ export default async function HomePage() {
 
       {/* CTA Section */}
       <section className="py-16 md:py-24 bg-muted/50 border-t">
-        <div className="container mx-auto px-4 text-center">
+        <div className="w-full max-w-[1400px] mx-auto px-4 text-center">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4 text-foreground">Experience it in person</h2>
             <p className="text-muted-foreground text-lg md:text-xl mb-8 leading-relaxed">

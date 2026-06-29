@@ -29,7 +29,7 @@ export default async function CatalogPage(props: { searchParams: Promise<{ [key:
 
   return (
     <div className="min-h-screen bg-background pt-24 md:pt-28 pb-12 md:pb-16">
-      <div className="container mx-auto px-4 md:px-6">
+      <div className="w-full max-w-[1400px] mx-auto px-4 md:px-6">
         
         {/* Header */}
         <div className="mb-8 md:mb-12 max-w-3xl">

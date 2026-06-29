@@ -114,7 +114,7 @@ export function CatalogClient({ products, categories, initialCategory, initialCo
   );
 
   return (
-    <div className="flex flex-col md:flex-row gap-4 md:gap-8 items-start">
+    <div className="flex flex-col gap-6 md:gap-8 w-full">
       {/* Mobile Filter Toggle */}
       <div className="w-full md:hidden flex gap-2">
         <div className="relative flex-1">
@@ -143,23 +143,30 @@ export function CatalogClient({ products, categories, initialCategory, initialCo
         </Sheet>
       </div>
 
-      {/* Desktop Sidebar Filters */}
-      <div className="hidden md:block w-64 shrink-0 space-y-8">
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <Input 
-            placeholder="Search products..." 
-            className="pl-9 focus-visible:ring-primary/50 transition-all bg-card"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
+      {/* Desktop Top Filter Bar */}
+      <div className="hidden md:flex flex-col gap-6 bg-card p-6 rounded-2xl border shadow-sm w-full">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="relative w-full md:max-w-md">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Input 
+              placeholder="Search products..." 
+              className="pl-9 focus-visible:ring-primary/50 transition-all bg-background"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+          </div>
+          <p className="text-muted-foreground text-sm font-medium shrink-0">
+            Showing <span className="text-foreground font-semibold">{filteredProducts.length}</span> products
+          </p>
         </div>
-        <FilterSidebar />
+        <div className="w-full">
+          <FilterSidebar />
+        </div>
       </div>
 
       {/* Product Grid */}
-      <div className="flex-1 w-full min-h-[500px]">
-        <div className="mb-6 flex items-center justify-between">
+      <div className="w-full min-h-[500px]">
+        <div className="mb-4 md:hidden flex items-center justify-between">
           <p className="text-muted-foreground text-sm font-medium">
             Showing <span className="text-foreground font-semibold">{filteredProducts.length}</span> products
           </p>
@@ -169,7 +176,7 @@ export function CatalogClient({ products, categories, initialCategory, initialCo
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="flex flex-col items-center justify-center py-24 text-center rounded-3xl bg-card border shadow-sm"
+            className="flex flex-col items-center justify-center py-24 text-center rounded-3xl bg-card border shadow-sm w-full"
           >
             <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-6">
               <PackageOpen className="h-8 w-8 text-primary" />
@@ -181,7 +188,7 @@ export function CatalogClient({ products, categories, initialCategory, initialCo
         ) : (
           <motion.div 
             layout 
-            className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-6"
+            className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 md:gap-6 w-full"
           >
             <AnimatePresence>
               {filteredProducts.map((product, index) => {
@@ -213,19 +220,17 @@ export function CatalogClient({ products, categories, initialCategory, initialCo
                           
                           {/* Optional Category Badge Overlay */}
                           <div className="absolute top-3 left-3 bg-background/80 backdrop-blur-md px-2.5 py-1 rounded-full border shadow-sm">
-                            <p className="text-[10px] font-semibold uppercase tracking-wider text-foreground">
-                              {product.brand?.name || product.category?.name || "Uncategorized"}
-                            </p>
+                            <span className="text-[10px] font-bold tracking-wider uppercase text-foreground">
+                              {product.brand?.name || product.category?.name || "Product"}
+                            </span>
                           </div>
                         </div>
-                        <div className="p-5">
-                          <h3 className="font-semibold text-lg group-hover:text-primary transition-colors mb-1">{product.name}</h3>
-                          <div className="flex items-center justify-between mt-2">
-                            {product.size && (
-                              <p className="text-xs text-muted-foreground font-medium bg-muted px-2 py-1 rounded-md">
-                                Size: {product.size}
-                              </p>
-                            )}
+                        <div className="p-4 md:p-5 flex flex-col justify-between h-[calc(100%-66%)]">
+                          <div>
+                            <h3 className="font-semibold text-base md:text-lg group-hover:text-primary transition-colors leading-tight">
+                              {product.name}
+                            </h3>
+                            <p className="text-xs md:text-sm text-muted-foreground mt-2 line-clamp-2">{product.size}</p>
                           </div>
                         </div>
                       </div>
