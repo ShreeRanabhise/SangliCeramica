@@ -139,8 +139,8 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
                 const primaryImage = product.images?.[0]; // We filtered for isPrimary in the query
                 return (
                   <NavCard key={product.id} href={`/products/${product.slug}`} className="group block">
-                    <div className="bg-card rounded-xl overflow-hidden border shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-1">
-                      <div className="relative aspect-[3/2] bg-muted overflow-hidden">
+                    <div className="bg-secondary rounded-xl overflow-hidden border shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-1">
+                      <div className="relative aspect-[3/2] bg-white overflow-hidden">
                         {primaryImage ? (
                           <Image 
                             src={primaryImage.url} 

@@ -196,8 +196,8 @@ export function CatalogClient({ products, categories, initialCategory, initialCo
                     transition={{ duration: 0.2, delay: index < 12 ? index * 0.05 : 0 }}
                   >
                     <NavCard href={`/products/${product.slug}`} className="group block h-full">
-                      <div className="bg-card h-full rounded-2xl overflow-hidden border shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-2">
-                        <div className="relative aspect-[3/2] bg-muted overflow-hidden">
+                      <div className="bg-secondary h-full rounded-2xl overflow-hidden border shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-2">
+                        <div className="relative aspect-[3/2] bg-white overflow-hidden">
                           {primaryImage ? (
                             <Image 
                               src={primaryImage.url} 

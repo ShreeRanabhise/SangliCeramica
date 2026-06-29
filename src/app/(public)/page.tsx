@@ -118,8 +118,8 @@ export default async function HomePage() {
                 const primaryImage = product.images?.find((img: any) => img.isPrimary) || product.images?.[0];
                 return (
                   <NavCard key={product.id} href={`/products/${product.slug}`} className="group block rounded-2xl shrink-0 w-[70vw] snap-center mr-4 md:w-auto md:mr-0 last:mr-0">
-                    <div className="bg-card rounded-2xl overflow-hidden border shadow-sm transition-shadow hover:shadow-md">
-                      <div className="relative aspect-[3/2] bg-muted overflow-hidden">
+                    <div className="bg-secondary rounded-2xl overflow-hidden border shadow-sm transition-shadow hover:shadow-md">
+                      <div className="relative aspect-[3/2] bg-white overflow-hidden">
                         {primaryImage ? (
                           <Image 
                             src={primaryImage.url} 
