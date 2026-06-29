@@ -130,13 +130,19 @@ export default async function HomePage() {
                           <div className="w-full h-full flex items-center justify-center bg-secondary">
                           </div>
                         )}
+                        
+                        {product.brand && (
+                          <div className="absolute top-3 left-3 z-10">
+                            <span className="inline-block px-2 py-1 rounded-full bg-background/90 backdrop-blur-md text-foreground shadow-sm text-[10px] uppercase tracking-wider font-semibold">
+                              {product.brand.name}
+                            </span>
+                          </div>
+                        )}
                       </div>
                       <div className="p-5">
-                        <div className="mb-2">
-                          <span className="inline-block px-2 py-0.5 rounded-full bg-primary/10 text-primary text-[10px] uppercase tracking-wider font-semibold">
-                            {product.brand?.name || product.category?.name}
-                          </span>
-                        </div>
+                        <p className="text-sm text-muted-foreground mb-1">
+                          {product.category?.name || "Product"}
+                        </p>
                         <h3 className="font-semibold text-lg group-hover:text-primary transition-colors">{product.name}</h3>
                         <p className="text-sm text-muted-foreground line-clamp-2 mt-2">{product.size}</p>
                       </div>
