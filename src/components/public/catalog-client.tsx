@@ -203,7 +203,7 @@ export function CatalogClient({ products, categories, initialCategory, initialCo
                               src={primaryImage.url} 
                               alt={product.name} 
                               fill 
-                              className="object-cover transition-transform duration-700 group-hover:scale-110"
+                              className="object-contain transition-transform duration-700 group-hover:scale-110"
                             />
                           ) : (
                             <div className="w-full h-full flex items-center justify-center bg-secondary">

@@ -146,7 +146,7 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
                             src={primaryImage.url} 
                             alt={product.name} 
                             fill 
-                            className="object-cover transition-transform duration-500 group-hover:scale-110"
+                            className="object-contain transition-transform duration-500 group-hover:scale-110"
                           />
                         ) : (
                           <div className="w-full h-full flex items-center justify-center bg-secondary">
