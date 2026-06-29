@@ -11,17 +11,36 @@ import { Loader2, Send } from "lucide-react";
 
 export function ContactForm() {
   const [loading, setLoading] = useState(false);
+  const [phone, setPhone] = useState("+91 ");
+
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let val = e.target.value;
+    if (!val.startsWith("+91 ")) {
+      val = "+91 ";
+    }
+    const digits = val.slice(4).replace(/\D/g, '').slice(0, 10);
+    setPhone("+91 " + digits);
+  };
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    
+    if (!/^\+91 \d{10}$/.test(phone)) {
+      toast.error("Please enter a valid 10-digit mobile number.");
+      return;
+    }
+
     try {
       setLoading(true);
       const formData = new FormData(e.currentTarget);
+      formData.set("mobileNumber", phone); // Ensure formatted phone is submitted
+      
       const res = await submitInquiry(formData);
       
       if (res.success) {
         toast.success("Message sent successfully! We will get back to you soon.");
         (e.target as HTMLFormElement).reset();
+        setPhone("+91 ");
       } else {
         toast.error(res.error);
       }
@@ -41,7 +60,15 @@ export function ContactForm() {
         </div>
         <div className="space-y-2">
           <Label htmlFor="mobileNumber">Phone Number <span className="text-destructive">*</span></Label>
-          <Input id="mobileNumber" name="mobileNumber" required disabled={loading} placeholder="+91 98765 43210" />
+          <Input 
+            id="mobileNumber" 
+            name="mobileNumber" 
+            required 
+            disabled={loading} 
+            placeholder="+91 98765 43210" 
+            value={phone}
+            onChange={handlePhoneChange}
+          />
         </div>
       </div>
       
