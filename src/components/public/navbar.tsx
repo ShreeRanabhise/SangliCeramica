@@ -20,6 +20,7 @@ const navLinks = [
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [pendingPath, setPendingPath] = useState<string | null>(null);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -30,9 +31,10 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close mobile menu on route change
+  // Close mobile menu and clear pending path on route change
   useEffect(() => {
     setMobileMenuOpen(false);
+    setPendingPath(null);
   }, [pathname]);
 
   const isHome = pathname === "/";
@@ -64,26 +66,47 @@ export function Navbar() {
 
             {/* Desktop Nav */}
             <nav className="hidden md:flex items-center gap-8">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.name}
-                  href={link.href}
-                  className={cn(
-                    "text-sm font-medium transition-colors hover:text-primary relative",
-                    pathname === link.href 
-                      ? "text-primary" 
-                      : (lightText ? "text-white/80 hover:text-white" : "text-muted-foreground")
-                  )}
-                >
-                  {link.name}
-                  {pathname === link.href && (
-                    <motion.div
-                      layoutId="navbar-indicator"
-                      className="absolute -bottom-1.5 left-0 w-full h-0.5 bg-primary rounded-full"
-                    />
-                  )}
-                </Link>
-              ))}
+              {navLinks.map((link) => {
+                const isActive = pathname === link.href;
+                const isPending = pendingPath === link.href;
+                const showIndicator = isActive || isPending;
+
+                return (
+                  <Link
+                    key={link.name}
+                    href={link.href}
+                    onClick={() => setPendingPath(link.href)}
+                    className={cn(
+                      "text-sm font-medium transition-colors relative",
+                      showIndicator 
+                        ? "text-primary" 
+                        : (lightText ? "text-white/80 hover:text-white" : "text-muted-foreground hover:text-primary")
+                    )}
+                  >
+                    {link.name}
+                    {showIndicator && (
+                      <motion.div
+                        layoutId="navbar-indicator"
+                        className={cn(
+                          "absolute -bottom-1.5 left-0 w-full h-0.5 rounded-full",
+                          isPending ? "bg-primary/50 animate-pulse" : "bg-primary"
+                        )}
+                        initial={false}
+                        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                      >
+                        {isPending && (
+                          <motion.div
+                            className="absolute top-0 left-0 h-full bg-primary rounded-full"
+                            initial={{ width: "0%" }}
+                            animate={{ width: "100%" }}
+                            transition={{ duration: 1, repeat: Infinity }}
+                          />
+                        )}
+                      </motion.div>
+                    )}
+                  </Link>
+                );
+              })}
             </nav>
 
             {/* CTA & Mobile Toggle */}
