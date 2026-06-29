@@ -143,7 +143,7 @@ export default async function HomePage() {
                 )
               })}
               
-              <Link 
+              <NavCard 
                 href="/products" 
                 className="group flex flex-col items-center justify-center rounded-2xl shrink-0 w-[70vw] md:w-[300px] lg:w-[280px] snap-center bg-muted/50 border border-dashed border-border hover:border-solid hover:bg-muted transition-all duration-300 min-h-[300px]"
               >
@@ -152,7 +152,7 @@ export default async function HomePage() {
                 </div>
                 <h3 className="font-semibold text-xl group-hover:text-primary transition-colors">Explore More</h3>
                 <p className="text-sm text-muted-foreground mt-2">View all products</p>
-              </Link>
+              </NavCard>
             </div>
             
             <div className="mt-6 text-center">
