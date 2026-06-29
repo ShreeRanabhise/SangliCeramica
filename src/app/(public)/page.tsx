@@ -112,11 +112,11 @@ export default async function HomePage() {
               <p className="text-muted-foreground text-lg">Our most requested and highly rated products, handpicked by our design experts.</p>
             </div>
 
-            <div className="flex overflow-x-auto pb-4 -mx-4 px-4 snap-x snap-mandatory md:grid md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 md:gap-6 md:pb-0 md:mx-0 md:px-0 md:overflow-visible no-scrollbar">
+            <div className="flex overflow-x-auto pb-6 snap-x snap-mandatory gap-4 md:gap-6 no-scrollbar">
               {featuredProducts.map((product: any) => {
                 const primaryImage = product.images?.find((img: any) => img.isPrimary) || product.images?.[0];
                 return (
-                  <NavCard key={product.id} href={`/products/${product.slug}`} className="group block rounded-2xl shrink-0 w-[70vw] snap-center mr-4 md:w-auto md:mr-0 last:mr-0">
+                  <NavCard key={product.id} href={`/products/${product.slug}`} className="group block rounded-2xl shrink-0 w-[70vw] md:w-[300px] lg:w-[280px] snap-center">
                     <div className="bg-secondary rounded-2xl overflow-hidden border shadow-sm transition-shadow hover:shadow-md">
                       <div className="relative aspect-[3/2] bg-white overflow-hidden">
                         {primaryImage ? (
