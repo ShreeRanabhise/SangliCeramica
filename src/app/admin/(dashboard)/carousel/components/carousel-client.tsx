@@ -12,8 +12,6 @@ import ImageUpload from "@/components/admin/image-upload";
 export const CarouselClient = ({ data }: { data: any[] }) => {
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
-  const [title, setTitle] = useState("");
-  const [subtitle, setSubtitle] = useState("");
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,14 +24,10 @@ export const CarouselClient = ({ data }: { data: any[] }) => {
       setLoading(true);
       const res = await createCarouselImage({ 
         imageUrl, 
-        title, 
-        subtitle, 
         order: data.length 
       });
       if (res.success) {
         toast.success("Image added to carousel");
-        setTitle("");
-        setSubtitle("");
         setImageUrl("");
       } else {
         toast.error(res.error || "Failed to add image");
@@ -82,14 +76,6 @@ export const CarouselClient = ({ data }: { data: any[] }) => {
                 disabled={loading} 
               />
             </div>
-            <div className="space-y-2">
-              <Label>Title (Optional)</Label>
-              <Input value={title} onChange={e => setTitle(e.target.value)} disabled={loading} placeholder="E.g. Premium Tiles" />
-            </div>
-            <div className="space-y-2">
-              <Label>Subtitle (Optional)</Label>
-              <Input value={subtitle} onChange={e => setSubtitle(e.target.value)} disabled={loading} placeholder="Discover our new collection..." />
-            </div>
             <Button type="submit" className="w-full" disabled={loading || !imageUrl}>
               {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
               <Plus className="mr-2 h-4 w-4" /> Add to Carousel
@@ -102,9 +88,7 @@ export const CarouselClient = ({ data }: { data: any[] }) => {
             {data.map((item) => (
               <div key={item.id} className="border rounded-lg p-4 flex flex-col justify-between bg-card">
                 <div>
-                  <img src={item.imageUrl} alt={item.title || "Carousel"} className="w-full h-40 object-cover rounded-md mb-4" />
-                  <h4 className="font-semibold">{item.title || "No Title"}</h4>
-                  <p className="text-sm text-muted-foreground line-clamp-2">{item.subtitle}</p>
+                  <img src={item.imageUrl} alt="Carousel Image" className="w-full h-40 object-cover rounded-md mb-4" />
                 </div>
                 <div className="mt-4 flex justify-between items-center">
                   <span className="text-xs font-mono text-muted-foreground">Order: {item.order}</span>

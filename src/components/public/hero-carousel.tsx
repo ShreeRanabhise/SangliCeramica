@@ -7,11 +7,9 @@ import { buttonVariants } from "@/components/ui/button";
 
 interface HeroCarouselProps {
   images: string[];
-  title: string;
-  subtitle: string;
 }
 
-export function HeroCarousel({ images, title, subtitle }: HeroCarouselProps) {
+export function HeroCarousel({ images }: HeroCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
@@ -47,17 +45,13 @@ export function HeroCarousel({ images, title, subtitle }: HeroCarouselProps) {
           <span>Premium Showroom Experience</span>
         </div>
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight mb-4 animate-fade-in-up [animation-delay:200ms]">
-          {title ? (
-            <div dangerouslySetInnerHTML={{ __html: title.replace(/\n/g, '<br />') }} />
-          ) : (
-            <>
-              Elevate Your <br className="hidden md:block" />
-              <span className="text-primary italic">Living Spaces</span>
-            </>
-          )}
+          <>
+            Elevate Your <br className="hidden md:block" />
+            <span className="text-primary italic">Living Spaces</span>
+          </>
         </h1>
         <p className="text-base md:text-lg text-white/90 max-w-2xl mx-auto mb-6 md:mb-8 animate-fade-in-up [animation-delay:400ms]">
-          {subtitle || "Discover Sangli's most exclusive collection of luxury tiles, elegant sanitaryware, and premium designer doors."}
+          Discover Sangli's most exclusive collection of luxury tiles, elegant sanitaryware, and premium designer doors.
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-up [animation-delay:600ms]">
           <Link href="/collections" className={buttonVariants({ size: "lg", className: "rounded-full px-6 w-full sm:w-auto" })}>

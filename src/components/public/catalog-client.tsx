@@ -215,15 +215,13 @@ export function CatalogClient({ products, categories, initialCategory, initialCo
                             </div>
                           )}
                           
-                          {/* Optional Category Badge Overlay */}
-                          <div className="absolute top-3 left-3 bg-background/80 backdrop-blur-md px-2.5 py-1 rounded-full border shadow-sm">
-                            <span className="text-[10px] font-bold tracking-wider uppercase text-foreground">
-                              {product.brand?.name || product.category?.name || "Product"}
-                            </span>
-                          </div>
+
                         </div>
                         <div className="p-4 md:p-5 flex flex-col justify-between h-[calc(100%-66%)]">
                           <div>
+                            <p className="text-xs md:text-sm text-muted-foreground mb-1">
+                              {product.category?.name || "Product"}
+                            </p>
                             <h3 className="font-semibold text-base md:text-lg group-hover:text-primary transition-colors leading-tight">
                               {product.name}
                             </h3>

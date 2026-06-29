@@ -34,12 +34,7 @@ export default async function HomePage() {
   const brands = brandRes.success ? brandRes.data : [];
   
   // Format carousel images for HeroCarousel component
-  // We use the first image's title/subtitle as fallback if HeroCarousel only supports global title
-  // Currently HeroCarousel just takes arrays of strings and a global title. We can upgrade it later if needed,
-  // but for now we'll pass the images array.
   const carouselImageUrls = carouselRes.map(img => img.imageUrl);
-  const mainTitle = carouselRes[0]?.title || "The Pinnacle of Elegance";
-  const mainSubtitle = carouselRes[0]?.subtitle || "Discover Sangli's most exclusive collection.";
 
   return (
     <>
@@ -47,14 +42,12 @@ export default async function HomePage() {
       {carouselImageUrls.length > 0 ? (
         <HeroCarousel 
           images={carouselImageUrls}
-          title={mainTitle}
-          subtitle={mainSubtitle}
         />
       ) : (
         <div className="w-full min-h-[80vh] md:min-h-[600px] md:aspect-[5/2] bg-slate-900 flex items-center justify-center">
           <div className="text-center text-white px-4">
-            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4">{mainTitle}</h1>
-            <p className="text-base md:text-lg text-slate-300">{mainSubtitle}</p>
+            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4">The Pinnacle of Elegance</h1>
+            <p className="text-base md:text-lg text-slate-300">Discover Sangli's most exclusive collection.</p>
           </div>
         </div>
       )}

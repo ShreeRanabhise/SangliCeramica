@@ -9,7 +9,7 @@ export async function getCategories() {
       orderBy: { order: "asc" },
       include: {
         _count: {
-          select: { subcategories: true, products: true },
+          select: { products: true },
         },
       },
     });

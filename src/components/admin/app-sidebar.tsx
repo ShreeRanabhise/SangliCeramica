@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/sidebar";
 import { Package, FolderTree, Image as ImageIcon, MessageSquare, Tag, LayoutDashboard, Settings, FileText, LayoutTemplate, MapPin, User, LogOut } from "lucide-react";
 import Link from "next/link";
+import { NavCard } from "@/components/ui/nav-card";
 import { usePathname, useRouter } from "next/navigation";
 
 import { signOut } from "@/actions/auth";
@@ -69,7 +70,7 @@ export function AppSidebar({ user }: { user: any }) {
 
   const handleSignOut = async () => {
     await signOut();
-    router.push("/admin/login");
+    router.push("/");
     router.refresh();
   };
 
@@ -90,10 +91,10 @@ export function AppSidebar({ user }: { user: any }) {
                   return (
                     <SidebarMenuItem key={item.title}>
                       <SidebarMenuButton isActive={isActive}>
-                        <Link href={item.url} className="flex items-center gap-2 w-full">
-                          <item.icon className="h-4 w-4" />
+                        <NavCard href={item.url} className="flex items-center gap-2 w-full h-full">
+                          <item.icon className="h-4 w-4 shrink-0" />
                           <span>{item.title}</span>
-                        </Link>
+                        </NavCard>
                       </SidebarMenuButton>
                     </SidebarMenuItem>
                   );
