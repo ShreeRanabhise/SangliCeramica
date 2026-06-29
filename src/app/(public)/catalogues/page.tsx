@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { CatalogueDownloadForm } from "@/components/public/catalogue-download-form";
 import { FileText, Download } from "lucide-react";
+import Image from "next/image";
 
 export const metadata = {
   title: "Download Catalogues | Sangli Ceramica",
@@ -35,13 +36,30 @@ export default async function CataloguesPage() {
         {catalogues.length > 0 ? (
           <div className="flex flex-col md:flex-row gap-12 items-center">
             <div className="w-full md:w-1/2">
-               <div className="aspect-[4/3] rounded-2xl bg-muted/30 border border-border/50 flex items-center justify-center p-8 text-center relative overflow-hidden">
-                 <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent pointer-events-none" />
-                 <div>
-                   <FileText className="h-20 w-20 text-primary/40 mx-auto mb-6" />
-                   <h3 className="text-2xl font-bold mb-2">Sangli Ceramica</h3>
-                   <p className="text-muted-foreground font-medium">Master Collection 2026</p>
-                 </div>
+               <div className="aspect-[4/3] rounded-2xl bg-muted/30 border border-border/50 flex items-center justify-center p-8 text-center relative overflow-hidden group shadow-sm">
+                 {catalogues[0].coverImage ? (
+                   <>
+                     <Image 
+                       src={catalogues[0].coverImage} 
+                       alt={catalogues[0].title}
+                       fill
+                       className="object-cover transition-transform duration-700 group-hover:scale-105"
+                     />
+                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent pointer-events-none" />
+                     <div className="absolute bottom-6 left-6 right-6 text-white text-left pointer-events-none">
+                       <h3 className="text-2xl font-bold leading-tight">{catalogues[0].title}</h3>
+                     </div>
+                   </>
+                 ) : (
+                   <>
+                     <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent pointer-events-none" />
+                     <div>
+                       <FileText className="h-20 w-20 text-primary/40 mx-auto mb-6" />
+                       <h3 className="text-2xl font-bold mb-2">Sangli Ceramica</h3>
+                       <p className="text-muted-foreground font-medium">Master Collection 2026</p>
+                     </div>
+                   </>
+                 )}
                </div>
             </div>
             <div className="w-full md:w-1/2 max-w-md">
