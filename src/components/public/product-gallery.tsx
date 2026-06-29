@@ -26,7 +26,7 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
   return (
     <div className="space-y-4">
       {/* Main Image */}
-      <div className="relative w-full aspect-[3/2] rounded-2xl overflow-hidden bg-muted border">
+      <div className="relative w-full aspect-[3/2] rounded-2xl overflow-hidden bg-white border">
         <Image 
           src={activeImage.url} 
           alt={`${productName} - Image ${activeIndex + 1}`} 
@@ -44,7 +44,7 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
               key={image.id}
               onClick={() => setActiveIndex(index)}
               className={cn(
-                "relative aspect-[3/2] rounded-lg overflow-hidden border-2 transition-all",
+                "relative aspect-[3/2] rounded-lg overflow-hidden border-2 transition-all bg-white",
                 activeIndex === index ? "border-primary" : "border-transparent hover:border-primary/50"
               )}
             >
