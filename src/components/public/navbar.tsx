@@ -88,18 +88,23 @@ export function Navbar() {
                       <motion.div
                         layoutId="navbar-indicator"
                         className={cn(
-                          "absolute -bottom-1.5 left-0 w-full h-0.5 rounded-full",
-                          isPending ? "bg-primary/50 animate-pulse" : "bg-primary"
+                          "absolute -bottom-1.5 left-0 w-full h-0.5 rounded-full overflow-hidden",
+                          isPending ? "bg-primary/20" : "bg-primary"
                         )}
                         initial={false}
                         transition={{ type: "spring", stiffness: 300, damping: 30 }}
                       >
                         {isPending && (
                           <motion.div
-                            className="absolute top-0 left-0 h-full bg-primary rounded-full"
-                            initial={{ width: "0%" }}
-                            animate={{ width: "100%" }}
-                            transition={{ duration: 1, repeat: Infinity }}
+                            className="absolute top-0 h-full w-1/3 bg-primary rounded-full"
+                            initial={{ left: "-50%" }}
+                            animate={{ left: "150%" }}
+                            transition={{ 
+                              duration: 0.8, 
+                              ease: "easeInOut", 
+                              repeat: Infinity,
+                              repeatDelay: 0.1 
+                            }}
                           />
                         )}
                       </motion.div>
