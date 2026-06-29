@@ -11,7 +11,7 @@ export function WhatsAppWidget({ phoneNumber }: { phoneNumber: string }) {
       href={`https://wa.me/${cleanPhone}`}
       target="_blank"
       rel="noopener noreferrer"
-      className="fixed bottom-6 right-6 z-50 flex items-center justify-center w-14 h-14 bg-[#25D366] text-white rounded-full shadow-lg hover:scale-110 hover:shadow-xl transition-all duration-300"
+      className="fixed bottom-24 md:bottom-6 right-6 z-50 flex items-center justify-center w-14 h-14 bg-[#25D366] text-white rounded-full shadow-lg hover:scale-110 hover:shadow-xl transition-all duration-300"
       aria-label="Chat on WhatsApp"
     >
       <svg 

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { NavCard } from "@/components/ui/nav-card";
 import { Home, Package, Image as ImageIcon, Phone } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -23,7 +24,7 @@ export function MobileNav() {
           const Icon = link.icon;
           
           return (
-            <Link
+            <NavCard
               key={link.name}
               href={link.href}
               className={cn(
@@ -35,7 +36,7 @@ export function MobileNav() {
             >
               <Icon className={cn("w-5 h-5 mb-1", isActive && "fill-current")} />
               <span className="text-[10px] font-medium leading-none">{link.name}</span>
-            </Link>
+            </NavCard>
           );
         })}
       </div>
