@@ -39,16 +39,18 @@ export function Navbar() {
   const lightText = !isScrolled && isHome;
 
   return (
-    <div className={cn("fixed top-0 left-0 w-full z-50 transition-all duration-500 px-0 md:px-4", isScrolled ? "pt-0 md:pt-4" : "pt-0")}>
+    <div className={cn("fixed top-0 left-0 w-full z-50 transition-all duration-500 px-2 md:px-4", isScrolled ? "pt-2 md:pt-4" : "pt-4 md:pt-6")}>
       <header
         className={cn(
           "mx-auto transition-all duration-500",
           isScrolled
-            ? "bg-background/85 backdrop-blur-xl border-b md:border md:rounded-full md:shadow-lg md:max-w-5xl"
-            : "bg-transparent py-4 md:py-6 w-full max-w-7xl"
+            ? "bg-background/85 backdrop-blur-xl border rounded-full shadow-lg max-w-5xl"
+            : isHome
+              ? "bg-black/20 backdrop-blur-md border border-white/10 rounded-full w-full max-w-7xl shadow-lg"
+              : "bg-background/60 backdrop-blur-md border border-border rounded-full w-full max-w-7xl shadow-sm"
         )}
       >
-        <div className={cn("px-4 md:px-8", isScrolled ? "py-3" : "py-0")}>
+        <div className="px-4 md:px-8 py-3">
           <div className="flex items-center justify-between">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2 group">
