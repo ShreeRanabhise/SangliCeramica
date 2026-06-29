@@ -84,7 +84,6 @@ export const BrandTable: React.FC<BrandTableProps> = ({ data, onEdit }) => {
             <TableRow>
               <TableHead className="w-[100px]">Logo</TableHead>
               <TableHead>Name</TableHead>
-              <TableHead>Slug</TableHead>
               <TableHead className="text-right">Actions</TableHead>
             </TableRow>
           </TableHeader>
@@ -110,7 +109,6 @@ export const BrandTable: React.FC<BrandTableProps> = ({ data, onEdit }) => {
                     )}
                   </TableCell>
                   <TableCell className="font-medium">{brand.name}</TableCell>
-                  <TableCell>{brand.slug}</TableCell>
                   <TableCell className="text-right">
                     <Button
                       variant="ghost"

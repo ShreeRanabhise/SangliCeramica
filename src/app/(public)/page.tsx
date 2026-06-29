@@ -18,14 +18,15 @@ export const metadata = {
 
 export default async function HomePage() {
   // Fetch data on the server concurrently
-  const [colRes, prodRes, brandRes, carouselRes, categories, catalogues, gallery] = await Promise.all([
+  const [colRes, prodRes, brandRes, carouselRes, categories, catalogues, gallery, heroContentRes] = await Promise.all([
     getCollections(),
     getProducts(),
     getBrands(),
     prisma.carouselImage.findMany({ where: { isActive: true }, orderBy: { order: "asc" } }),
     prisma.category.findMany({ orderBy: { name: "asc" } }),
     prisma.catalogue.findMany({ where: { isActive: true }, orderBy: { createdAt: "desc" } }),
-    prisma.galleryMedia.findMany({ take: 6, orderBy: { order: "asc" } })
+    prisma.galleryMedia.findMany({ take: 6, orderBy: { order: "asc" } }),
+    prisma.homepageContent.findUnique({ where: { section: "HERO" } })
   ]);
 
   const collections = colRes.success ? colRes.data : [];
@@ -35,6 +36,10 @@ export default async function HomePage() {
   
   // Format carousel images for HeroCarousel component
   const carouselImageUrls = carouselRes.map(img => img.imageUrl);
+  
+  const heroContentData = heroContentRes?.content as any;
+  const heroTitle = heroContentData?.title || "The Pinnacle of Elegance";
+  const heroSubtitle = heroContentData?.subtitle || "Discover Sangli's most exclusive collection of luxury tiles, elegant sanitaryware, and premium designer doors.";
 
   return (
     <>
@@ -42,12 +47,14 @@ export default async function HomePage() {
       {carouselImageUrls.length > 0 ? (
         <HeroCarousel 
           images={carouselImageUrls}
+          title={heroTitle}
+          subtitle={heroSubtitle}
         />
       ) : (
         <div className="w-full min-h-[80vh] md:min-h-[600px] md:aspect-[5/2] bg-slate-900 flex items-center justify-center">
           <div className="text-center text-white px-4">
-            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4">The Pinnacle of Elegance</h1>
-            <p className="text-base md:text-lg text-slate-300">Discover Sangli's most exclusive collection.</p>
+            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4">{heroTitle}</h1>
+            <p className="text-base md:text-lg text-slate-300">{heroSubtitle}</p>
           </div>
         </div>
       )}

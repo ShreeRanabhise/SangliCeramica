@@ -87,8 +87,6 @@ export const CategoryTable: React.FC<CategoryTableProps> = ({ data, onEdit }) =>
               <TableHead className="w-[100px]">Icon</TableHead>
               <TableHead>Collection</TableHead>
               <TableHead>Name</TableHead>
-              <TableHead>Slug</TableHead>
-              <TableHead>Subcategories</TableHead>
               <TableHead>Products</TableHead>
               <TableHead className="text-right">Actions</TableHead>
             </TableRow>
@@ -116,8 +114,6 @@ export const CategoryTable: React.FC<CategoryTableProps> = ({ data, onEdit }) =>
                   </TableCell>
                   <TableCell className="capitalize">{category.collection?.toLowerCase()}</TableCell>
                   <TableCell className="font-medium">{category.name}</TableCell>
-                  <TableCell>{category.slug}</TableCell>
-                  <TableCell>{category._count?.subcategories || 0}</TableCell>
                   <TableCell>{category._count?.products || 0}</TableCell>
                   <TableCell className="text-right whitespace-nowrap">
                     <Link href={`/admin/categories/${category.id}/products`}>

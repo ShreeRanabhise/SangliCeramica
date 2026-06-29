@@ -82,7 +82,7 @@ export const ProductTable: React.FC<ProductTableProps> = ({ data, onEdit }) => {
           <TableHeader>
             <TableRow>
               <TableHead className="w-[80px]">Image</TableHead>
-              <TableHead>Product</TableHead>
+              <TableHead className="w-[300px]">Product</TableHead>
               <TableHead>Size</TableHead>
               <TableHead>Collection</TableHead>
               <TableHead>Category</TableHead>
