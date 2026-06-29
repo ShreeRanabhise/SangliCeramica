@@ -3,10 +3,10 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 
 const navLinks = [
   { name: "Home", href: "/" },
@@ -35,111 +35,113 @@ export function Navbar() {
     setMobileMenuOpen(false);
   }, [pathname]);
 
+  const isHome = pathname === "/";
+  const lightText = !isScrolled && isHome;
+
   return (
-    <header
-      className={cn(
-        "fixed top-0 left-0 w-full z-50 transition-all duration-300",
-        isScrolled
-          ? "bg-background/80 backdrop-blur-md border-b shadow-sm py-3"
-          : "bg-transparent py-5"
-      )}
-    >
-      <div className="container mx-auto px-4 md:px-6">
-        <div className="flex items-center justify-between">
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 group">
-            <div className="w-8 h-8 bg-primary rounded flex items-center justify-center transform group-hover:rotate-12 transition-transform">
-              <span className="text-primary-foreground font-bold text-xl">S</span>
-            </div>
-            <span className={cn(
-              "font-bold text-xl tracking-tight transition-colors",
-              !isScrolled && pathname === "/" ? "text-white" : "text-foreground"
-            )}>
-              Sangli Ceramica
-            </span>
-          </Link>
+    <div className={cn("fixed top-0 left-0 w-full z-50 transition-all duration-500 px-0 md:px-4", isScrolled ? "pt-0 md:pt-4" : "pt-0")}>
+      <header
+        className={cn(
+          "mx-auto transition-all duration-500",
+          isScrolled
+            ? "bg-background/85 backdrop-blur-xl border-b md:border md:rounded-full md:shadow-lg md:max-w-5xl"
+            : "bg-transparent py-4 md:py-6 w-full max-w-7xl"
+        )}
+      >
+        <div className={cn("px-4 md:px-8", isScrolled ? "py-3" : "py-0")}>
+          <div className="flex items-center justify-between">
+            {/* Logo */}
+            <Link href="/" className="flex items-center gap-2 group">
+              <span className={cn(
+                "font-black text-2xl tracking-tighter transition-colors",
+                lightText ? "text-white" : "text-foreground"
+              )}>
+                SANGLI<span className="font-light text-primary">CERAMICA</span>
+              </span>
+            </Link>
 
-          {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center gap-8">
-            {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                href={link.href}
-                className={cn(
-                  "text-sm font-medium transition-colors hover:text-primary relative",
-                  pathname === link.href 
-                    ? "text-primary" 
-                    : (!isScrolled && pathname === "/" ? "text-white/80 hover:text-white" : "text-muted-foreground")
-                )}
-              >
-                {link.name}
-                {pathname === link.href && (
-                  <motion.div
-                    layoutId="navbar-indicator"
-                    className="absolute -bottom-1 left-0 w-full h-0.5 bg-primary rounded-full"
-                  />
-                )}
-              </Link>
-            ))}
-          </nav>
-
-          {/* CTA & Mobile Toggle */}
-          <div className="flex items-center gap-4">
-            <div className="hidden md:flex items-center gap-2">
-              <Link href="/contact" className={buttonVariants({ variant: !isScrolled && pathname === "/" ? "secondary" : "default", className: "rounded-full px-6" })}>
-                Inquire Now
-              </Link>
-            </div>
-            
-            <button
-              className="md:hidden p-2"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            >
-              {mobileMenuOpen ? (
-                <X className={cn("h-6 w-6", !isScrolled && pathname === "/" && "text-white")} />
-              ) : (
-                <Menu className={cn("h-6 w-6", !isScrolled && pathname === "/" && "text-white")} />
-              )}
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Mobile Menu */}
-      <AnimatePresence>
-        {mobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-background border-b overflow-hidden"
-          >
-            <div className="container mx-auto px-4 py-6 flex flex-col gap-4">
+            {/* Desktop Nav */}
+            <nav className="hidden md:flex items-center gap-8">
               {navLinks.map((link) => (
                 <Link
                   key={link.name}
                   href={link.href}
                   className={cn(
-                    "text-lg font-medium p-2 rounded-md transition-colors",
-                    pathname === link.href ? "bg-primary/10 text-primary" : "text-foreground hover:bg-muted"
+                    "text-sm font-medium transition-colors hover:text-primary relative",
+                    pathname === link.href 
+                      ? "text-primary" 
+                      : (lightText ? "text-white/80 hover:text-white" : "text-muted-foreground")
                   )}
                 >
                   {link.name}
+                  {pathname === link.href && (
+                    <motion.div
+                      layoutId="navbar-indicator"
+                      className="absolute -bottom-1.5 left-0 w-full h-0.5 bg-primary rounded-full"
+                    />
+                  )}
                 </Link>
               ))}
-              <div className="flex flex-col gap-3 mt-2">
-                <Link
-                  href="/contact"
-                  className={buttonVariants({ variant: "default", className: "w-full justify-center h-12 text-base" })}
-                  onClick={() => setMobileMenuOpen(false)}
-                >
+            </nav>
+
+            {/* CTA & Mobile Toggle */}
+            <div className="flex items-center gap-4">
+              <div className="hidden md:flex items-center gap-2">
+                <Link href="/contact" className={buttonVariants({ variant: lightText ? "secondary" : "default", className: "rounded-full px-6" })}>
                   Inquire Now
                 </Link>
               </div>
+              
+              <button
+                className="md:hidden p-2"
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              >
+                {mobileMenuOpen ? (
+                  <X className={cn("h-6 w-6", lightText && "text-white")} />
+                ) : (
+                  <Menu className={cn("h-6 w-6", lightText && "text-white")} />
+                )}
+              </button>
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </header>
+          </div>
+        </div>
+
+        {/* Mobile Menu */}
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              className="md:hidden bg-background/95 backdrop-blur-xl border-b overflow-hidden"
+            >
+              <div className="px-4 py-6 flex flex-col gap-4">
+                {navLinks.map((link) => (
+                  <Link
+                    key={link.name}
+                    href={link.href}
+                    className={cn(
+                      "text-lg font-medium p-3 rounded-xl transition-colors",
+                      pathname === link.href ? "bg-primary/10 text-primary" : "text-foreground hover:bg-muted"
+                    )}
+                  >
+                    {link.name}
+                  </Link>
+                ))}
+                <div className="flex flex-col gap-3 mt-4 pt-4 border-t">
+                  <Link
+                    href="/contact"
+                    className={buttonVariants({ variant: "default", className: "w-full justify-center h-14 text-base rounded-xl" })}
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Inquire Now
+                  </Link>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </header>
+    </div>
   );
 }
