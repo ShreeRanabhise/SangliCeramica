@@ -9,6 +9,7 @@ import { ArrowRight, MapPin, Sparkles, FileText, Download } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import { HeroCarousel } from "@/components/public/hero-carousel";
 import { BrandMarquee } from "@/components/public/brand-marquee";
+import { CatalogueDownloadForm } from "@/components/public/catalogue-download-form";
 
 export const metadata = {
   title: "Sangli Ceramica | Premium Tiles & Sanitaryware Showroom",
@@ -150,6 +151,39 @@ export default async function HomePage() {
                   View All Products <ArrowRight className="ml-2 w-4 h-4" />
                 </div>
               </NavCard>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Catalogues Download Section */}
+      {catalogues.length > 0 && (
+        <section id="catalogues" className="py-16 md:py-24 bg-primary/5 border-t">
+          <div className="container mx-auto px-4 md:px-6">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-8 mb-12">
+              <div className="max-w-2xl">
+                <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4 text-foreground">Download Our Catalogues</h2>
+                <p className="text-muted-foreground text-lg leading-relaxed">
+                  Browse our complete range of products, specifications, and design inspirations offline by downloading our premium PDF catalogues.
+                </p>
+              </div>
+              <Link href="/catalogues" className={buttonVariants({ variant: "outline", className: "shrink-0 hidden md:inline-flex" })}>
+                View All <ArrowRight className="ml-2 w-4 h-4" />
+              </Link>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+              {catalogues.slice(0, 3).map((catalogue: any) => (
+                <div key={catalogue.id} className="h-full">
+                  <CatalogueDownloadForm catalogue={catalogue} />
+                </div>
+              ))}
+            </div>
+            
+            <div className="mt-8 md:hidden text-center">
+              <Link href="/catalogues" className={buttonVariants({ variant: "outline", className: "w-full" })}>
+                View All Catalogues <ArrowRight className="ml-2 w-4 h-4" />
+              </Link>
             </div>
           </div>
         </section>
