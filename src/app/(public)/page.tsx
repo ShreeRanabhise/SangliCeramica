@@ -132,9 +132,11 @@ export default async function HomePage() {
                         )}
                       </div>
                       <div className="p-5">
-                        <p className="text-sm text-muted-foreground mb-1">
-                          {product.brand?.name || product.category?.name}
-                        </p>
+                        <div className="mb-2">
+                          <span className="inline-block px-2 py-0.5 rounded-full bg-primary/10 text-primary text-[10px] uppercase tracking-wider font-semibold">
+                            {product.brand?.name || product.category?.name}
+                          </span>
+                        </div>
                         <h3 className="font-semibold text-lg group-hover:text-primary transition-colors">{product.name}</h3>
                         <p className="text-sm text-muted-foreground line-clamp-2 mt-2">{product.size}</p>
                       </div>

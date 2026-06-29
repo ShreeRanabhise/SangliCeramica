@@ -73,7 +73,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
           <div className="flex flex-col">
             {/* Badges */}
             <div className="flex items-center gap-3 mb-4">
-              <span className="px-3 py-1 bg-muted text-foreground text-xs font-semibold uppercase tracking-wider rounded-full">
+              <span className="inline-block px-3 py-1 rounded-full bg-primary/10 text-primary text-xs uppercase tracking-wider font-semibold">
                 {product.brand?.name || product.category?.name}
               </span>
             </div>

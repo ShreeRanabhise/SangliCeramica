@@ -225,9 +225,11 @@ export function CatalogClient({ products, categories, initialCategory, initialCo
                         </div>
                         <div className="p-4 md:p-5 flex flex-col justify-between h-[calc(100%-66%)]">
                           <div>
-                            <p className="text-xs md:text-sm text-muted-foreground mb-1">
-                              {product.category?.name || "Product"}
-                            </p>
+                            <div className="mb-2">
+                              <span className="inline-block px-2 py-0.5 rounded-full bg-primary/10 text-primary text-[10px] uppercase tracking-wider font-semibold">
+                                {product.brand?.name || product.category?.name || "Product"}
+                              </span>
+                            </div>
                             <h3 className="font-semibold text-base md:text-lg group-hover:text-primary transition-colors leading-tight">
                               {product.name}
                             </h3>

@@ -159,9 +159,11 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
                         )}
                       </div>
                       <div className="p-4">
-                        <p className="text-xs text-muted-foreground mb-1 uppercase tracking-wider">
-                          {product.brand?.name || product.category?.name}
-                        </p>
+                        <div className="mb-2">
+                          <span className="inline-block px-2 py-0.5 rounded-full bg-primary/10 text-primary text-[10px] uppercase tracking-wider font-semibold">
+                            {product.brand?.name || product.category?.name}
+                          </span>
+                        </div>
                         <h3 className="font-semibold text-base group-hover:text-primary transition-colors">{product.name}</h3>
                         {product.size && (
                           <p className="text-xs text-muted-foreground mt-1">Size: {product.size}</p>
