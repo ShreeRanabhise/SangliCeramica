@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/table";
 import { Edit, Trash, Image as ImageIcon, Star } from "lucide-react";
 import Image from "next/image";
-import { softDeleteProduct } from "@/actions/products";
+import { softDeleteProduct, toggleProductFeatured } from "@/actions/products";
 import { toast } from "sonner";
 import {
   AlertDialog,
@@ -123,6 +123,21 @@ export const ProductTable: React.FC<ProductTableProps> = ({ data, onEdit }) => {
                     <TableCell>{product.category?.collection}</TableCell>
                     <TableCell>{product.category?.name}</TableCell>
                     <TableCell className="text-right">
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={async () => {
+                          const res = await toggleProductFeatured(product.id, !product.isFeatured);
+                          if (res.success) {
+                            toast.success(`Product ${!product.isFeatured ? 'marked as featured' : 'removed from featured'}.`);
+                          } else {
+                            toast.error(res.error || "Failed to update featured status.");
+                          }
+                        }}
+                        className={product.isFeatured ? "text-yellow-500 hover:text-yellow-600 hover:bg-yellow-500/10" : "text-muted-foreground"}
+                      >
+                        <Star className={`h-4 w-4 ${product.isFeatured ? "fill-current" : ""}`} />
+                      </Button>
                       <Button
                         variant="ghost"
                         size="icon"

@@ -1,5 +1,5 @@
 import { getCollections } from "@/actions/collections";
-import { getProducts } from "@/actions/products";
+import { getFeaturedProducts } from "@/actions/products";
 import { getBrands } from "@/actions/brands";
 import { NavCard } from "@/components/ui/nav-card";
 import Link from "next/link";
@@ -18,9 +18,9 @@ export const metadata = {
 
 export default async function HomePage() {
   // Fetch data on the server concurrently
-  const [colRes, prodRes, brandRes, carouselRes, categories, catalogues, gallery, heroContentRes] = await Promise.all([
+  const [colRes, featuredProdRes, brandRes, carouselRes, categories, catalogues, gallery, heroContentRes] = await Promise.all([
     getCollections(),
-    getProducts(),
+    getFeaturedProducts(5),
     getBrands(),
     prisma.carouselImage.findMany({ where: { isActive: true }, orderBy: { order: "asc" } }),
     prisma.category.findMany({ orderBy: { name: "asc" } }),
@@ -30,8 +30,7 @@ export default async function HomePage() {
   ]);
 
   const collections = colRes.success ? colRes.data : [];
-  const allProducts = prodRes.success ? prodRes.data : [];
-  const featuredProducts = allProducts?.slice(0, 4) || [];
+  const featuredProducts = featuredProdRes.success ? featuredProdRes.data : [];
   const brands = brandRes.success ? brandRes.data : [];
   
   // Format carousel images for HeroCarousel component
@@ -104,7 +103,7 @@ export default async function HomePage() {
 
 
       {/* 5. Products Section */}
-      {featuredProducts.length > 0 && (
+      {featuredProducts && featuredProducts.length > 0 && (
         <section className="py-4 md:py-8 bg-muted/50 border-t">
           <div className="w-full max-w-[1400px] mx-auto px-4">
             <div className="text-center max-w-2xl mx-auto mb-6">

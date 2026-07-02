@@ -133,3 +133,37 @@ export async function softDeleteProduct(id: string) {
     return { success: false, error: error.message };
   }
 }
+
+export async function toggleProductFeatured(id: string, isFeatured: boolean) {
+  try {
+    await prisma.product.update({
+      where: { id },
+      data: { isFeatured },
+    });
+    revalidatePath("/admin/products");
+    revalidatePath("/", "layout");
+    return { success: true };
+  } catch (error: any) {
+    return { success: false, error: error.message };
+  }
+}
+
+export async function getFeaturedProducts(limit = 5) {
+  try {
+    const products = await prisma.product.findMany({
+      where: { isDeleted: false, isFeatured: true },
+      orderBy: { updatedAt: "desc" },
+      take: limit,
+      include: {
+        category: true,
+        brand: true,
+        images: {
+          orderBy: { order: "asc" },
+        },
+      },
+    });
+    return { success: true, data: products };
+  } catch (error: any) {
+    return { success: false, error: error.message };
+  }
+}
