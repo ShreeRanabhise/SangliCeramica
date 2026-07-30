@@ -72,6 +72,7 @@ export const metadata: Metadata = {
     title: "Sangli Ceramica | Premium Tiles, Sanitaryware & Doors",
     description: "Discover Sangli's premier showroom for luxury tiles, bath fittings, and designer doors.",
     images: ["https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop"],
+  },
   icons: {
     icon: [
       { url: "/favicon.ico" },
