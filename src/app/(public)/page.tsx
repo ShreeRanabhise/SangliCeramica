@@ -4,30 +4,63 @@ import { getBrands } from "@/actions/brands";
 import { NavCard } from "@/components/ui/nav-card";
 import Link from "next/link";
 import Image from "next/image";
-import { Button, buttonVariants } from "@/components/ui/button";
-import { ArrowRight, MapPin, Sparkles, FileText, Download } from "lucide-react";
+import { buttonVariants } from "@/components/ui/button";
+import { ArrowRight, MapPin, FileText, Download } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import { HeroCarousel } from "@/components/public/hero-carousel";
 import { BrandMarquee } from "@/components/public/brand-marquee";
 import { CatalogueDownloadForm } from "@/components/public/catalogue-download-form";
+import { Metadata } from "next";
 
-export const metadata = {
-  title: "Sangli Ceramica | Premium Tiles & Sanitaryware Showroom",
-  description: "Explore our exclusive collection of luxury tiles, elegant sanitaryware, and premium doors. Transform your spaces with Sangli Ceramica.",
+export const revalidate = 3600; // Cache page for 1 hour (ISR)
+
+export const metadata: Metadata = {
+  title: "Sangli Ceramica | Premium Tiles, Sanitaryware & Doors Showroom",
+  description: "Explore our exclusive collection of luxury tiles, elegant sanitaryware, and premium doors. Transform your living & architectural spaces with Sangli Ceramica.",
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    title: "Sangli Ceramica | Premium Tiles & Sanitaryware Showroom",
+    description: "Explore our exclusive collection of luxury tiles, elegant sanitaryware, and premium doors. Transform your spaces with Sangli Ceramica.",
+    url: "/",
+    images: [
+      {
+        url: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop",
+        width: 1200,
+        height: 630,
+        alt: "Sangli Ceramica Luxury Tiles & Bath Fittings Showroom",
+      },
+    ],
+  },
 };
 
 export default async function HomePage() {
-  // Fetch data on the server concurrently
-  const [colRes, featuredProdRes, brandRes, carouselRes, categories, catalogues, gallery, heroContentRes] = await Promise.all([
-    getCollections(),
-    getFeaturedProducts(5),
-    getBrands(),
-    prisma.carouselImage.findMany({ where: { isActive: true }, orderBy: { order: "asc" } }),
-    prisma.category.findMany({ orderBy: { name: "asc" } }),
-    prisma.catalogue.findMany({ where: { isActive: true }, orderBy: { createdAt: "desc" } }),
-    prisma.galleryMedia.findMany({ take: 6, orderBy: { order: "asc" } }),
-    prisma.homepageContent.findUnique({ where: { section: "HERO" } })
-  ]);
+  let colRes: any = { success: false, data: [] };
+  let featuredProdRes: any = { success: false, data: [] };
+  let brandRes: any = { success: false, data: [] };
+  let carouselRes: any[] = [];
+  let catalogues: any[] = [];
+  let heroContentRes: any = null;
+
+  try {
+    const res = await Promise.all([
+      getCollections(),
+      getFeaturedProducts(5),
+      getBrands(),
+      prisma.carouselImage.findMany({ where: { isActive: true }, orderBy: { order: "asc" } }),
+      prisma.catalogue.findMany({ where: { isActive: true }, orderBy: { createdAt: "desc" } }),
+      prisma.homepageContent.findUnique({ where: { section: "HERO" } })
+    ]);
+    colRes = res[0];
+    featuredProdRes = res[1];
+    brandRes = res[2];
+    carouselRes = res[3];
+    catalogues = res[4];
+    heroContentRes = res[5];
+  } catch (error) {
+    console.warn("HomePage: Database query error during prerender", error);
+  }
 
   const collections = colRes.success ? colRes.data : [];
   const featuredProducts = featuredProdRes.success ? featuredProdRes.data : [];
@@ -61,7 +94,7 @@ export default async function HomePage() {
       {/* 2. Brands Section */}
       <BrandMarquee brands={brands || []} />
 
-      {/* 4. Collections Section */}
+      {/* 3. Collections Section */}
       {collections && collections.length > 0 && (
         <section className="py-4 md:py-8 bg-background">
           <div className="w-full max-w-[1400px] mx-auto px-4">
@@ -85,6 +118,7 @@ export default async function HomePage() {
                       src={col.imageUrl} 
                       alt={col.title}
                       fill
+                      sizes="(max-width: 768px) 85vw, 33vw"
                       className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
                     />
                   ) : (
@@ -100,9 +134,7 @@ export default async function HomePage() {
         </section>
       )}
 
-
-
-      {/* 5. Products Section */}
+      {/* 4. Products Section */}
       {featuredProducts && featuredProducts.length > 0 && (
         <section className="py-4 md:py-8 bg-muted/50 border-t">
           <div className="w-full max-w-[1400px] mx-auto px-4">
@@ -123,6 +155,7 @@ export default async function HomePage() {
                             src={primaryImage.url} 
                             alt={product.name} 
                             fill 
+                            sizes="(max-width: 768px) 70vw, (max-width: 1024px) 300px, 280px"
                             className="object-contain transition-transform duration-500 group-hover:scale-105"
                           />
                         ) : (
@@ -175,7 +208,7 @@ export default async function HomePage() {
         </section>
       )}
 
-      {/* Catalogues Download Section */}
+      {/* 5. Catalogues Download Section */}
       {catalogues.length > 0 && (
         <section id="catalogues" className="py-16 md:py-24 bg-primary/5 border-t">
           <div className="w-full max-w-[1200px] mx-auto px-4 md:px-6">
@@ -195,6 +228,7 @@ export default async function HomePage() {
                     src={catalogues[0].coverImage} 
                     alt={catalogues[0].title}
                     fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
                     className="object-cover transition-transform duration-700 hover:scale-105"
                   />
                 ) : (
@@ -223,7 +257,7 @@ export default async function HomePage() {
         </section>
       )}
 
-      {/* CTA Section */}
+      {/* 6. CTA Section */}
       <section className="py-16 md:py-24 bg-muted/50 border-t">
         <div className="w-full max-w-[1400px] mx-auto px-4 text-center">
           <div className="max-w-3xl mx-auto">

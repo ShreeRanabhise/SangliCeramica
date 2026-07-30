@@ -5,12 +5,15 @@ import { NavCard } from "@/components/ui/nav-card";
 import Link from "next/link";
 import { CollectionName } from "@prisma/client";
 import { BackButton } from "@/components/ui/back-button";
+import { Metadata } from "next";
+
+export const revalidate = 3600;
 
 interface CollectionPageProps {
   params: Promise<{ collection: string }>;
 }
 
-export async function generateMetadata({ params }: CollectionPageProps) {
+export async function generateMetadata({ params }: CollectionPageProps): Promise<Metadata> {
   const { collection } = await params;
   const enumValue = collection.toUpperCase() as CollectionName;
   
@@ -18,13 +21,36 @@ export async function generateMetadata({ params }: CollectionPageProps) {
     return { title: "Collection Not Found" };
   }
 
-  const meta = await prisma.collectionMeta.findUnique({
-    where: { collection: enumValue },
-  });
+  let meta: any = null;
+  try {
+    meta = await prisma.collectionMeta.findUnique({
+      where: { collection: enumValue },
+    });
+  } catch (error) {
+    console.warn("Collection generateMetadata: DB error during prerender", error);
+  }
+
+  const title = meta?.title || `${collection.charAt(0).toUpperCase() + collection.slice(1)} Collection`;
+  const description = meta?.tagline || `Discover our exclusive range of luxury ${collection} at Sangli Ceramica.`;
 
   return {
-    title: `${meta?.title || collection} | Sangli Ceramica`,
-    description: meta?.tagline || `Explore our ${collection} collection.`,
+    title,
+    description,
+    alternates: {
+      canonical: `/collections/${collection.toLowerCase()}`,
+    },
+    openGraph: {
+      title: `${title} | Sangli Ceramica`,
+      description,
+      url: `/collections/${collection.toLowerCase()}`,
+      images: meta?.imageUrl ? [{ url: meta.imageUrl, alt: title }] : [],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${title} | Sangli Ceramica`,
+      description,
+      images: meta?.imageUrl ? [meta.imageUrl] : [],
+    },
   };
 }
 
@@ -37,38 +63,77 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
     notFound();
   }
 
-  // Fetch Collection Meta
-  const meta = await prisma.collectionMeta.findUnique({
-    where: { collection: enumValue },
-  });
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://sangliceramica.com";
 
-  // Fetch Categories for this Collection
-  const categories = await prisma.category.findMany({
-    where: { collection: enumValue },
-    orderBy: { name: "asc" },
-  });
+  let meta: any = null;
+  let categories: any[] = [];
+  let allProducts: any[] = [];
 
-  // Fetch all Products for this Collection
-  const allProducts = await prisma.product.findMany({
-    where: { 
-      category: { collection: enumValue },
-      isDeleted: false,
-    },
-    include: {
-      category: true,
-      brand: true,
-      images: {
-        where: { isPrimary: true },
-        take: 1
+  try {
+    const res = await Promise.all([
+      prisma.collectionMeta.findUnique({
+        where: { collection: enumValue },
+      }),
+      prisma.category.findMany({
+        where: { collection: enumValue },
+        orderBy: { name: "asc" },
+      }),
+      prisma.product.findMany({
+        where: { 
+          category: { collection: enumValue },
+          isDeleted: false,
+        },
+        take: 24, // Limit to top 24 products for performance
+        include: {
+          category: true,
+          brand: true,
+          images: {
+            where: { isPrimary: true },
+            take: 1
+          },
+        },
+      })
+    ]);
+    meta = res[0];
+    categories = res[1];
+    allProducts = res[2];
+  } catch (error) {
+    console.warn("CollectionPage: DB query error during prerender", error);
+  }
+
+  const title = meta?.title || enumValue;
+
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": baseUrl
       },
-    },
-  });
-
-  // Shuffle products randomly
-  const randomizedProducts = [...allProducts].sort(() => 0.5 - Math.random());
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Collections",
+        "item": `${baseUrl}/collections`
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": title,
+        "item": `${baseUrl}/collections/${collection.toLowerCase()}`
+      }
+    ]
+  };
 
   return (
     <div className="min-h-screen bg-background pt-28 pb-24">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       
       {/* Hero Section */}
       <div className="w-full max-w-[1400px] mx-auto px-4 md:px-6 mb-12 mt-8">
@@ -77,7 +142,7 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
         </div>
         <div className="max-w-3xl">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4">
-            {meta?.title || enumValue}
+            {title}
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground font-medium">
             {meta?.tagline || `Discover our exclusive range of ${enumValue.toLowerCase()}.`}
@@ -110,6 +175,7 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
                       src={cat.icon} 
                       alt={cat.name} 
                       fill 
+                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
                       className="object-cover transition-transform duration-500 group-hover:scale-110"
                     />
                   ) : (
@@ -126,21 +192,21 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
           </div>
         )}
 
-        {/* Randomized Products Grid */}
+        {/* Featured Products Grid */}
         <div>
           <div className="flex items-center justify-between mb-8">
-            <h2 className="text-3xl font-bold tracking-tight">Featured {meta?.title || enumValue}</h2>
+            <h2 className="text-3xl font-bold tracking-tight">Featured {title}</h2>
           </div>
 
-          {randomizedProducts.length === 0 ? (
+          {allProducts.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-24 text-center border rounded-xl bg-muted/20">
               <h3 className="text-xl font-semibold mb-2">No products found</h3>
               <p className="text-muted-foreground mb-6">We are currently adding more products to this collection.</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {randomizedProducts.map((product) => {
-                const primaryImage = product.images?.[0]; // We filtered for isPrimary in the query
+              {allProducts.map((product) => {
+                const primaryImage = product.images?.[0];
                 return (
                   <NavCard key={product.id} href={`/products/${product.slug}`} className="group block">
                     <div className="bg-secondary rounded-xl overflow-hidden border shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-1">
@@ -150,6 +216,7 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
                             src={primaryImage.url} 
                             alt={product.name} 
                             fill 
+                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 33vw, 25vw"
                             className="object-contain transition-transform duration-500 group-hover:scale-110"
                           />
                         ) : (

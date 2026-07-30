@@ -1,8 +1,13 @@
 import { Metadata } from "next";
 
+export const revalidate = 86400;
+
 export const metadata: Metadata = {
   title: "Terms of Service | Sangli Ceramica",
-  description: "Terms of Service for Sangli Ceramica",
+  description: "Terms of Service for Sangli Ceramica.",
+  alternates: {
+    canonical: "/terms",
+  },
 };
 
 export default function TermsOfServicePage() {

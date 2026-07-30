@@ -1,18 +1,36 @@
 import { Metadata } from "next";
 import { ContactForm } from "@/components/public/contact-form";
-import { MapPin, Phone, Mail, Clock } from "lucide-react";
+import { Phone, Mail, Clock } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 
+export const revalidate = 3600;
+
 export const metadata: Metadata = {
-  title: "Contact | Sangli Ceramica",
-  description: "Get in touch with Sangli Ceramica. Visit our showroom, call us, or send an inquiry.",
+  title: "Contact Us | Sangli Ceramica",
+  description: "Get in touch with Sangli Ceramica. Visit our showroom in Sangli, call our design experts, or send an inquiry for your architectural project.",
+  alternates: {
+    canonical: "/contact",
+  },
+  openGraph: {
+    title: "Contact Us | Sangli Ceramica",
+    description: "Get in touch with Sangli Ceramica. Visit our showroom in Sangli or call our design experts.",
+    url: "/contact",
+  },
 };
 
 export default async function ContactPage() {
-  const [settings, primaryBranch] = await Promise.all([
-    prisma.contactInformation.findFirst(),
-    prisma.branch.findFirst({ where: { isPrimary: true } })
-  ]);
+  let settings: any = null;
+  let primaryBranch: any = null;
+  try {
+    const res = await Promise.all([
+      prisma.contactInformation.findFirst(),
+      prisma.branch.findFirst({ where: { isPrimary: true } })
+    ]);
+    settings = res[0];
+    primaryBranch = res[1];
+  } catch (error) {
+    console.warn("ContactPage: DB query error during prerender", error);
+  }
 
   return (
     <div className="min-h-screen bg-background pt-28 pb-24">
@@ -36,7 +54,7 @@ export default async function ContactPage() {
                 </div>
                 <div>
                   <h3 className="text-xl font-bold mb-2">Call Us</h3>
-                  <p className="text-muted-foreground">
+                  <p className="text-muted-foreground whitespace-pre-line">
                     {primaryBranch?.phones?.length ? primaryBranch.phones.join('\n') : "N/A"}
                   </p>
                 </div>

@@ -2,9 +2,32 @@ import { Metadata } from "next";
 import Image from "next/image";
 import { CheckCircle2 } from "lucide-react";
 
+export const revalidate = 86400; // Cache for 24 hours
+
 export const metadata: Metadata = {
-  title: "About | Sangli Ceramica",
-  description: "Learn about Sangli Ceramica, the premium showroom for luxury tiles, sanitaryware, and doors.",
+  title: "About Us | Sangli Ceramica",
+  description: "Learn about Sangli Ceramica, Maharashtra's premier showroom for luxury tiles, elegant sanitaryware, and designer doors. Over a decade of excellence.",
+  alternates: {
+    canonical: "/about",
+  },
+  openGraph: {
+    title: "About Us | Sangli Ceramica",
+    description: "Learn about Sangli Ceramica, Maharashtra's premier showroom for luxury tiles, sanitaryware, and designer doors.",
+    url: "/about",
+    images: [
+      {
+        url: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=80&w=1200&auto=format&fit=crop",
+        width: 1200,
+        height: 630,
+        alt: "Sangli Ceramica Showroom Interior",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "About Us | Sangli Ceramica",
+    description: "Learn about Sangli Ceramica, Maharashtra's premier showroom for luxury tiles, sanitaryware, and designer doors.",
+  },
 };
 
 export default function AboutPage() {
@@ -27,6 +50,8 @@ export default function AboutPage() {
               src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=80&w=2000&auto=format&fit=crop" 
               alt="Showroom Interior" 
               fill 
+              sizes="(max-width: 768px) 100vw, 50vw"
+              priority
               className="object-cover"
             />
           </div>
@@ -34,16 +59,18 @@ export default function AboutPage() {
             <div className="relative rounded-3xl overflow-hidden bg-muted">
               <Image 
                 src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=2000&auto=format&fit=crop" 
-                alt="Luxury Bathroom" 
+                alt="Luxury Bathroom Showcase" 
                 fill 
+                sizes="(max-width: 768px) 100vw, 50vw"
                 className="object-cover"
               />
             </div>
             <div className="relative rounded-3xl overflow-hidden bg-muted">
               <Image 
                 src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2000&auto=format&fit=crop" 
-                alt="Premium Tiles" 
+                alt="Premium Tiles Display" 
                 fill 
+                sizes="(max-width: 768px) 100vw, 50vw"
                 className="object-cover"
               />
             </div>

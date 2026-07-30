@@ -10,11 +10,17 @@ export default async function PublicLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const [settingsRes, primaryBranch] = await Promise.all([
-    getSettings(),
-    prisma.branch.findFirst({ where: { isPrimary: true } })
-  ]);
-  const whatsappNumber = primaryBranch?.whatsapp || (settingsRes.success ? settingsRes.data?.whatsapp : null);
+  let whatsappNumber: string | null = null;
+
+  try {
+    const [settingsRes, primaryBranch] = await Promise.all([
+      getSettings(),
+      prisma.branch.findFirst({ where: { isPrimary: true } })
+    ]);
+    whatsappNumber = primaryBranch?.whatsapp || (settingsRes.success ? settingsRes.data?.whatsapp : null) || null;
+  } catch (error) {
+    console.warn("PublicLayout: DB call error, defaulting WhatsApp number.", error);
+  }
 
   return (
     <div className="min-h-screen flex flex-col">

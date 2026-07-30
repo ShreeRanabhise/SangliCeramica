@@ -1,8 +1,13 @@
 import { Metadata } from "next";
 
+export const revalidate = 86400;
+
 export const metadata: Metadata = {
   title: "Privacy Policy | Sangli Ceramica",
-  description: "Privacy Policy of Sangli Ceramica",
+  description: "Privacy Policy of Sangli Ceramica.",
+  alternates: {
+    canonical: "/privacy",
+  },
 };
 
 export default function PrivacyPolicyPage() {

@@ -2,17 +2,33 @@ import { prisma } from "@/lib/prisma";
 import { CatalogueDownloadForm } from "@/components/public/catalogue-download-form";
 import { FileText, Download } from "lucide-react";
 import Image from "next/image";
+import { Metadata } from "next";
 
-export const metadata = {
+export const revalidate = 3600;
+
+export const metadata: Metadata = {
   title: "Download Catalogues | Sangli Ceramica",
   description: "Download our premium PDF catalogues to explore our complete range of tiles, sanitaryware, and doors.",
+  alternates: {
+    canonical: "/catalogues",
+  },
+  openGraph: {
+    title: "Download Catalogues | Sangli Ceramica",
+    description: "Download our premium PDF catalogues to explore our complete range of tiles, sanitaryware, and doors.",
+    url: "/catalogues",
+  },
 };
 
 export default async function CataloguesPage() {
-  const catalogues = await prisma.catalogue.findMany({
-    where: { isActive: true },
-    orderBy: { createdAt: "desc" },
-  });
+  let catalogues: any[] = [];
+  try {
+    catalogues = await prisma.catalogue.findMany({
+      where: { isActive: true },
+      orderBy: { createdAt: "desc" },
+    });
+  } catch (error) {
+    console.warn("CataloguesPage: DB query error during prerender", error);
+  }
 
   return (
     <div className="min-h-screen bg-background pt-24 md:pt-32 pb-24">
@@ -43,6 +59,7 @@ export default async function CataloguesPage() {
                        src={catalogues[0].coverImage} 
                        alt={catalogues[0].title}
                        fill
+                       sizes="(max-width: 768px) 100vw, 50vw"
                        className="object-cover transition-transform duration-700 group-hover:scale-105"
                      />
                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent pointer-events-none" />
@@ -56,7 +73,7 @@ export default async function CataloguesPage() {
                      <div>
                        <FileText className="h-20 w-20 text-primary/40 mx-auto mb-6" />
                        <h3 className="text-2xl font-bold mb-2">Sangli Ceramica</h3>
-                       <p className="text-muted-foreground font-medium">Master Collection 2026</p>
+                       <p className="text-muted-foreground font-medium">Master Collection</p>
                      </div>
                    </>
                  )}

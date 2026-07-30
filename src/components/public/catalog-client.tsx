@@ -213,6 +213,7 @@ export function CatalogClient({ products, categories, initialCategory, initialCo
                               src={primaryImage.url} 
                               alt={product.name} 
                               fill 
+                              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
                               className="object-contain transition-transform duration-700 group-hover:scale-110"
                             />
                           ) : (

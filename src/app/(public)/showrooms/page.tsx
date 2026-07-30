@@ -3,15 +3,30 @@ import { prisma } from "@/lib/prisma";
 import Image from "next/image";
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
 
+export const revalidate = 3600;
+
 export const metadata: Metadata = {
-  title: "Showrooms | Sangli Ceramica",
-  description: "Visit our showrooms to experience premium luxury tiles, sanitaryware, and doors.",
+  title: "Our Showrooms | Sangli Ceramica",
+  description: "Visit Sangli Ceramica showrooms across Maharashtra to experience luxury tiles, sanitaryware, and doors in person. Personalized design consultation available.",
+  alternates: {
+    canonical: "/showrooms",
+  },
+  openGraph: {
+    title: "Our Showrooms | Sangli Ceramica",
+    description: "Visit Sangli Ceramica showrooms to experience luxury tiles, sanitaryware, and doors in person.",
+    url: "/showrooms",
+  },
 };
 
 export default async function ShowroomsPage() {
-  const branches = await prisma.branch.findMany({
-    orderBy: { order: "asc" }
-  });
+  let branches: any[] = [];
+  try {
+    branches = await prisma.branch.findMany({
+      orderBy: { order: "asc" }
+    });
+  } catch (error) {
+    console.warn("ShowroomsPage: DB query error during prerender", error);
+  }
 
   return (
     <div className="min-h-screen bg-background pt-28 pb-24">
@@ -39,6 +54,7 @@ export default async function ShowroomsPage() {
                       src={branch.imageUrl} 
                       alt={`${branch.name} Showroom`}
                       fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       className="object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                   ) : (

@@ -8,12 +8,25 @@ export const metadata: Metadata = {
   description: "Browse our extensive collection of premium tiles, sanitaryware, and doors.",
 };
 
+export const revalidate = 3600;
+
 export default async function CatalogPage(props: { searchParams: Promise<{ [key: string]: string | string[] | undefined }> }) {
-  const [productsRes, categoriesRes, searchParams] = await Promise.all([
-    getProducts(),
-    getCategories(),
-    props.searchParams
-  ]);
+  let productsRes: any = { success: false, data: [] };
+  let categoriesRes: any = { success: false, data: [] };
+  let searchParams: any = {};
+
+  try {
+    const res = await Promise.all([
+      getProducts(),
+      getCategories(),
+      props.searchParams
+    ]);
+    productsRes = res[0];
+    categoriesRes = res[1];
+    searchParams = res[2] || {};
+  } catch (error) {
+    console.warn("CatalogPage: DB query error during prerender", error);
+  }
 
   const products = productsRes.success ? productsRes.data : [];
   const categories = categoriesRes.success ? categoriesRes.data : [];

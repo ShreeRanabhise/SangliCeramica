@@ -1,16 +1,27 @@
 import Link from "next/link";
-import { Globe, MapPin, Phone, Mail, ArrowRight } from "lucide-react";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Globe, MapPin, Phone, Mail } from "lucide-react";
+import { buttonVariants } from "@/components/ui/button";
 
 import { prisma } from "@/lib/prisma";
 
 export async function Footer() {
-  const [settings, catalogues, primaryBranch] = await Promise.all([
-    prisma.contactInformation.findFirst(),
-    prisma.catalogue.findMany({ where: { isActive: true }, orderBy: { createdAt: "desc" } }),
-    prisma.branch.findFirst({ where: { isPrimary: true } })
-  ]);
-  const mainCatalogue = catalogues[0];
+  let settings: any = null;
+  let catalogues: any[] = [];
+  let primaryBranch: any = null;
+
+  try {
+    const res = await Promise.all([
+      prisma.contactInformation.findFirst(),
+      prisma.catalogue.findMany({ where: { isActive: true }, orderBy: { createdAt: "desc" } }),
+      prisma.branch.findFirst({ where: { isPrimary: true } })
+    ]);
+    settings = res[0];
+    catalogues = res[1];
+    primaryBranch = res[2];
+  } catch (error) {
+    console.warn("Footer: Database query error, using fallback values.", error);
+  }
+
   return (
     <footer className="bg-slate-950 text-slate-300 border-t border-slate-900 relative overflow-hidden">
       {/* Subtle radial gradient */}
@@ -68,7 +79,7 @@ export async function Footer() {
                 <div className="mt-1 w-8 h-8 rounded-full bg-slate-900 flex items-center justify-center shrink-0 border border-white/80">
                   <MapPin className="w-4 h-4 text-white" />
                 </div>
-                <span className="whitespace-pre-line leading-relaxed">{primaryBranch?.address || "Please configure a primary branch in admin."}</span>
+                <span className="whitespace-pre-line leading-relaxed">{primaryBranch?.address || "Sangli, Maharashtra, India"}</span>
               </li>
               <li className="flex gap-4 text-sm text-slate-400 items-center">
                 <div className="w-8 h-8 rounded-full bg-slate-900 flex items-center justify-center shrink-0 border border-white/80">

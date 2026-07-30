@@ -2,9 +2,19 @@ import { Metadata } from "next";
 import { getAlbums } from "@/actions/gallery";
 import Image from "next/image";
 
+export const revalidate = 3600;
+
 export const metadata: Metadata = {
-  title: "Gallery | Sangli Ceramica",
-  description: "Browse our showroom gallery and recent projects.",
+  title: "Gallery & Projects | Sangli Ceramica",
+  description: "Browse our showroom gallery and recent architectural projects in Maharashtra for tiles, sanitaryware, and luxury bath fittings inspiration.",
+  alternates: {
+    canonical: "/gallery",
+  },
+  openGraph: {
+    title: "Gallery & Projects | Sangli Ceramica",
+    description: "Browse our showroom gallery and recent architectural projects in Maharashtra.",
+    url: "/gallery",
+  },
 };
 
 export default async function PublicGalleryPage() {
@@ -47,6 +57,7 @@ export default async function PublicGalleryPage() {
                         alt={album.name}
                         width={600}
                         height={600}
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                         className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
                       />
                       <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />

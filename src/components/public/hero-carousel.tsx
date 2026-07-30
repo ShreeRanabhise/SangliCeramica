@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Sparkles } from "lucide-react";
+import Image from "next/image";
 import { buttonVariants } from "@/components/ui/button";
 
 interface HeroCarouselProps {
@@ -19,7 +19,7 @@ export function HeroCarousel({ images, title, subtitle }: HeroCarouselProps) {
     
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % images.length);
-    }, 3000); // Change image every 3 seconds
+    }, 4000); // Change image every 4 seconds
 
     return () => clearInterval(interval);
   }, [images]);
@@ -35,10 +35,19 @@ export function HeroCarousel({ images, title, subtitle }: HeroCarouselProps) {
       
       {backgroundImages.map((src, index) => (
         <div 
-          key={src}
-          className={`absolute inset-0 bg-cover bg-center transition-opacity duration-1000 ${index === currentIndex ? 'opacity-100' : 'opacity-0'}`}
-          style={{ backgroundImage: `url(${src})` }}
-        />
+          key={`${src}-${index}`}
+          className={`absolute inset-0 transition-opacity duration-1000 ${index === currentIndex ? 'opacity-100' : 'opacity-0'}`}
+        >
+          <Image
+            src={src}
+            alt={title || "Sangli Ceramica Hero Showcase"}
+            fill
+            priority={index === 0}
+            sizes="100vw"
+            quality={85}
+            className="object-cover"
+          />
+        </div>
       ))}
       
       <div className="container relative z-20 mx-auto px-4 text-center mt-4 md:mt-6">
